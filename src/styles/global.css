@@ -163,9 +163,9 @@ main { transition: opacity .7s ease; }
 .trattini button { width: 30px; height: 18px; display: grid; place-items: center; }
 .trattini button::before { content: ''; width: 100%; height: 2px; border-radius: 2px; background: var(--carta); opacity: .28; transition: opacity .3s ease; }
 .trattini button[aria-current]::before { opacity: 1; }
-.op-testa { padding-block: 22px 30px; display: grid; gap: 22px; }
-.op-t { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(56px, 18vw, 180px); line-height: .9; letter-spacing: -0.04em; text-align: center; } /* nome dell'opera grande e centrato */
-.op-dati { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; border-top: 1px solid var(--linea); padding-top: 16px; }
+.op-testa { padding-block: 30px 30px; display: grid; gap: 30px; }
+.op-t { margin: 0 0 -0.16em; font-family: var(--display); font-weight: 700; font-size: clamp(56px, 18vw, 180px); line-height: .9; letter-spacing: -0.04em; text-align: center; } /* nome dell'opera grande e centrato; il margine negativo toglie lo spazio vuoto sotto le lettere, così sopra e sotto sembrano uguali */
+.op-dati { margin: 0 calc(-1 * var(--g)); padding: 18px var(--g) 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; border-top: 1px solid var(--linea); } /* la linea va da bordo a bordo, come le altre */
 .op-dati div { display: grid; gap: 2px; min-width: 0; }
 .op-dati div:last-child { grid-column: 1 / -1; }
 .op-dati dt { color: var(--grigio); font-size: 13px; }
@@ -185,7 +185,9 @@ main { transition: opacity .7s ease; }
 .ft { grid-template-columns: 1fr; position: relative; z-index: 3; margin-top: -1px; border-bottom: 0; } /* la sua linea si posa su quella sopra (mai doppia); niente linea di chiusura */
 .ft-nav { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
 .ft-nav a { background: var(--nero); padding: 20px var(--g); font-family: var(--display); font-weight: 700; font-size: clamp(20px, 5.4vw, 34px); line-height: 1; }
-.ft-nav a[aria-current="page"] { color: var(--accento); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .14em; }
+.ft-nav a span { border-bottom: 2px solid transparent; padding-bottom: .08em; } /* la sottolineatura è un bordo vero, uguale su ogni browser */
+.ft-nav a[aria-current="page"] { color: var(--accento); }
+.ft-nav a[aria-current="page"] span { border-bottom-color: currentColor; }
 @media (hover: hover) { .ft-nav a:hover { color: var(--accento); } }
 .ft > .cella { padding-bottom: 28px; }
 .ft .piede { padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px)); } /* spazio per il menu, che resta sopra il piede */
