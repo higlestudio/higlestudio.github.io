@@ -27,10 +27,10 @@ if (puntatore && matchMedia('(pointer: fine)').matches) {
 }
 
 
-/* il cambio lingua nel piede: si ricorda l'ultima scelta, che si può sempre cambiare di nuovo */
-$<HTMLAnchorElement>('.lingua')?.addEventListener('click', (e) => {
-  try { localStorage.setItem('higle-lingua', (e.currentTarget as HTMLAnchorElement).hreflang); } catch {}
-});
+/* il cambio lingua (pillola in alto e piede): si ricorda l'ultima scelta, che si può sempre cambiare di nuovo */
+document.querySelectorAll<HTMLAnchorElement>('.lingua').forEach((a) => a.addEventListener('click', () => {
+  try { localStorage.setItem('higle-lingua', a.hreflang); } catch {}
+}));
 
 /* pagina dell'opera: le foto si sfogliano col dito; i trattini sotto dicono quale si vede e, toccati, ci saltano */
 const sfoglia = $('.sfoglia'), trattini = [...document.querySelectorAll<HTMLButtonElement>('.trattini button')];
