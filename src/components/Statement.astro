@@ -1,0 +1,9 @@
+---
+import { statement } from '../dati';
+interface Props { testo: string }
+const { lead, corpo } = statement(Astro.props.testo);
+---
+<div class="statement">
+  <p class="lead" set:html={lead} />
+  {corpo.trim() && <div class="corpo" set:html={corpo} />}
+</div>

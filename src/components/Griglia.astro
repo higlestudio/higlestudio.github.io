@@ -1,0 +1,15 @@
+---
+import { percorsi, type Lang } from '../i18n';
+interface Props { lang: Lang; opere: any[]; class?: string }
+const { lang, opere, class: cls = '' } = Astro.props;
+---
+<ol class={`pannelli inv-grid ${cls}`}>
+  {opere.map((o) => (
+    <li data-anno={o.data.anno}>
+      <a href={percorsi[lang].opera(o.id)} data-opera>
+        <div class="im" style={`--f:${o.data.fondo}`}><img src={o.data.foto_quadrata || o.data.foto} alt="" loading="lazy" /></div>
+        <div class="cap"><span class="t">{o.data.titolo}</span></div>
+      </a>
+    </li>
+  ))}
+</ol>

@@ -1,0 +1,216 @@
+/* Higle — stanza scura nel nero del brand. Nohemi per i titoli, Poppins per il testo, accento crema. */
+@font-face { font-family: 'Nohemi'; font-weight: 400; src: url('/fonts/Nohemi-Regular.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Nohemi'; font-weight: 500; src: url('/fonts/Nohemi-Medium.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Nohemi'; font-weight: 700; src: url('/fonts/Nohemi-Bold.woff2') format('woff2'); font-display: swap; }
+
+:root {
+  --nero: #292724;
+  --carta: #FFF6E5;
+  --neutro: #E0D8C9;
+  --grigio: #ABA396;
+  --linea: #3E3B37;
+  --fondo-foto: #33302C;
+  --accento: var(--carta); /* l'accento è la crema: niente arancio sul sito (deciso 8/10) */
+  --pill: #3A3733;
+  --font: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --display: 'Nohemi', 'Helvetica Neue', sans-serif;
+  --g: 16px;
+  color-scheme: dark;
+}
+@media (min-width: 900px) { :root { --g: 40px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--nero); color: var(--carta); overscroll-behavior-y: none; } /* niente rimbalzo elastico: il menu fisso non si stacca dalla pagina */
+body { overflow-x: clip; margin: 0; font-family: var(--font); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--carta); outline-offset: 3px; }
+.num { font-variant-numeric: tabular-nums; }
+.wrap { padding-inline: var(--g); max-width: 1440px; margin: 0 auto; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+main { position: relative; z-index: 2; }
+
+/* cursore: solo con il mouse */
+.cur { display: none; }
+@media (pointer: fine) {
+  html, body, a, button, input { cursor: none; }
+  .cur { display: grid; place-items: center; position: fixed; left: 0; top: 0; z-index: 99; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--accento); pointer-events: none; transition: width .25s, height .25s, margin .25s, background .25s; font-size: 13px; font-weight: 700; color: var(--nero); }
+  .cur span { opacity: 0; transition: opacity .2s; white-space: nowrap; }
+  .cur.link { width: 36px; height: 36px; margin: -18px 0 0 -18px; background: color-mix(in srgb, var(--accento) 50%, transparent); }
+  .cur.apri { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
+  .cur.apri span { opacity: 1; }
+  .cur.apri.su-logo { background: var(--carta); color: var(--nero); }
+  .cur.testo { width: 3px; height: 26px; margin: -13px 0 0 -1px; border-radius: 2px; }
+}
+
+/* menu a pillola, in basso al centro, sempre visibile (deciso 8/10: sulle pagine corte spariva subito) */
+.pill-nav { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 4px; align-items: stretch; font-size: 16px; font-weight: 600; transition: transform .35s cubic-bezier(.2,.7,.2,1), opacity .35s; }
+.pn-group { background: var(--carta); border-radius: 999px; display: flex; align-items: center; padding: 0 8px; box-shadow: 0 6px 20px rgba(0,0,0,.28); } /* colori invertiti: pillola crema, testo nero di brand */
+.pn-group a { padding: 14px 14px; color: color-mix(in srgb, var(--nero) 50%, var(--carta)); }
+.pn-group a[aria-current="page"] { color: var(--nero); }
+@media (hover: hover) { .pn-group a:hover { color: var(--nero); } }
+@media (min-width: 900px) { .pill-nav { font-size: 16px; } .pn-group a { padding: 14px 16px; } }
+
+/* hero: il logomark grande, la fascia alta quanto lui; toccando ovunque i petali cadono dietro il titolo */
+.hero2 { position: relative; z-index: 1; height: calc(min(86vw, 760px) * 80 / 103 + 56px); overflow: visible; }
+.marchio2 { margin: 0; position: absolute; line-height: 0; }
+.mk-btn { display: block; width: 100%; height: 100%; padding: 0; color: var(--accento); opacity: 0; transform: scale(.96); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+.mk-btn.vis { opacity: 1; transform: none; }
+.mk-btn svg { width: 100%; height: 100%; overflow: visible; display: block; }
+.mk-btn svg path { transform-box: fill-box; transform-origin: 50% 50%; }
+@media (pointer: fine) { .hero2, .hero2 * { cursor: none; } }
+/* ingresso: i petali arrivano da fuori e compongono il logo; il resto compare dopo */
+html.intro .mk-btn svg { visibility: hidden; }
+html.intro main, html.intro .pill-nav, html.intro-resto main, html.intro-resto .pill-nav { opacity: 0 !important; }
+main { transition: opacity .7s ease; }
+
+
+/* i petali in volo: sopra la pagina, sotto il menu su cui rimbalzano */
+.volo { position: fixed; inset: 0; z-index: 9; pointer-events: none; overflow: hidden; color: var(--accento); }
+.volo svg { position: absolute; left: 0; top: 0; overflow: visible; will-change: transform; }
+.volo path { fill: currentColor; }
+
+/* pannelli a tutta larghezza, separati da un filo */
+.pannelli { display: grid; gap: 1px; background: var(--linea); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+.pannelli > * { background: var(--nero); min-width: 0; }
+.cella { padding: 18px var(--g); }
+.etichetta { margin: 0 0 10px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); display: flex; justify-content: space-between; gap: 12px; }
+
+/* il ciclo in primo piano: titolo trasparente sopra i petali, le foto coprono */
+.ciclo2, .ciclo2 .pannelli, .ciclo2 .pannelli > * { background: transparent; }
+.ciclo2 .pannelli { border-bottom: 0; }
+.ciclo2 .cella { padding-block: 20px 40px; }
+.ciclo-t { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(38px, 11.2vw, 150px); line-height: .95; letter-spacing: -0.03em; text-wrap: balance; }
+
+.statement { margin-top: 22px; display: grid; gap: 22px; }
+.statement .lead { margin: 0; font-size: clamp(20px, 5.4vw, 34px); line-height: 1.28; font-weight: 500; max-width: 30ch; text-wrap: pretty; }
+.statement .corpo { display: grid; gap: 1em; max-width: 62ch; font-size: 16px; line-height: 1.65; color: var(--neutro); }
+.statement .corpo p { margin: 0; }
+@media (min-width: 900px) {
+  .statement { grid-template-columns: 5fr 6fr; gap: 6vw; margin-top: 40px; align-items: start; }
+  .statement .corpo { font-size: 17px; }
+}
+
+/* le opere: foto orizzontali, a tutta larghezza sul telefono, a tutto schermo sul computer */
+.opere { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; position: relative; z-index: 2; background: var(--nero); }
+.opera { min-width: 0; }
+.opera a { display: grid; grid-template-rows: auto auto; width: 100%; }
+.foto { background: var(--f, var(--fondo-foto)); overflow: hidden; aspect-ratio: 4 / 3; }
+.foto img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+@media (hover: hover) { .opera a:hover .foto img { transform: scale(1.015); } }
+.scheda { display: grid; padding: 12px var(--g) 18px; align-items: center; }
+.scheda .t { font-family: var(--display); font-weight: 700; font-size: 16px; }
+@media (min-width: 900px) {
+  .opera { height: 100vh; }
+  .opera a { height: 100%; grid-template-rows: minmax(0, 1fr) auto; }
+  .foto { aspect-ratio: auto; }
+  .scheda { padding-block: 16px 24px; }
+}
+
+/* si accendono, una alla volta, come lampadine */
+@keyframes accendi { 0% { filter: brightness(.3); } 30% { filter: brightness(.9); } 38% { filter: brightness(.45); } 60%, 100% { filter: brightness(1); } }
+.opera .foto { animation: accendi .7s linear both; }
+.opera:nth-child(2) .foto { animation-delay: .12s; }
+.opera:nth-child(3) .foto { animation-delay: .24s; }
+.opera:nth-child(4) .foto { animation-delay: .36s; }
+
+/* griglia d'archivio */
+.inv-grid { grid-template-columns: 1fr 1fr; border-top: 0; list-style: none; margin: 0; padding: 0; }
+.inv-grid a { display: grid; grid-template-rows: auto auto; height: 100%; }
+.inv-grid .im { aspect-ratio: 1; background: var(--f, var(--fondo-foto)); }
+.inv-grid .im img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.inv-grid .cap { display: block; padding: 10px var(--g) 12px; }
+.inv-grid .t { font-family: var(--display); font-weight: 700; font-size: 16px; }
+@media (hover: hover) { .inv-grid a:hover .t { color: var(--accento); } }
+@media (min-width: 900px) { .inv-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* Work: un progetto per riga (anno, titolo, freccia); toccando si apre la griglia delle sue opere */
+.gruppo summary { list-style: none; cursor: pointer; border-top: 0; -webkit-tap-highlight-color: transparent; }
+.gruppo summary::-webkit-details-marker { display: none; }
+.gruppo .riga { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 14px; padding-block: 20px; }
+.gruppo .anno { color: var(--grigio); font-size: 13px; font-weight: 500; width: 2.6em; }
+.gruppo .freccia { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transform-origin: 50% 50%; transition: transform .36s cubic-bezier(.2,.8,.2,1); } /* gira su se stessa, senza spostarsi */
+.gruppo.aperto .freccia { transform: rotate(180deg); transition-duration: .48s; } /* stessi tempi della griglia: .48s ad aprire, .36s a chiudere */
+.gruppo h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 6vw, 40px); line-height: .98; letter-spacing: -0.02em; text-wrap: balance; }
+
+/* contatti: mail e instagram alla pari, in alto; poi ritratto e bio */
+.contatti2 { grid-template-columns: 1fr; border-top: 0; }
+.canale { display: grid; align-content: space-between; justify-items: center; text-align: center; gap: 18px; padding-block: 24px 26px; min-height: 22svh; }
+.canale .valore { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 7.6vw, 72px); line-height: 1; letter-spacing: -0.03em; overflow-wrap: anywhere; }
+.canale .etichetta { align-items: center; justify-content: center; margin: 0; }
+.canale .ic { display: inline-flex; align-items: center; gap: 10px; color: var(--carta); }
+.canale .ic svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) { .canale:hover .valore { color: var(--accento); } }
+.me { grid-template-columns: 1fr; }
+.me .ph { aspect-ratio: 4 / 5; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; background: var(--fondo-foto); }
+.me .testo { display: grid; align-content: space-between; gap: 40px; padding-block: 22px 26px; }
+.me .bio { margin: 0; font-size: clamp(20px, 5.4vw, 40px); line-height: 1.2; font-weight: 500; max-width: 26ch; }
+.me .bio p { margin: 0 0 .6em; }
+@media (min-width: 900px) {
+  .contatti2 { grid-template-columns: 1fr 1fr; } .canale { min-height: 42vh; } .canale .valore { font-size: 3.6vw; }
+  .me { grid-template-columns: 1fr 1fr; } .me .ph { aspect-ratio: auto; min-height: 92vh; } .me .testo { padding-block: 32px 36px; }
+}
+
+/* pagina dell'opera */
+/* B (7/10): la foto è sempre intera, mai ritagliata; dove il riquadro non coincide, lo riempie il colore di fondo dell'opera */
+.op-foto { margin: 0; background: var(--f); aspect-ratio: 4 / 3; position: relative; }
+/* più foto: si sfogliano col dito, una alla volta */
+.sfoglia { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.sfoglia::-webkit-scrollbar { display: none; }
+.sfoglia img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; display: block; scroll-snap-align: start; scroll-snap-stop: always; }
+/* trattini sotto la foto: uno per foto, pieno quello che si vede */
+.trattini { display: flex; justify-content: center; gap: 4px; padding: 10px var(--g) 4px; }
+.trattini button { width: 30px; height: 18px; display: grid; place-items: center; }
+.trattini button::before { content: ''; width: 100%; height: 2px; border-radius: 2px; background: var(--carta); opacity: .28; transition: opacity .3s ease; }
+.trattini button[aria-current]::before { opacity: 1; }
+.op-testa { padding-block: 22px 30px; display: grid; gap: 22px; }
+.op-t { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(56px, 18vw, 180px); line-height: .9; letter-spacing: -0.04em; text-align: center; } /* nome dell'opera grande e centrato */
+.op-dati { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; border-top: 1px solid var(--linea); padding-top: 16px; }
+.op-dati div { display: grid; gap: 2px; min-width: 0; }
+.op-dati div:last-child { grid-column: 1 / -1; }
+.op-dati dt { color: var(--grigio); font-size: 13px; }
+.op-dati dd { margin: 0; }
+.op-testo { max-width: 46ch; font-size: clamp(18px, 4.6vw, 24px); line-height: 1.4; }
+.op-testo p { margin: 0 0 .8em; }
+.op-altre { grid-template-columns: repeat(3, 1fr); }
+@media (min-width: 900px) {
+  .op-foto { aspect-ratio: auto; height: 100vh; }
+  .op-testa { grid-template-columns: 1fr 1fr; align-items: end; column-gap: 6vw; }
+  .op-t { grid-column: 1 / -1; }
+  .op-dati { grid-template-columns: repeat(4, 1fr); }
+}
+
+
+/* piede: link grandi, newsletter, firma */
+.ft { grid-template-columns: 1fr; position: relative; z-index: 3; margin-top: -1px; border-bottom: 0; } /* la sua linea si posa su quella sopra (mai doppia); niente linea di chiusura */
+.ft-nav { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
+.ft-nav a { background: var(--nero); padding: 20px var(--g); font-family: var(--display); font-weight: 700; font-size: clamp(20px, 5.4vw, 34px); line-height: 1; }
+.ft-nav a[aria-current="page"] { color: var(--accento); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .14em; }
+@media (hover: hover) { .ft-nav a:hover { color: var(--accento); } }
+.ft > .cella { padding-bottom: 28px; }
+.ft .piede { padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px)); } /* spazio per il menu, che resta sopra il piede */
+.ft .nlc { padding-block: 22px 24px; }
+.nl { display: flex; gap: 12px; border-bottom: 2px solid var(--carta); align-items: center; }
+.nl input { flex: 1; min-width: 0; background: none; border: 0; color: var(--carta); font: inherit; font-size: clamp(18px, 4.6vw, 34px); font-weight: 600; padding: 12px 0; }
+.nl input::placeholder { color: var(--grigio); }
+.nl input:focus, .nl input:focus-visible { outline: none; }
+.nl input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px var(--nero) inset; -webkit-text-fill-color: var(--carta); caret-color: var(--carta); }
+.nl button { background: var(--accento); color: var(--nero); font-weight: 700; padding: 10px 16px; border-radius: 999px; flex: none; }
+.nl button[disabled] { opacity: .5; }
+.nl .trappola { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.nl-ok { color: var(--carta); margin: 10px 0 0; }
+.nl-ok:empty { display: none; } /* lo spazio del messaggio compare solo quando c'è un messaggio */
+.ft .piede { display: flex; justify-content: space-between; align-items: center; gap: 18px; color: var(--grigio); font-size: 13px; }
+.legali { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; }
+.legali a { color: var(--grigio); }
+@media (hover: hover) { .legali a:hover { color: var(--carta); } }
+@media (min-width: 900px) { .ft { grid-template-columns: 2fr 1fr; } .ft-nav { grid-template-columns: repeat(4, 1fr); } }
+
+/* pagine legali */
+.legale { padding-block: 40px 60px; max-width: 70ch; }
+.titolo-legale { margin: 0 0 18px; font-family: var(--display); font-weight: 700; font-size: clamp(44px, 12vw, 110px); line-height: .9; letter-spacing: -0.03em; }
+.legale h2 { font-family: var(--display); font-weight: 700; font-size: 28px; margin: 48px 0 12px; }
+.nota-legale { color: var(--neutro); }
+.nota-legale p { margin: 0 0 1em; }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

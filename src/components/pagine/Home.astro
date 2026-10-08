@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Logomark from '../Logomark.astro';
+import Statement from '../Statement.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { cicloInPrimoPiano, opere, titoloCiclo } from '../../dati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const ciclo = await cicloInPrimoPiano();
+const lista = await opere(ciclo.id);
+const titolo = titoloCiclo(ciclo, lang);
+---
+<Base lang={lang} titolo={`Higle — ${titolo}`} descrizione={titolo} pagina="home" altra={percorsi[altra].home}>
+  <header class="hero2" aria-label="Higle" slot="prima">
+    <!-- ingresso: alla prima apertura della visita la pagina resta nascosta finché il logo non si compone (mai oltre 4 secondi) -->
+    <script is:inline>
+      try {
+        if (!sessionStorage.getItem('higle-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('intro');
+          setTimeout(function () { document.documentElement.classList.remove('intro', 'intro-resto'); }, 4000);
+        }
+      } catch (e) {}
+    </script>
+    <h1 class="marchio2">
+      <button type="button" class="mk-btn" aria-label={t.logoCade}><Logomark /></button>
+      <span class="sr">Higle</span>
+    </h1>
+  </header>
+  <section class="ciclo2" aria-labelledby="ciclo-t">
+    <div class="pannelli"><div class="cella">
+      <h2 id="ciclo-t" class="ciclo-t">{titolo}</h2>
+      <Statement testo={lang === 'it' ? ciclo.data.statement_it : ciclo.data.statement_en} />
+    </div></div>
+    <ol class="opere" id="opere">
+      {lista.map((o, i) => (
+        <li class="opera">
+          <a href={percorsi[lang].opera(o.id)} data-opera>
+            <div class="foto" style={`--f:${o.data.fondo}`}>
+              <img src={o.data.foto} alt={o.data.titolo} loading={i < 2 ? 'eager' : 'lazy'} />
+            </div>
+            <div class="scheda"><span class="t">{o.data.titolo}</span></div>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+</Base>
+<script>import '../../scripts/hero.ts'; import '../../scripts/scorrimento.ts';</script>

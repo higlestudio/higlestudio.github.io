@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import Griglia from '../Griglia.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { cicli, opere, titoloCiclo } from '../../dati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const tutti = await cicli();
+const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.id), anno: c.data.anno })));
+---
+<Base lang={lang} titolo={`${t.archivio} — Higle`} pagina="archivio" altra={percorsi[altra].archivio}>
+  <h1 class="sr">{t.archivio}</h1>
+  <!-- un progetto per riga, dal più recente. Quello in primo piano parte aperto; toccando una riga si aprono le sue opere e quella aperta prima si chiude (sito.ts) -->
+  {gruppi.map(({ c, o, anno }) => (
+    <details class:list={["gruppo", { aperto: c.data.in_primo_piano }]} open={c.data.in_primo_piano}>
+      <summary class="pannelli"><div class="cella riga">
+        <span class="anno num">{anno}</span>
+        <h2>{titoloCiclo(c, lang)}</h2>
+        <svg class="freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
+      </div></summary>
+      <div class="apre"><Griglia lang={lang} opere={o} /></div>
+    </details>
+  ))}
+</Base>
+<script>import '../../scripts/scorrimento.ts';</script>

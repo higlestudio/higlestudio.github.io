@@ -1,0 +1,74 @@
+---
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '../styles/global.css';
+import Piede from '../components/Piede.astro';
+import { percorsi, testi, type Lang } from '../i18n';
+import { LANCIATO } from '../lancio';
+
+interface Props {
+  lang: Lang;
+  titolo: string;
+  descrizione?: string;
+  pagina?: 'home' | 'archivio' | 'contatti' | null;
+  /** la stessa pagina nell'altra lingua */
+  altra: string;
+  /** false dove la pagina è già bilingue (404): niente cambio automatico */
+  automatica?: boolean;
+}
+const { lang, titolo, descrizione = '', pagina = null, altra, automatica = true } = Astro.props;
+const t = testi[lang];
+const p = percorsi[lang];
+const qui = new URL(Astro.url.pathname, Astro.site);
+const enUrl = new URL(lang === 'en' ? Astro.url.pathname : altra, Astro.site);
+const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <!-- lingua automatica: chi arriva da fuori finisce nella lingua del suo telefono, o nell'ultima scelta con la pillola. I motori di ricerca no. -->
+  {automatica && <script is:inline define:vars={{ lingua: lang, altra }}>
+    try {
+      const daFuori = !document.referrer || new URL(document.referrer).host !== location.host;
+      const robot = /bot|crawl|spider|slurp|lighthouse|facebookexternalhit/i.test(navigator.userAgent);
+      if (daFuori && !robot) {
+        const voluta = localStorage.getItem('higle-lingua') || (/^it\b/i.test(navigator.language || '') ? 'it' : 'en');
+        if (voluta !== lingua) location.replace(altra + location.hash);
+      }
+    } catch (e) {}
+  </script>}
+  {!LANCIATO && <meta name="robots" content="noindex, nofollow" />}
+  <title>{titolo}</title>
+  {descrizione && <meta name="description" content={descrizione} />}
+  <link rel="canonical" href={qui} />
+  <link rel="alternate" hreflang="en" href={enUrl} />
+  <link rel="alternate" hreflang="it" href={itUrl} />
+  <link rel="alternate" hreflang="x-default" href={enUrl} />
+  <meta property="og:title" content={titolo} />
+  {descrizione && <meta property="og:description" content={descrizione} />}
+  <meta property="og:url" content={qui} />
+  <meta name="theme-color" content="#292724" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="/fonts/Nohemi-Bold.woff2" as="font" type="font/woff2" crossorigin />
+</head>
+<body data-apri={t.apri} data-cliccami={t.cliccami}>
+  <div class="cur" aria-hidden="true"><span>{t.apri}</span></div>
+  <slot name="prima" />
+  <nav class="pill-nav" aria-label={t.menu}>
+    <span class="pn-group">
+      <a href={p.home} aria-current={pagina === 'home' ? 'page' : undefined}>{t.home}</a>
+      <a href={p.archivio} aria-current={pagina === 'archivio' ? 'page' : undefined}>{t.archivio}</a>
+      <a href={p.contatti} aria-current={pagina === 'contatti' ? 'page' : undefined}>{t.contatti}</a>
+    </span>
+  </nav>
+  <main>
+    <slot />
+    <Piede lang={lang} pagina={pagina} altra={altra} />
+  </main>
+  <script>import '../scripts/sito.ts';</script>
+</body>
+</html>

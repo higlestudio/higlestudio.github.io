@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { sito, md } from '../../dati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const s = await sito();
+---
+<Base lang={lang} titolo={`${t.privacy} — Higle`} altra={percorsi[altra].privacy}>
+  <section class="wrap legale">
+    <h1 class="titolo-legale">{t.privacy}</h1>
+    <div class="nota-legale" set:html={md(lang === 'it' ? s.privacy_it : s.privacy_en)} />
+    <h2 id="impressum">{t.impressum}</h2>
+    <div class="nota-legale" set:html={md(s.impressum)} />
+  </section>
+</Base>

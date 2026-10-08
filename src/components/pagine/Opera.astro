@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import Griglia from '../Griglia.astro';
+import Statement from '../Statement.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { opere, titoloCiclo, md } from '../../dati';
+import { getEntry } from 'astro:content';
+interface Props { lang: Lang; opera: any }
+const { lang, opera } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const o = opera.data;
+const ciclo = (await getEntry('cicli', o.ciclo))!;
+const nelCiclo = await opere(o.ciclo);
+const i = nelCiclo.findIndex((x) => x.id === opera.id);
+const altre = [...nelCiclo.slice(i + 1), ...nelCiclo.slice(0, i)];
+const nomeCiclo = titoloCiclo(ciclo, lang);
+const it = lang === 'it';
+const foto = [o.foto, ...o.altre_foto];
+---
+<Base lang={lang} titolo={`${o.titolo} — Higle`} descrizione={`${o.titolo}, ${o.anno}. ${nomeCiclo}`} altra={percorsi[altra].opera(opera.id)}>
+  <figure class="op-foto" style={`--f:${o.fondo}`}>
+    <div class="sfoglia" tabindex={foto.length > 1 ? 0 : undefined} aria-label={foto.length > 1 ? `${t.foto}: ${o.titolo}` : undefined}>
+      {foto.map((f, n) => <img src={f} alt={foto.length > 1 ? `${o.titolo}, ${n + 1}/${foto.length}` : o.titolo} loading={n ? 'lazy' : 'eager'} />)}
+    </div>
+  </figure>
+  {foto.length > 1 && (
+    <div class="trattini" aria-label={`${t.foto}: ${o.titolo}`}>
+      {foto.map((_, n) => <button type="button" aria-label={`${t.foto} ${n + 1}/${foto.length}`} aria-current={n === 0 ? 'true' : undefined}></button>)}
+    </div>
+  )}
+  <section class="pannelli"><div class="cella op-testa">
+    <h1 class="op-t">{o.titolo}</h1>
+    <dl class="op-dati num">
+      <div><dt>{t.anno}</dt><dd>{o.anno}</dd></div>
+      <div><dt>{t.materiali}</dt><dd>{it ? o.materiali_it : o.materiali_en}</dd></div>
+      <div><dt>{t.misure}</dt><dd>{o.misure}</dd></div>
+      <div><dt>{t.edizione}</dt><dd>{it ? o.edizione_it : o.edizione_en}</dd></div>
+      <div><dt>{t.ciclo}</dt><dd>{nomeCiclo}</dd></div>
+    </dl>
+    <div class="op-testo" set:html={md(it ? o.testo_it : o.testo_en)} />
+  </div></section>
+  <section class="pannelli" aria-labelledby="op-st"><div class="cella">
+    <p class="etichetta" id="op-st"><span>{t.ilCiclo}</span></p>
+    <h2 class="ciclo-t">{nomeCiclo}</h2>
+    <Statement testo={it ? ciclo.data.statement_it : ciclo.data.statement_en} />
+  </div></section>
+  {altre.length > 0 && (
+    <section aria-labelledby="op-altre">
+      <div class="pannelli"><div class="cella"><h2 class="etichetta" id="op-altre"><span>{t.altreOpere}</span></h2></div></div>
+      <Griglia lang={lang} opere={altre} class="op-altre" />
+    </section>
+  )}
+</Base>
+<script>import '../../scripts/scorrimento.ts';</script>

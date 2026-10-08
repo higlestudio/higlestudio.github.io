@@ -1,0 +1,38 @@
+---
+import { percorsi, testi, type Lang } from '../i18n';
+import { sito } from '../dati';
+interface Props { lang: Lang; pagina?: string | null; altra: string }
+const { lang, pagina, altra } = Astro.props;
+const altraLang: Lang = lang === 'it' ? 'en' : 'it';
+const t = testi[lang];
+const p = percorsi[lang];
+const s = await sito();
+const anno = new Date().getFullYear();
+---
+<footer class="pannelli ft">
+  <div class="ft-nav">
+    <a href={p.home} aria-current={pagina === 'home' ? 'page' : undefined}>{t.home}</a>
+    <a href={p.archivio} aria-current={pagina === 'archivio' ? 'page' : undefined}>{t.archivio}</a>
+    <a href={p.contatti} aria-current={pagina === 'contatti' ? 'page' : undefined}>{t.contatti}</a>
+    <a href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="cella nlc">
+    <p class="etichetta"><span>{t.newsletter}</span></p>
+    <form class="nl" id="nl" novalidate data-lingua={lang.toUpperCase()}
+      data-ok={t.nlOk} data-non-valida={t.nlNonValida} data-errore={t.nlErrore} data-spenta={t.nlSpenta}>
+      <label for="nl-email" class="sr">{t.tuaEmail}</label>
+      <input id="nl-email" name="EMAIL" type="email" placeholder={t.tuaEmail} autocomplete="email" />
+      <input class="trappola" name="email_address_check" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <button type="submit">{t.iscriviti}</button>
+    </form>
+    <p class="nl-ok" id="nl-ok" role="status"></p>
+  </div>
+  <div class="cella piede">
+    <nav class="legali" aria-label={t.noteLegali}>
+      <a href={p.privacy}>{t.privacy}</a>
+      <a href={`${p.privacy}#impressum`}>{t.impressum}</a>
+      <a href={altra} class="lingua" lang={altraLang} hreflang={altraLang}>{t.altraLinguaNome}</a>
+    </nav>
+    <span class="num">© {anno} Higle Studio</span>
+  </div>
+</footer>
