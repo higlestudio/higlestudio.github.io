@@ -1,4 +1,4 @@
-/* pagina 404: sotto la frase il logo è rotto, i petali staccati e girati. Toccato, si ricompone e si torna in Home.
+/* pagina 404: i petali del logo sono caduti sulla linea del piede. Toccati, si rialzano, ricompongono il logo e si torna in Home.
    La lingua: italiano se l'indirizzo era sotto /it/ o il telefono è in italiano. */
 
 const italiano = location.pathname.startsWith('/it/') || /^it\b/i.test(navigator.language || '');
@@ -12,11 +12,30 @@ const bottone = document.querySelector<HTMLButtonElement>('.vuoto-petali');
 if (bottone) {
   const petali = [...bottone.querySelectorAll<SVGPathElement>('path')];
   const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // ogni petalo si allontana dal centro del logo e gira un po' su se stesso: il logo è rotto, ma si riconosce
-  // (in unità del disegno: il logo è largo 103)
-  const rotto = [[4, 10, 28], [-14, 3, -34], [12, -10, 22], [13, 6, -26], [-11, -9, 30]];
-  if (!calmo) petali.forEach((p, i) => { const [x, y, g] = rotto[i]; p.style.transform = `translate(${x}px, ${y}px) rotate(${g}deg)`; });
+  const giri = [96, -128, 152, -74, 118], posti = [0.13, 0.32, 0.5, 0.68, 0.87]; // rotazione e punto a terra di ogni petalo
+
+  // i petali sono caduti: a terra sulla linea dove comincia il piede, sparsi in larghezza, ognuno girato a modo suo
+  const atterra = () => {
+    petali.forEach((p) => { p.style.transition = 'none'; p.style.transform = ''; });
+    if (calmo) return;
+    const piede = document.querySelector('.ft');
+    if (!piede) return;
+    const terra = piede.getBoundingClientRect().top + scrollY;
+    const scala = bottone.getBoundingClientRect().width / 103;
+    petali.forEach((p, i) => {
+      const r = p.getBoundingClientRect();
+      const dx = innerWidth * posti[i] - (r.left + r.width / 2);
+      let dy = terra - (r.top + scrollY + r.height / 2);
+      p.style.transform = `translate(${dx / scala}px, ${dy / scala}px) rotate(${giri[i]}deg)`;
+      // girato occupa più spazio: si misura e lo si alza finché il punto più basso tocca la linea
+      dy += terra - (p.getBoundingClientRect().bottom + scrollY);
+      p.style.transform = `translate(${dx / scala}px, ${dy / scala}px) rotate(${giri[i]}deg)`;
+    });
+  };
+  atterra();
   bottone.classList.add('pronti');
+  let largo = innerWidth;
+  addEventListener('resize', () => { if (innerWidth !== largo) { largo = innerWidth; atterra(); } });
 
   // toccato, si ricompone; poi si torna in Home
   let via = false;
