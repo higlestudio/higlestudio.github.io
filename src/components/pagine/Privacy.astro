@@ -8,7 +8,7 @@ const t = testi[lang];
 const altra: Lang = lang === 'it' ? 'en' : 'it';
 const s = await sito();
 ---
-<Base lang={lang} titolo={`${t.privacy} — Higle`} altra={percorsi[altra].privacy}>
+<Base lang={lang} titolo={`${t.privacy} | Higle Studio`} altra={percorsi[altra].privacy}>
   <section class="wrap legale">
     <h1 class="titolo-legale">{t.privacy}</h1>
     <div class="nota-legale" set:html={md(lang === 'it' ? s.privacy_it : s.privacy_en)} />

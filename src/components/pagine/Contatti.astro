@@ -8,7 +8,7 @@ const t = testi[lang];
 const altra: Lang = lang === 'it' ? 'en' : 'it';
 const s = await sito();
 ---
-<Base lang={lang} titolo={`${t.contatti} — Higle`} pagina="contatti" altra={percorsi[altra].contatti}>
+<Base lang={lang} titolo={`${t.contatti} | Higle Studio`} pagina="contatti" altra={percorsi[altra].contatti}>
   <h1 class="sr">{t.contatti}</h1>
   <section class="pannelli contatti2" aria-label={t.contatti}>
     <a class="cella canale" href={`mailto:${s.email}`}>

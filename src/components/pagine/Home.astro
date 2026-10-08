@@ -12,8 +12,8 @@ const ciclo = await cicloInPrimoPiano();
 const lista = await opere(ciclo.id);
 const titolo = titoloCiclo(ciclo, lang);
 ---
-<Base lang={lang} titolo={`Higle — ${titolo}`} descrizione={titolo} pagina="home" altra={percorsi[altra].home}>
-  <header class="hero2" aria-label="Higle" slot="prima">
+<Base lang={lang} titolo={`Higle Studio | ${titolo}`} descrizione={titolo} pagina="home" altra={percorsi[altra].home}>
+  <header class="hero2" aria-label="Higle Studio" slot="prima">
     <!-- ingresso: alla prima apertura della visita la pagina resta nascosta finché il logo non si compone (mai oltre 4 secondi) -->
     <script is:inline>
       try {
@@ -25,7 +25,7 @@ const titolo = titoloCiclo(ciclo, lang);
     </script>
     <h1 class="marchio2">
       <button type="button" class="mk-btn" aria-label={t.logoCade}><Logomark /></button>
-      <span class="sr">Higle</span>
+      <span class="sr">Higle Studio</span>
     </h1>
   </header>
   <section class="ciclo2" aria-labelledby="ciclo-t">

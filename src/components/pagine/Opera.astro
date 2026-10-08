@@ -18,7 +18,7 @@ const nomeCiclo = titoloCiclo(ciclo, lang);
 const it = lang === 'it';
 const foto = [o.foto, ...o.altre_foto];
 ---
-<Base lang={lang} titolo={`${o.titolo} — Higle`} descrizione={`${o.titolo}, ${o.anno}. ${nomeCiclo}`} altra={percorsi[altra].opera(opera.id)}>
+<Base lang={lang} titolo={`${o.titolo} | Higle Studio`} descrizione={`${o.titolo}, ${o.anno}. ${nomeCiclo}`} altra={percorsi[altra].opera(opera.id)}>
   <figure class="op-foto" style={`--f:${o.fondo}`}>
     <div class="sfoglia" tabindex={foto.length > 1 ? 0 : undefined} aria-label={foto.length > 1 ? `${t.foto}: ${o.titolo}` : undefined}>
       {foto.map((f, n) => <img src={f} alt={foto.length > 1 ? `${o.titolo}, ${n + 1}/${foto.length}` : o.titolo} loading={n ? 'lazy' : 'eager'} />)}

@@ -10,7 +10,7 @@ const altra: Lang = lang === 'it' ? 'en' : 'it';
 const tutti = await cicli();
 const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.id), anno: c.data.anno })));
 ---
-<Base lang={lang} titolo={`${t.archivio} — Higle`} pagina="archivio" altra={percorsi[altra].archivio}>
+<Base lang={lang} titolo={`${t.archivio} | Higle Studio`} pagina="archivio" altra={percorsi[altra].archivio}>
   <h1 class="sr">{t.archivio}</h1>
   <!-- un progetto per riga, dal più recente. Quello in primo piano parte aperto; toccando una riga si aprono le sue opere e quella aperta prima si chiude (sito.ts) -->
   {gruppi.map(({ c, o, anno }) => (
