@@ -14,12 +14,17 @@ const titolo = titoloCiclo(ciclo, lang);
 ---
 <Base lang={lang} titolo={`Higle Studio | ${titolo}`} descrizione={titolo} pagina="home" altra={percorsi[altra].home}>
   <header class="hero2" aria-label="Higle Studio" slot="prima">
-    <!-- ingresso: alla prima apertura della visita la pagina resta nascosta finché il logo non si compone (mai oltre 4 secondi) -->
+    <!-- ingresso: a ogni ricarica della Home e a ogni arrivo da fuori; non tornando da un'altra pagina del sito né col tasto indietro.
+         La pagina resta nascosta finché il logo non si compone (mai oltre 4,5 secondi). -->
     <script is:inline>
       try {
-        if (!sessionStorage.getItem('higle-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var tipo = (performance.getEntriesByType('navigation')[0] || {}).type, interno = false;
+        try { interno = !!document.referrer && new URL(document.referrer).host === location.host; } catch (e) {}
+        var daFuori = sessionStorage.getItem('higle-da-fuori'); sessionStorage.removeItem('higle-da-fuori');
+        var parte = tipo === 'reload' || (tipo !== 'back_forward' && (!interno || daFuori));
+        if (parte && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
           document.documentElement.classList.add('intro');
-          setTimeout(function () { document.documentElement.classList.remove('intro', 'intro-resto'); }, 4000);
+          setTimeout(function () { document.documentElement.classList.remove('intro', 'intro-resto'); }, 4500);
         }
       } catch (e) {}
     </script>

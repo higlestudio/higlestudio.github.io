@@ -39,7 +39,8 @@ const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
       const robot = /bot|crawl|spider|slurp|lighthouse|facebookexternalhit/i.test(navigator.userAgent);
       if (daFuori && !robot) {
         const voluta = localStorage.getItem('higle-lingua') || (/^it\b/i.test(navigator.language || '') ? 'it' : 'en');
-        if (voluta !== lingua) location.replace(altra + location.hash);
+        // chi arriva da fuori e viene girato sull'altra lingua conta ancora come arrivato da fuori (per l'ingresso della Home)
+        if (voluta !== lingua) { try { sessionStorage.setItem('higle-da-fuori', '1'); } catch (e) {} location.replace(altra + location.hash); }
       }
     } catch (e) {}
   </script>}

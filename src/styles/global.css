@@ -67,6 +67,7 @@ main { position: relative; z-index: 2; }
 /* ingresso: i petali arrivano da fuori e compongono il logo; il resto compare dopo */
 html.intro .mk-btn svg { visibility: hidden; }
 html.intro main, html.intro .pill-nav, html.intro .pill-lato, html.intro-resto main, html.intro-resto .pill-nav, html.intro-resto .pill-lato { opacity: 0 !important; }
+.pill-nav, .pill-lato { transition: opacity .7s ease; } /* compaiono con il nero che si dissolve */
 main { transition: opacity .7s ease; }
 
 

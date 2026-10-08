@@ -22,12 +22,16 @@ if (hero) {
   const mostra = (si: boolean, lento = false) => petali.forEach((p) => { p.style.transition = lento ? 'opacity .6s ease' : 'none'; p.style.opacity = si ? '1' : '0'; });
   const ricomponi = () => { caduto = false; finito = false; hero.classList.remove('rotto'); mostra(true, true); };
 
-  // ingresso, solo alla prima apertura della visita: la caduta al contrario. I petali arrivano da fuori, ognuno dal suo lato,
-  // e compongono il logo; poi compaiono menu e pagina. Toccando si salta.
+  // ingresso (a ogni ricarica e a ogni arrivo da fuori, vedi Home.astro): su nero, i petali arrivano da fuori, ognuno dal suo lato,
+  // e compongono il logo al centro dello schermo; poi il nero si dissolve (compaiono menu e pagina) e il logo sale al suo posto.
+  // Toccando si salta.
   const html = document.documentElement;
   if (html.classList.contains('intro')) {
-    try { sessionStorage.setItem('higle-intro', '1'); } catch {}
     btn.style.transition = 'none'; btn.classList.add('vis');
+    // il logo parte al centro dello schermo
+    const posto = box.getBoundingClientRect();
+    const alCentro = innerHeight / 2 - (posto.top + posto.height / 2);
+    box.style.transform = `translateY(${alCentro}px)`;
     const scala = btn.clientWidth / 103, logo = btn.getBoundingClientRect();
     const cx = logo.left + logo.width / 2, cy = logo.top + logo.height / 2, lontano = Math.hypot(innerWidth, innerHeight);
     const voli = petali.map((p, i) => {
@@ -41,9 +45,14 @@ if (hero) {
     });
     html.classList.replace('intro', 'intro-resto');
     let inCorso = true;
-    const fine = () => { inCorso = false; html.classList.remove('intro-resto'); };
-    Promise.all(voli.map((a) => a.finished)).then(fine, fine);
-    addEventListener('pointerdown', () => { if (inCorso) { voli.forEach((a) => a.finish()); bloccato = performance.now() + 500; } }, { once: true });
+    const fine = () => {
+      if (!inCorso) return; inCorso = false;
+      html.classList.remove('intro-resto'); // il nero si dissolve
+      box.animate([{ transform: `translateY(${alCentro}px)` }, { transform: 'none' }], { duration: 900, easing: 'cubic-bezier(.65,0,.35,1)' });
+      box.style.transform = '';
+    };
+    Promise.all(voli.map((a) => a.finished)).then(() => setTimeout(fine, 250), fine);
+    addEventListener('pointerdown', () => { if (inCorso) { voli.forEach((a) => a.finish()); fine(); bloccato = performance.now() + 500; } }, { once: true });
   } else requestAnimationFrame(() => btn.classList.add('vis'));
 
   // spinto = la pagina che sale col dito schiaccia il logo: i petali partono verso il basso e lo scorrimento resta di chi scorre
