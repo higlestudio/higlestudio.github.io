@@ -52,7 +52,19 @@ const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
   {descrizione && <meta property="og:description" content={descrizione} />}
   <meta property="og:url" content={qui} />
   <meta name="theme-color" content="#292724" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Higle" />
+  <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_GB'} />
+  <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Higle" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- icone: vettoriale per i browser, .ico per i vecchi e per Google, tessere per i telefoni -->
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32 48x48" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <link rel="preload" href="/fonts/Nohemi-Bold.woff2" as="font" type="font/woff2" crossorigin />
 </head>
 <body data-apri={t.apri} data-cliccami={t.cliccami}>
