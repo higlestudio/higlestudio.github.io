@@ -33,16 +33,15 @@ collections:
     extension: json
     format: json
     create: true
-    slug: "{{fields.slug}}"
+    slug: "{{slug}}" # il nome del file si ricava dal titolo IT: nessun campo da compilare
     identifier_field: titolo_it
     summary: "{{anno}} — {{titolo_it}}{{in_primo_piano | ternary(' · in primo piano', '')}}"
     sortable_fields: [anno, titolo_it]
     fields:
-      - { name: slug, label: "Nome breve (minuscole, senza spazi, non cambiarlo dopo)", widget: string }
       - { name: titolo_it, label: "Titolo IT", widget: string }
       - { name: titolo_en, label: "Titolo EN", widget: string }
       - { name: anno, label: Anno, widget: number, value_type: int }
-      - { name: in_primo_piano, label: "In primo piano (apre la home)", widget: boolean, default: false }
+      - { name: in_primo_piano, label: "In primo piano (apre la Home e parte aperto in Work)", widget: boolean, default: false }
       - { name: statement_it, label: "Statement IT (il primo paragrafo esce grande)", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
       - { name: statement_en, label: "Statement EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
 
