@@ -1,11 +1,23 @@
 ---
 import { percorsi, type Lang } from '../i18n';
-interface Props { lang: Lang; opere: any[]; class?: string }
-const { lang, opere, class: cls = '' } = Astro.props;
+interface Props { lang: Lang; opere: any[]; class?: string; adatta?: boolean }
+const { lang, opere, class: cls = '', adatta = false } = Astro.props;
+
+// "adatta": righe sempre piene. Divisibile per 3 → 3 per riga; per 2 → 2 per riga;
+// altrimenti prima le righe da 3, poi da 2 a chiudere (5 = 3+2, 7 = 3+2+2). Una sola opera: tutta la larghezza.
+// Griglia da 6 colonne: un'opera occupa 2 colonne (riga da 3), 3 colonne (riga da 2) o 6 (da sola).
+const larghezze = (n: number): number[] => {
+  if (n === 1) return [6];
+  if (n % 3 === 0) return Array(n).fill(2);
+  if (n % 2 === 0) return Array(n).fill(3);
+  const daDue = n % 3 === 1 ? 4 : 2;
+  return [...Array(n - daDue).fill(2), ...Array(daDue).fill(3)];
+};
+const spazi = adatta ? larghezze(opere.length) : [];
 ---
-<ol class={`pannelli inv-grid ${cls}`}>
-  {opere.map((o) => (
-    <li data-anno={o.data.anno}>
+<ol class={`pannelli inv-grid ${adatta ? 'adatta' : ''} ${cls}`}>
+  {opere.map((o, i) => (
+    <li data-anno={o.data.anno} style={adatta ? `grid-column: span ${spazi[i]}` : undefined}>
       <a href={percorsi[lang].opera(o.id)} data-opera>
         <div class="im" style={`--f:${o.data.fondo}`}><img src={o.data.foto_quadrata || o.data.foto} alt="" loading="lazy" /></div>
         <div class="cap"><span class="t">{o.data.titolo}</span></div>

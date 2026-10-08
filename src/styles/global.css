@@ -172,7 +172,7 @@ main { transition: opacity .7s ease; }
 .op-dati dd { margin: 0; }
 .op-testo { max-width: 46ch; font-size: clamp(18px, 4.6vw, 24px); line-height: 1.4; }
 .op-testo p { margin: 0 0 .8em; }
-.op-altre { grid-template-columns: repeat(3, 1fr); }
+.inv-grid.adatta { grid-template-columns: repeat(6, 1fr); } /* righe sempre piene: le larghezze le decide Griglia.astro */
 @media (min-width: 900px) {
   .op-foto { aspect-ratio: auto; height: 100vh; }
   .op-testa { grid-template-columns: 1fr 1fr; align-items: end; column-gap: 6vw; }

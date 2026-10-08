@@ -44,7 +44,7 @@ const avvia = () => gsap.matchMedia().add('(prefers-reduced-motion: no-preferenc
 
   // 5. foto: una tendina che si apre dal basso
   const tendina = { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.1, ease: 'power3.inOut', clearProps: 'clipPath' };
-  document.querySelectorAll<HTMLElement>('.opera .foto, .op-foto, .inv-grid:not(.gruppo .inv-grid) .im').forEach((box) => {
+  document.querySelectorAll<HTMLElement>('.op-foto, .inv-grid:not(.gruppo .inv-grid) .im').forEach((box) => { // in Home niente tendina (8/10)
     gsap.from(box, { ...tendina, scrollTrigger: { trigger: box, start: 'top 90%', once: true } });
   });
   // in Work le foto di un progetto si scoprono quando il progetto si apre (quello in primo piano subito, all'apertura della pagina):
