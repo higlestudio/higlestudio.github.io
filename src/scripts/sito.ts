@@ -60,7 +60,6 @@ const scorri = (g: HTMLDetailsElement, apri: boolean) => {
   );
   a.style.overflow = 'hidden';
   anim.onfinish = () => { a.style.overflow = ''; if (!apri) g.open = false; };
-  anim.finished.then(() => document.dispatchEvent(new Event('work:cambiato'))).catch(() => {});
   return anim;
 };
 gruppi.forEach((g) => g.querySelector('summary')!.addEventListener('click', (e) => {
