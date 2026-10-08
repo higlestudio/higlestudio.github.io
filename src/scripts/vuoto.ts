@@ -33,6 +33,9 @@ if (bottone) {
     });
   };
   atterra();
+  // Safari può spostare la linea dopo aver caricato caratteri e pagina: si rimettono a terra quando tutto è pronto
+  document.fonts.ready.then(atterra);
+  addEventListener('load', atterra);
   bottone.classList.add('pronti');
   let largo = innerWidth;
   addEventListener('resize', () => { if (innerWidth !== largo) { largo = innerWidth; atterra(); } });

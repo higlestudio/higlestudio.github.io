@@ -235,7 +235,7 @@ main { transition: opacity .7s ease; }
 .vuoto { position: relative; min-height: calc(100svh - 104px); padding: 54px var(--g) 0; text-align: center; } /* alta quanto lo schermo meno il menu: la linea del piede, dove cadono i petali, si vede subito; 54 px sopra = lo spazio a vista tra 404 e frase */
 .vuoto-404 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(120px, 44vw, 380px); line-height: .85; letter-spacing: -0.05em; }
 .vuoto-frase { margin: 18px 0 0; font-size: clamp(20px, 5.4vw, 34px); font-weight: 500; }
-.vuoto-petali { display: block; margin: 48px auto 0; width: min(52vw, 280px); padding: 0; color: var(--accento); visibility: hidden; }
+.vuoto-petali { position: relative; z-index: 4; display: block; margin: 48px auto 0; width: min(52vw, 280px); padding: 0; color: var(--accento); visibility: hidden; }
 .vuoto-petali.pronti { visibility: visible; }
 .vuoto-petali svg { display: block; width: 100%; height: auto; overflow: visible; }
 .vuoto-petali svg path { transform-box: fill-box; transform-origin: 50% 50%; }
