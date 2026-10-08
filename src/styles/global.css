@@ -13,13 +13,14 @@
   --font: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --display: 'Nohemi', 'Helvetica Neue', sans-serif;
   --g: 16px;
+  --testa: calc(78px + env(safe-area-inset-top, 0px)); /* spazio in cima a ogni pagina per il menu, che sta in alto */
   color-scheme: dark;
 }
 @media (min-width: 900px) { :root { --g: 40px; } }
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { background: var(--nero); color: var(--carta); overscroll-behavior-y: none; } /* niente rimbalzo elastico: il menu fisso non si stacca dalla pagina */
-body { overflow-x: clip; margin: 0; font-family: var(--font); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body { overflow-x: clip; margin: 0; padding-top: var(--testa); font-family: var(--font); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--carta); outline-offset: 3px; }
@@ -41,8 +42,8 @@ main { position: relative; z-index: 2; }
   .cur.testo { width: 3px; height: 26px; margin: -13px 0 0 -1px; border-radius: 2px; }
 }
 
-/* menu a pillola, in basso al centro, sempre visibile (deciso 8/10: sulle pagine corte spariva subito) */
-.pill-nav { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 4px; align-items: stretch; font-size: 16px; font-weight: 600; }
+/* menu a pillola, in alto al centro, sempre visibile (8/10: spostato in alto; prima stava in basso) */
+.pill-nav { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); top: calc(14px + env(safe-area-inset-top, 0px)); display: flex; gap: 4px; align-items: stretch; font-size: 16px; font-weight: 600; }
 .pn-group { background: var(--carta); border-radius: 999px; display: flex; align-items: center; padding: 0 8px; box-shadow: 0 6px 20px rgba(0,0,0,.28); } /* colori invertiti: pillola crema, testo nero di brand */
 .pn-group a { padding: 14px 14px; color: color-mix(in srgb, var(--nero) 50%, var(--carta)); }
 .pn-group a[aria-current="page"] { color: var(--nero); }
@@ -188,8 +189,8 @@ main { transition: opacity .7s ease; }
 .ft-nav a[aria-current="page"] span { border-bottom-color: currentColor; }
 @media (hover: hover) { .ft-nav a:hover { color: var(--accento); } }
 .ft > .cella { padding-bottom: 28px; }
-.ft .piede { padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px)); } /* spazio per il menu, che resta sopra il piede */
-.ft .nlc { padding-block: 22px 24px; }
+.ft .piede { padding-block: 24px calc(24px + env(safe-area-inset-bottom, 0px)); }
+.ft .nlc { padding-block: 20px 24px; } /* 24 px tra ogni linea e quello che contiene (il pulsante sporge di 4) */
 .nl { display: flex; gap: 12px; border-bottom: 2px solid var(--carta); align-items: center; }
 .nl input { flex: 1; min-width: 0; background: none; border: 0; color: var(--carta); font: inherit; font-size: clamp(18px, 4.6vw, 34px); font-weight: 600; padding: 12px 0; }
 .nl input::placeholder { color: var(--grigio); }
@@ -230,7 +231,7 @@ main { transition: opacity .7s ease; }
 }
 
 /* pagina 404: 404 grande, una frase, sotto il logo rotto che riporta in Home (scripts/vuoto.ts) */
-.vuoto { position: relative; min-height: calc(100svh - 104px); padding: 54px var(--g) 0; text-align: center; } /* alta quanto lo schermo meno il menu: la linea del piede, dove cadono i petali, si vede subito; 54 px sopra = lo spazio a vista tra 404 e frase */
+.vuoto { position: relative; min-height: calc(100svh - var(--testa) - 24px); padding: 54px var(--g) 0; text-align: center; } /* alta quanto lo schermo meno lo spazio del menu: la linea del piede, dove cadono i petali, si vede subito; 54 px sopra = lo spazio a vista tra 404 e frase */
 .vuoto-404 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(120px, 44vw, 380px); line-height: .85; letter-spacing: -0.05em; }
 .vuoto-frase { margin: 18px 0 0; font-size: clamp(20px, 5.4vw, 34px); font-weight: 500; }
 .vuoto-petali { position: relative; z-index: 4; display: block; margin: 48px auto 0; width: min(52vw, 280px); padding: 0; color: var(--accento); visibility: hidden; }

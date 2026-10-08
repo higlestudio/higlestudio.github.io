@@ -1,10 +1,9 @@
-/* hero: il logo grande; toccando ovunque i petali cadono, rimbalzano sul menu ed escono dallo schermo */
+/* hero: il logo grande; toccando ovunque i petali cadono, rimbalzano sul bordo basso dello schermo ed escono */
 const hero = document.querySelector<HTMLElement>('.hero2');
 if (hero) {
   const box = hero.querySelector<HTMLElement>('.marchio2')!;
   const btn = hero.querySelector<HTMLButtonElement>('.mk-btn')!;
   const petali = [...btn.querySelectorAll<SVGPathElement>('path')];
-  const menu = document.querySelector<HTMLElement>('.pill-nav');
   const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SOPRA = 28, SOTTO = 28; // aria intorno al logo
 
@@ -47,13 +46,6 @@ if (hero) {
     addEventListener('pointerdown', () => { if (inCorso) { voli.forEach((a) => a.finish()); bloccato = performance.now() + 500; } }, { once: true });
   } else requestAnimationFrame(() => btn.classList.add('vis'));
 
-  // il menu sobbalza quando un petalo ci batte sopra
-  let sobbalzo: Animation | null = null;
-  const colpo = () => {
-    if (!menu || sobbalzo?.playState === 'running') return;
-    sobbalzo = menu.animate([{ translate: '0 0' }, { translate: '0 5px' }, { translate: '0 0' }], { duration: 260, easing: 'cubic-bezier(.3,.7,.4,1)' });
-  };
-
   // spinto = la pagina che sale col dito schiaccia il logo: i petali partono verso il basso e lo scorrimento resta di chi scorre
   const cadi = (spinto = false) => {
     if (caduto || performance.now() < bloccato) return; caduto = true; guida = !spinto; hero.classList.add("rotto");
@@ -66,8 +58,9 @@ if (hero) {
     const volo = document.createElement('div');
     volo.className = 'volo'; volo.setAttribute('aria-hidden', 'true');
     document.body.append(volo);
-    const m = menu ? menu.getBoundingClientRect() : null;
-    const pavimento = m ? m.top : innerHeight; // il bordo alto del menu
+    // il pavimento è il bordo basso dello schermo (dal 8/10 il menu sta in alto): i petali ci battono nella parte centrale
+    const m = { left: innerWidth * 0.15, right: innerWidth * 0.85, width: innerWidth * 0.7 };
+    const pavimento = innerHeight - 4;
     const G = 2200; // gravità, px/s²
     const corpi = petali.map((p, i) => {
       const r = p.getBoundingClientRect(), bb = p.getBBox();
@@ -78,11 +71,11 @@ if (hero) {
       volo.append(svg);
       const x = r.left + r.width / 2, y = r.top + r.height / 2;
       svg.style.transform = `translate(${r.left}px, ${r.top}px)`; // parte esattamente da dove sta nel logo, anche mentre aspetta il suo turno
-      // ognuno punta a un punto del menu, così tutti ci rimbalzano sopra
-      const meta = m ? m.left + m.width * (0.15 + 0.7 * ((i * 0.37 + 0.2) % 1)) : x;
+      // ognuno punta a un punto del pavimento, così tutti ci rimbalzano sopra
+      const meta = m.left + m.width * (0.15 + 0.7 * ((i * 0.37 + 0.2) % 1));
       const vy0 = spinto ? 160 + i * 40 : -260 - i * 30, dy = Math.max(40, pavimento - (y + r.height * 0.35));
       const t = (-vy0 + Math.sqrt(vy0 * vy0 + 2 * G * dy)) / G;
-      return { el: svg, x, y, w: r.width, h: r.height, vx: (meta - x) / t, vy: vy0, a: 0, va: (i % 2 ? -1 : 1) * (160 + i * 40), parte: i * 0.05, rimbalzato: !m, fuori: false };
+      return { el: svg, x, y, w: r.width, h: r.height, vx: (meta - x) / t, vy: vy0, a: 0, va: (i % 2 ? -1 : 1) * (160 + i * 40), parte: i * 0.05, rimbalzato: false, fuori: false };
     });
     mostra(false);
 
@@ -95,15 +88,14 @@ if (hero) {
       for (const c of corpi) {
         if (c.fuori || t < c.parte) continue;
         c.vy += G * dt; c.x += c.vx * dt; c.y += c.vy * dt; c.a += c.va * dt;
-        // il primo tocco sul menu: rimbalzo, poi via verso il lato da cui è arrivato
-        if (!c.rimbalzato && c.vy > 0 && c.y + c.h * 0.35 >= pavimento && m && c.x > m.left - 10 && c.x < m.right + 10) {
+        // il primo tocco sul pavimento: rimbalzo, poi via verso il lato da cui è arrivato
+        if (!c.rimbalzato && c.vy > 0 && c.y + c.h * 0.35 >= pavimento) {
           c.rimbalzato = true;
           c.y = pavimento - c.h * 0.35;
           c.vy = -Math.min(c.vy * 0.55, 900);
           const lato = c.x < m.left + m.width / 2 ? -1 : 1;
           c.vx = lato * (220 + Math.random() * 260);
           c.va *= -2.2;
-          colpo();
         }
         if (c.y - c.h > innerHeight || c.x + c.w < -40 || c.x - c.w > innerWidth + 40) { c.fuori = true; c.el.remove(); continue; }
         c.el.style.transform = `translate(${c.x - c.w / 2}px, ${c.y - c.h / 2}px) rotate(${c.a}deg)`;
