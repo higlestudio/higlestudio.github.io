@@ -189,9 +189,7 @@ main { transition: opacity .7s ease; }
 @media (hover: hover) { .ft-nav a:hover { color: var(--accento); } }
 .ft > .cella { padding-bottom: 28px; }
 .ft .piede { padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px)); } /* spazio per il menu, che resta sopra il piede */
-.nl-testa { margin: 0; display: flex; justify-content: center; align-items: center; gap: 6px; padding: 20px var(--g); font-family: var(--display); font-weight: 700; font-size: clamp(20px, 5.4vw, 34px); line-height: 1; grid-column: 1 / -1; } /* riga grande come Home, Work, About, Instagram; parola e freccia insieme al centro */
-.nl-testa .freccia { width: 26px; height: 26px; flex: none; translate: 0 -2px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.ft .nlc { padding-block: 14px 24px; }
+.ft .nlc { padding-block: 22px 24px; }
 .nl { display: flex; gap: 12px; border-bottom: 2px solid var(--carta); align-items: center; }
 .nl input { flex: 1; min-width: 0; background: none; border: 0; color: var(--carta); font: inherit; font-size: clamp(18px, 4.6vw, 34px); font-weight: 600; padding: 12px 0; }
 .nl input::placeholder { color: var(--grigio); }

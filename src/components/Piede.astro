@@ -16,11 +16,6 @@ const anno = new Date().getFullYear();
     <a href={p.contatti} aria-current={pagina === 'contatti' ? 'page' : undefined}><span>{t.contatti}</span></a>
     <a href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><span>Instagram</span></a>
   </div>
-  <!-- newsletter: una riga grande come i link sopra, con la freccia che indica il campo sotto -->
-  <p class="nl-testa">
-    <span>{t.newsletter}</span>
-    <svg class="freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
-  </p>
   <div class="cella nlc">
     <form class="nl" id="nl" novalidate data-lingua={lang.toUpperCase()}
       data-ok={t.nlOk} data-non-valida={t.nlNonValida} data-errore={t.nlErrore} data-spenta={t.nlSpenta}>

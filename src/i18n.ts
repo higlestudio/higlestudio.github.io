@@ -9,7 +9,7 @@ export const testi = {
   it: {
     home: 'Home', archivio: 'Work', contatti: 'About', menu: 'Menu',
     altraLinguaNome: 'English',
-    newsletter: 'Newsletter', tuaEmail: 'La tua email', iscriviti: 'Iscriviti',
+    tuaEmail: 'Mail per la newsletter', iscriviti: 'Iscriviti',
     nlOk: 'Ci sei.', nlNonValida: 'Scrivi un indirizzo email valido.', nlErrore: 'Non è partita. Riprova tra un momento.',
     nlSpenta: '⚠️ La newsletter non è ancora collegata.',
     noteLegali: 'Note legali', privacy: 'Privacy', impressum: 'Impressum',
@@ -21,7 +21,7 @@ export const testi = {
   en: {
     home: 'Home', archivio: 'Work', contatti: 'About', menu: 'Menu',
     altraLinguaNome: 'Italiano',
-    newsletter: 'Newsletter', tuaEmail: 'Your email', iscriviti: 'Subscribe',
+    tuaEmail: 'Email for the newsletter', iscriviti: 'Subscribe',
     nlOk: "You're in.", nlNonValida: 'Please enter a valid email address.', nlErrore: "It didn't go through. Try again in a moment.",
     nlSpenta: '⚠️ The newsletter is not connected yet.',
     noteLegali: 'Legal', privacy: 'Privacy', impressum: 'Impressum',
