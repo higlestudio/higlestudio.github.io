@@ -27,9 +27,9 @@ Sito di Higle: Astro + Sveltia CMS + GitHub Pages. EN alla root, IT sotto `/it/`
 
 ## Online
 
-- Sito: **https://higlestudio.com** (archivio GitHub ). Ogni salvataggio dal pannello o ogni  lo ripubblica da solo in 1-2 minuti.
-- Ancora nascosto a Google: al lancio metti  in .
-- **Prima di lavorare in locale**: , perché il pannello online salva direttamente su GitHub e la cartella sul computer resta indietro.
+- Sito: **https://higlestudio.com** (archivio GitHub `higlestudio/higlestudio.github.io`). Ogni salvataggio dal pannello o ogni `git push` lo ripubblica da solo in 1-2 minuti.
+- Ancora nascosto a Google: al lancio metti `LANCIATO = true` in `src/lancio.ts`.
+- **Prima di lavorare in locale**: `git pull`, perché il pannello online salva direttamente su GitHub e la cartella sul computer resta indietro.
 
 ## Il pannello
 
