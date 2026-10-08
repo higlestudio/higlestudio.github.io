@@ -1,6 +1,4 @@
 /* Higle — stanza scura nel nero del brand. Nohemi per i titoli, Poppins per il testo, accento crema. */
-@font-face { font-family: 'Nohemi'; font-weight: 400; src: url('/fonts/Nohemi-Regular.woff2') format('woff2'); font-display: swap; }
-@font-face { font-family: 'Nohemi'; font-weight: 500; src: url('/fonts/Nohemi-Medium.woff2') format('woff2'); font-display: swap; }
 @font-face { font-family: 'Nohemi'; font-weight: 700; src: url('/fonts/Nohemi-Bold.woff2') format('woff2'); font-display: swap; }
 
 :root {
@@ -44,7 +42,7 @@ main { position: relative; z-index: 2; }
 }
 
 /* menu a pillola, in basso al centro, sempre visibile (deciso 8/10: sulle pagine corte spariva subito) */
-.pill-nav { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 4px; align-items: stretch; font-size: 16px; font-weight: 600; transition: transform .35s cubic-bezier(.2,.7,.2,1), opacity .35s; }
+.pill-nav { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 4px; align-items: stretch; font-size: 16px; font-weight: 600; }
 .pn-group { background: var(--carta); border-radius: 999px; display: flex; align-items: center; padding: 0 8px; box-shadow: 0 6px 20px rgba(0,0,0,.28); } /* colori invertiti: pillola crema, testo nero di brand */
 .pn-group a { padding: 14px 14px; color: color-mix(in srgb, var(--nero) 50%, var(--carta)); }
 .pn-group a[aria-current="page"] { color: var(--nero); }
