@@ -29,10 +29,7 @@ const titolo = titoloCiclo(ciclo, lang);
     </h1>
   </header>
   <section class="ciclo2" aria-labelledby="ciclo-t">
-    <div class="pannelli"><div class="cella">
-      <h2 id="ciclo-t" class="ciclo-t">{titolo}</h2>
-      <Statement testo={lang === 'it' ? ciclo.data.statement_it : ciclo.data.statement_en} />
-    </div></div>
+    <!-- prima le opere, poi titolo e statement del progetto (8/10) -->
     <ol class="opere" id="opere">
       {lista.map((o, i) => (
         <li class="opera">
@@ -45,6 +42,10 @@ const titolo = titoloCiclo(ciclo, lang);
         </li>
       ))}
     </ol>
+    <div class="pannelli"><div class="cella">
+      <h2 id="ciclo-t" class="ciclo-t">{titolo}</h2>
+      <Statement testo={lang === 'it' ? ciclo.data.statement_it : ciclo.data.statement_en} />
+    </div></div>
   </section>
 </Base>
 <script>import '../../scripts/hero.ts'; import '../../scripts/rivela.ts';</script>

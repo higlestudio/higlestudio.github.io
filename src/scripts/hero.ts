@@ -49,8 +49,9 @@ if (hero) {
   // spinto = la pagina che sale col dito schiaccia il logo: i petali partono verso il basso e lo scorrimento resta di chi scorre
   const cadi = (spinto = false) => {
     if (caduto || performance.now() < bloccato) return; caduto = true; guida = !spinto; hero.classList.add("rotto");
-    const titolo = document.querySelector('.ciclo2')!;
-    const da = scrollY, corsa = titolo.getBoundingClientRect().top + scrollY - da;
+    const titolo = document.querySelector('.ciclo2')!; // dove comincia il progetto: le opere
+    const testa = parseFloat(getComputedStyle(document.body).paddingTop) || 0; // si ferma sotto il menu, che sta in alto
+    const da = scrollY, corsa = titolo.getBoundingClientRect().top + scrollY - testa - da;
 
     if (calmo) { mostra(false, true); scrollTo(0, da + corsa); finito = true; return; }
 

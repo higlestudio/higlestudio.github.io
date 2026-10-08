@@ -78,7 +78,7 @@ main { transition: opacity .7s ease; }
 /* il ciclo in primo piano: titolo trasparente sopra i petali, le foto coprono */
 .ciclo2, .ciclo2 .pannelli, .ciclo2 .pannelli > * { background: transparent; }
 .ciclo2 .pannelli { border-bottom: 0; }
-.ciclo2 .cella { padding-block: 20px 40px; }
+.ciclo2 .cella { padding-block: 28px 40px; }
 .ciclo-t { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(38px, 11.2vw, 150px); line-height: .95; letter-spacing: -0.03em; text-wrap: balance; }
 
 .statement { margin-top: 22px; display: grid; gap: 22px; }
