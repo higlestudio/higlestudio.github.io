@@ -230,3 +230,12 @@ main { transition: opacity .7s ease; }
   .r-parola > span { display: inline-block; translate: 0 105%; transition: translate .9s cubic-bezier(.25,1,.5,1) var(--ritardo, 0s); }
   .visto .r-parola > span { translate: 0 0; }
 }
+
+/* pagina 404: frase grande in alto, i petali del logo a terra in fondo allo schermo (scripts/vuoto.ts) */
+.vuoto { position: relative; min-height: 100svh; padding: 34px var(--g) 0; }
+.vuoto-testo h1, .vuoto-testo .h1 { margin: 0 0 24px; font-family: var(--display); font-weight: 700; font-size: clamp(38px, 11.2vw, 150px); line-height: .95; letter-spacing: -0.03em; }
+.vuoto-home { display: inline-block; font-weight: 600; font-size: 17px; border-bottom: 2px solid currentColor; padding-bottom: .08em; }
+.vuoto-petali { position: absolute; left: 50%; top: 56%; translate: -50% -50%; width: min(46vw, 250px); padding: 0; color: var(--accento); visibility: hidden; }
+.vuoto-petali.pronti { visibility: visible; }
+.vuoto-petali svg { display: block; width: 100%; height: auto; overflow: visible; }
+.vuoto-petali svg path { transform-box: fill-box; transform-origin: 50% 50%; }

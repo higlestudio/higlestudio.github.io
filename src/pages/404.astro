@@ -1,10 +1,21 @@
 ---
 import Base from '../layouts/Base.astro';
+import Logomark from '../components/Logomark.astro';
 ---
 <Base lang="en" titolo="404 | Higle Studio" altra="/it/" automatica={false}>
-  <section class="wrap legale">
-    <h1 class="titolo-legale">404</h1>
-    <div class="nota-legale"><p>This page doesn't exist. <a href="/" style="border-bottom:2px solid var(--accento)">Home</a></p>
-    <p lang="it">Questa pagina non esiste. <a href="/it/" style="border-bottom:2px solid var(--accento)">Home</a></p></div>
+  <!-- pagina che non esiste: il logo è caduto, i petali sono a terra. Toccandoli si ricompone e si torna in Home.
+       Un solo file per tutte le lingue: lo script mostra l'italiano se l'indirizzo era sotto /it/ o il telefono è in italiano. -->
+  <section class="vuoto">
+    <div class="vuoto-testo" data-lingua="en">
+      <h1>Nothing here.<br />Not even an idea.</h1>
+      <a href="/" class="vuoto-home">Back to Home</a>
+    </div>
+    <div class="vuoto-testo" data-lingua="it" lang="it" hidden>
+      <p class="h1">Qui non c'è niente.<br />Nemmeno un'idea.</p>
+      <a href="/it/" class="vuoto-home">Torna alla Home</a>
+    </div>
+    <button type="button" class="vuoto-petali" aria-label="Home"><Logomark /></button>
+    <noscript><style>.vuoto-petali { visibility: visible; }</style></noscript>
   </section>
 </Base>
+<script>import '../scripts/vuoto.ts';</script>
