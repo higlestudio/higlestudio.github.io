@@ -35,4 +35,4 @@ Sito di Higle: Astro + Sveltia CMS + GitHub Pages. EN alla root, IT sotto `/it/`
 
 Con `npm run dev` acceso, apri `http://localhost:4321/admin/` in Chrome o Edge e scegli di lavorare sulla cartella locale: modifichi opere e testi senza toccare il codice. Online è su `higlestudio.com/admin/`: «Accedi con Token di Accesso» e incolla la chiave GitHub «Pannello Higle».
 
-I segnaposto ⚠️ vanno tolti prima del lancio. La newsletter è spenta finché non c'è la privacy: interruttore `NEWSLETTER_ATTIVA` in `src/scripts/sito.ts`.
+I testi provvisori (elenco in `10-sito/CHECKLIST-LANCIO.md`, sezione 1) vanno sostituiti prima del lancio: dal 9/10 non hanno più il segnale ⚠️. La newsletter è spenta finché non c'è la privacy: interruttore `NEWSLETTER_ATTIVA` in `src/scripts/sito.ts`.
