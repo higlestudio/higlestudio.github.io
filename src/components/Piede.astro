@@ -34,8 +34,8 @@ const anno = new Date().getFullYear();
     <p class="nl-nota">{t.nlNota} <a href={p.privacy}>{t.nlNotaLink}</a>{t.nlNotaFine}</p>
     <p class="nl-ok" id="nl-ok" role="status"></p>
   </div>
-  <a class="ft-ig" href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><span>Instagram</span></a>
-  <a class="ft-ig ft-mail" href={`mailto:${s.email}`}><span>{s.email}</span></a>
+  <a class="ft-ig" href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><svg class="ft-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6" fill="currentColor"/></svg><span>Instagram</span></a>
+  <a class="ft-ig ft-mail" href={`mailto:${s.email}`}><svg class="ft-ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6.5L20.5 7"/></svg><span>{s.email}</span></a>
   <div class="cella piede">
     <nav class="legali" aria-label={t.noteLegali}>
       <a href={p.privacy}>{t.privacy}</a>

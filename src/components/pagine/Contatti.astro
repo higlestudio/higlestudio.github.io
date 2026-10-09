@@ -10,24 +10,13 @@ const s = await sito();
 ---
 <Base lang={lang} titolo={`${t.contatti} | Higle Studio`} pagina="contatti" altra={percorsi[altra].contatti}>
   <h1 class="sr">{t.contatti}</h1>
-  <section class="pannelli contatti2" aria-label={t.contatti}>
-    <a class="cella canale" href={`mailto:${s.email}`}>
-      <p class="etichetta"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6.5L20.5 7"/></svg>{t.email}</span></p>
-      <span class="valore">{s.email}</span>
-    </a>
-    <a class="cella canale" href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener">
-      <p class="etichetta"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r=".6" fill="currentColor"/></svg>Instagram</span></p>
-      <span class="valore">@{s.instagram}</span>
-    </a>
-  </section>
+  <!-- 9/10: prima la bio, sotto il ritratto. Mail e Instagram stanno nel piede, con le icone -->
   <section class="pannelli me" aria-labelledby="me-t">
-    <img class="ph" src={s.ritratto} alt={t.ritratto} loading="lazy" />
     <div class="cella testo">
-      <div>
-        <h2 class="etichetta" id="me-t"><span>Higle</span></h2>
-        <div class="bio" set:html={md(lang === 'it' ? s.bio_it : s.bio_en)} />
-      </div>
+      <h2 class="etichetta" id="me-t"><span>Higle</span></h2>
+      <div class="bio" set:html={md(lang === 'it' ? s.bio_it : s.bio_en)} />
     </div>
+    <img class="ph" src={s.ritratto} alt={t.ritratto} loading="lazy" />
   </section>
 </Base>
 <script>import '../../scripts/rivela.ts';</script>
