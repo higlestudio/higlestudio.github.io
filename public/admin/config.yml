@@ -44,6 +44,18 @@ collections:
       - { name: in_primo_piano, label: "In primo piano (apre la Home e parte aperto in Work)", widget: boolean, default: false }
       - { name: statement_it, label: "Statement IT (il primo paragrafo esce grande)", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
       - { name: statement_en, label: "Statement EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+      - { name: video, label: "Video in cima alla Home (mp4, facoltativo; parte da solo, senza audio, a ciclo)", widget: file, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
+      - { name: copertina, label: "Copertina del video (foto verticale; si vede finché il video parte, o al suo posto se il video manca)", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
+      - name: evento
+        label: "Evento in Home (mostra, presentazione…)"
+        widget: object
+        collapsed: true
+        fields:
+          - { name: attivo, label: "Mostra l'evento in Home", widget: boolean, default: false }
+          - { name: titolo_it, label: "Evento IT (es. Mostra · 12–20 novembre · Berlino)", widget: string, required: false }
+          - { name: titolo_en, label: "Evento EN", widget: string, required: false }
+          - { name: locandina, label: "Locandina", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
+          - { name: link, label: "Link (facoltativo: dove porta toccando la locandina)", widget: string, required: false }
 
   - name: opere
     label: Opere

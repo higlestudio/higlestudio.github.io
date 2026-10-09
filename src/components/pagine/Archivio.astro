@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Griglia from '../Griglia.astro';
+import Statement from '../Statement.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
 import { cicli, opere, titoloCiclo } from '../../dati';
 interface Props { lang: Lang }
@@ -20,7 +21,13 @@ const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.i
         <h2>{titoloCiclo(c, lang)}</h2>
         <svg class="freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
       </div></summary>
-      <div class="apre"><Griglia lang={lang} opere={o} /></div>
+      <!-- 9/10: sotto le opere il testo lungo del progetto; si chiude insieme al progetto -->
+      <div class="apre">
+        <Griglia lang={lang} opere={o} />
+        {(lang === 'it' ? c.data.statement_it : c.data.statement_en).trim() && <div class="pannelli st-work"><div class="cella">
+          <Statement testo={lang === 'it' ? c.data.statement_it : c.data.statement_en} />
+        </div></div>}
+      </div>
     </details>
   ))}
 </Base>

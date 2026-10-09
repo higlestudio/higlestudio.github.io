@@ -8,17 +8,14 @@ const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector
 const puntatore = $('.cur');
 if (puntatore && matchMedia('(pointer: fine)').matches) {
   const etichetta = puntatore.querySelector('span')!;
-  const { apri = 'Apri', cliccami = 'Cliccami' } = document.body.dataset;
+  etichetta.textContent = document.body.dataset.apri || 'Apri';
   let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
   addEventListener('mousemove', (e) => {
     x = e.clientX; y = e.clientY;
     const el = e.target as Element;
-    const inHero = !!el.closest('.hero2');
     const suOpera = !!el.closest('[data-opera]');
-    etichetta.textContent = inHero ? cliccami : apri;
-    puntatore.classList.toggle('apri', inHero || suOpera);
-    puntatore.classList.toggle('su-logo', inHero);
-    puntatore.classList.toggle('link', !inHero && !suOpera && !!el.closest('a, button'));
+    puntatore.classList.toggle('apri', suOpera);
+    puntatore.classList.toggle('link', !suOpera && !!el.closest('a, button'));
     puntatore.classList.toggle('testo', !!el.closest('input'));
   }, { passive: true });
   (function segui() { cx += (x - cx) * 0.22; cy += (y - cy) * 0.22; puntatore.style.transform = `translate(${cx}px, ${cy}px)`; requestAnimationFrame(segui); })();

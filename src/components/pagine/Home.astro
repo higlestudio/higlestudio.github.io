@@ -1,21 +1,25 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Logomark from '../Logomark.astro';
-import Statement from '../Statement.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
 import { cicloInPrimoPiano, opere, titoloCiclo } from '../../dati';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = testi[lang];
+const p = percorsi[lang];
 const altra: Lang = lang === 'it' ? 'en' : 'it';
 const ciclo = await cicloInPrimoPiano();
 const lista = await opere(ciclo.id);
 const titolo = titoloCiclo(ciclo, lang);
+const { video, copertina, evento } = ciclo.data;
+const titoloEvento = lang === 'it' ? evento.titolo_it : evento.titolo_en;
+// la locandina porta al link dell'evento, se c'è
+const Locandina = evento.link ? 'a' : 'div';
 ---
 <Base lang={lang} titolo={`Higle Studio | ${titolo}`} descrizione={titolo} pagina="home" altra={percorsi[altra].home}>
-  <header class="hero2" aria-label="Higle Studio" slot="prima">
-    <!-- ingresso: a ogni ricarica della Home e a ogni arrivo da fuori; non tornando da un'altra pagina del sito né col tasto indietro.
-         La pagina resta nascosta finché il logo non si compone (mai oltre 4,5 secondi). -->
+  <!-- ingresso: a ogni ricarica della Home e a ogni arrivo da fuori; non tornando da un'altra pagina del sito né col tasto indietro.
+       Su nero i petali compongono il logo al centro, poi il nero si dissolve e sotto c'è la pagina (hero.ts). Mai oltre 4,5 secondi. -->
+  <div class="ingresso" aria-hidden="true" slot="prima">
     <script is:inline>
       try {
         var tipo = (performance.getEntriesByType('navigation')[0] || {}).type, interno = false;
@@ -28,29 +32,47 @@ const titolo = titoloCiclo(ciclo, lang);
         }
       } catch (e) {}
     </script>
-    <h1 class="marchio2">
-      <button type="button" class="mk-btn" aria-label={t.logoCade}><Logomark /></button>
-      <span class="sr">Higle Studio</span>
-    </h1>
-  </header>
-  <section class="ciclo2" aria-labelledby="ciclo-t">
-    <!-- prima le opere, poi titolo e statement del progetto (8/10) -->
-    <ol class="opere" id="opere">
-      {lista.map((o, i) => (
-        <li class="opera">
-          <a href={percorsi[lang].opera(o.id)} data-opera>
-            <div class="foto" style={`--f:${o.data.fondo}`}>
-              <img src={o.data.foto} alt={o.data.titolo} loading={i < 2 ? 'eager' : 'lazy'} />
-            </div>
-            <div class="scheda"><span class="t">{o.data.titolo}</span></div>
-          </a>
-        </li>
-      ))}
-    </ol>
-    <div class="pannelli"><div class="cella">
-      <h2 id="ciclo-t" class="ciclo-t">{titolo}</h2>
-      <Statement testo={lang === 'it' ? ciclo.data.statement_it : ciclo.data.statement_en} />
-    </div></div>
+    <Logomark />
+  </div>
+  <h1 class="sr">Higle Studio</h1>
+
+  <!-- 9/10: in cima il video del progetto (finché non c'è, la copertina con il segno del play) -->
+  <section class="video" aria-label={t.video}>
+    {video
+      ? <video src={video} poster={copertina} autoplay muted loop playsinline preload="metadata"></video>
+      : copertina && <img src={copertina} alt="" />}
+    {!video && <svg class="play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>}
   </section>
+
+  <!-- il progetto, poi l'evento con la locandina (si accende e si spegne dal pannello) -->
+  <section class="pannelli prog-home" aria-labelledby="prog-t">
+    <div class="cella riga-prog">
+      <span class="anno num">{ciclo.data.anno}</span>
+      <h2 id="prog-t">{titolo}</h2>
+    </div>
+    {evento.attivo && <>
+      <p class="cella evento-t">{titoloEvento}</p>
+      {evento.locandina && <Locandina class="cella locandina" href={evento.link}>
+        <img src={evento.locandina} alt={titoloEvento} loading="lazy" />
+      </Locandina>}
+    </>}
+  </section>
+
+  <ol class="opere" id="opere">
+    {lista.map((o) => (
+      <li class="opera">
+        <a href={p.opera(o.id)} data-opera>
+          <div class="foto" style={`--f:${o.data.fondo}`}>
+            <img src={o.data.foto} alt={o.data.titolo} loading="lazy" />
+          </div>
+          <div class="scheda"><span class="t">{o.data.titolo}</span></div>
+        </a>
+      </li>
+    ))}
+  </ol>
+
+  <div class="pannelli scopri-box">
+    <a class="cella scopri" href={p.archivio}>{t.scopri} <span aria-hidden="true">→</span></a>
+  </div>
 </Base>
 <script>import '../../scripts/hero.ts'; import '../../scripts/rivela.ts';</script>

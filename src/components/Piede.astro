@@ -1,4 +1,5 @@
 ---
+import Logomark from './Logomark.astro';
 import { percorsi, testi, type Lang } from '../i18n';
 import { sito } from '../dati';
 interface Props { lang: Lang; pagina?: string | null; altra: string }
@@ -9,13 +10,17 @@ const p = percorsi[lang];
 const s = await sito();
 const anno = new Date().getFullYear();
 ---
+<!-- 9/10, dal disegno di Simone: in alto il logo in un quadrato e accanto Home, Work, About; poi Instagram, newsletter, note legali -->
 <footer class="pannelli ft">
-  <div class="ft-nav">
-    <a href={p.home} aria-current={pagina === 'home' ? 'page' : undefined}><span>{t.home}</span></a>
-    <a href={p.archivio} aria-current={pagina === 'archivio' ? 'page' : undefined}><span>{t.archivio}</span></a>
-    <a href={p.contatti} aria-current={pagina === 'contatti' ? 'page' : undefined}><span>{t.contatti}</span></a>
-    <a href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><span>Instagram</span></a>
+  <div class="ft-testa">
+    <a href={p.home} class="ft-logo" aria-label="Higle Studio, Home"><Logomark /></a>
+    <nav class="ft-nav" aria-label={t.menu}>
+      <a href={p.home} aria-current={pagina === 'home' ? 'page' : undefined}><span>{t.home}</span></a>
+      <a href={p.archivio} aria-current={pagina === 'archivio' ? 'page' : undefined}><span>{t.archivio}</span></a>
+      <a href={p.contatti} aria-current={pagina === 'contatti' ? 'page' : undefined}><span>{t.contatti}</span></a>
+    </nav>
   </div>
+  <a class="ft-ig" href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><span>Instagram</span></a>
   <div class="cella nlc">
     <form class="nl" id="nl" novalidate data-lingua={lang.toUpperCase()}
       data-ok={t.nlOk} data-non-valida={t.nlNonValida} data-errore={t.nlErrore} data-spenta={t.nlSpenta}>

@@ -38,7 +38,6 @@ main { position: relative; z-index: 2; }
   .cur.link { width: 36px; height: 36px; margin: -18px 0 0 -18px; background: color-mix(in srgb, var(--accento) 50%, transparent); }
   .cur.apri { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
   .cur.apri span { opacity: 1; }
-  .cur.apri.su-logo { background: var(--carta); color: var(--nero); }
   .cur.testo { width: 3px; height: 26px; margin: -13px 0 0 -1px; border-radius: 2px; }
 }
 
@@ -50,25 +49,32 @@ main { position: relative; z-index: 2; }
 @media (hover: hover) { .pn-group a:hover { color: var(--nero); } }
 @media (min-width: 900px) { .pill-nav { font-size: 16px; } .pn-group a { padding: 14px 16px; } }
 
-/* hero: il logomark grande, la fascia alta quanto lui; toccando ovunque i petali cadono dietro il titolo */
-.hero2 { position: relative; z-index: 1; height: calc(min(86vw, 760px) * 80 / 103 + 56px); overflow: visible; }
-.marchio2 { margin: 0; position: absolute; line-height: 0; }
-.mk-btn { display: block; width: 100%; height: 100%; padding: 0; color: var(--accento); opacity: 0; transform: scale(.96); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
-.mk-btn.vis { opacity: 1; transform: none; }
-.mk-btn svg { width: 100%; height: 100%; overflow: visible; display: block; }
-.mk-btn svg path { transform-box: fill-box; transform-origin: 50% 50%; }
-@media (pointer: fine) { .hero2, .hero2 * { cursor: none; } }
-/* ingresso: i petali arrivano da fuori e compongono il logo; il resto compare dopo */
-html.intro .mk-btn svg { visibility: hidden; }
-html.intro main, html.intro .pill-nav, html.intro-resto main, html.intro-resto .pill-nav { opacity: 0 !important; }
-.pill-nav { transition: opacity .7s ease; } /* compaiono con il nero che si dissolve */
-main { transition: opacity .7s ease; }
+/* ingresso della Home (scripts/hero.ts): un velo nero sopra tutto, i petali compongono il logo al centro, poi il velo si dissolve */
+.ingresso { display: none; position: fixed; inset: 0; z-index: 20; place-items: center; background: var(--nero); color: var(--accento); transition: opacity .7s ease; }
+html.intro .ingresso, html.intro-resto .ingresso, .ingresso.esce { display: grid; }
+.ingresso.esce { opacity: 0; pointer-events: none; }
+.ingresso svg { width: min(64vw, 420px); height: auto; overflow: visible; display: block; }
+.ingresso svg path { transform-box: fill-box; transform-origin: 50% 50%; }
+html.intro .ingresso svg { visibility: hidden; } /* finché lo script non fa partire i petali */
 
+/* Home, in cima: il video del progetto, alto quanto lo schermo sotto il menu. Finché manca, la copertina con il segno del play */
+.video { position: relative; height: calc(100svh - var(--testa)); background: var(--fondo-foto); overflow: hidden; }
+.video video, .video img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.video .play { position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; translate: -50% -50%; fill: none; stroke: var(--carta); stroke-width: 1.2; stroke-linejoin: round; filter: drop-shadow(0 2px 12px rgba(0,0,0,.35)); }
 
-/* i petali in volo: sopra la pagina, sotto il menu su cui rimbalzano */
-.volo { position: fixed; inset: 0; z-index: 9; pointer-events: none; overflow: hidden; color: var(--accento); }
-.volo svg { position: absolute; left: 0; top: 0; overflow: visible; will-change: transform; }
-.volo path { fill: currentColor; }
+/* Home: il progetto (anno e titolo), l'evento e la locandina */
+.prog-home { border-top: 0; }
+.riga-prog { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 14px; padding-block: 20px; }
+.riga-prog .anno { color: var(--grigio); font-size: 13px; font-weight: 500; width: 2.6em; }
+.riga-prog h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 6vw, 40px); line-height: .98; letter-spacing: -0.02em; text-wrap: balance; }
+.evento-t { margin: 0; text-align: center; font-weight: 600; font-size: 16px; }
+.locandina { display: block; padding-block: 24px; }
+.locandina img { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; }
+
+/* Home, in fondo: verso Work */
+.scopri-box { margin-top: -1px; }
+.scopri { display: block; text-align: center; padding-block: 26px; font-family: var(--display); font-weight: 700; font-size: clamp(20px, 5.4vw, 34px); line-height: 1; }
+@media (hover: hover) { .scopri:hover { color: var(--neutro); } }
 
 /* pannelli a tutta larghezza, separati da un filo */
 .pannelli { display: grid; gap: 1px; background: var(--linea); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
@@ -76,10 +82,6 @@ main { transition: opacity .7s ease; }
 .cella { padding: 18px var(--g); }
 .etichetta { margin: 0 0 10px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); display: flex; justify-content: space-between; gap: 12px; }
 
-/* il ciclo in primo piano: titolo trasparente sopra i petali, le foto coprono */
-.ciclo2, .ciclo2 .pannelli, .ciclo2 .pannelli > * { background: transparent; }
-.ciclo2 .pannelli { border-bottom: 0; }
-.ciclo2 .cella { padding-block: 28px 40px; }
 .ciclo-t { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(38px, 11.2vw, 150px); line-height: .95; letter-spacing: -0.03em; text-wrap: balance; }
 
 .statement { margin-top: 22px; display: grid; gap: 22px; }
@@ -131,6 +133,9 @@ main { transition: opacity .7s ease; }
 .gruppo .anno { color: var(--grigio); font-size: 13px; font-weight: 500; width: 2.6em; }
 .gruppo .freccia { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transform-origin: 50% 50%; transition: transform .36s cubic-bezier(.2,.8,.2,1); } /* gira su se stessa, senza spostarsi */
 .gruppo.aperto .freccia { transform: rotate(180deg); transition-duration: .48s; } /* stessi tempi della griglia: .48s ad aprire, .36s a chiudere */
+.st-work { border-top: 0; }
+.st-work .cella { padding-block: 28px 40px; }
+.st-work .statement { margin-top: 0; }
 .gruppo h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 6vw, 40px); line-height: .98; letter-spacing: -0.02em; text-wrap: balance; }
 
 /* contatti: mail e instagram alla pari, in alto; poi ritratto e bio */
@@ -183,12 +188,16 @@ main { transition: opacity .7s ease; }
 
 /* piede: link grandi, newsletter, firma */
 .ft { grid-template-columns: 1fr; position: relative; z-index: 3; margin-top: -1px; border-bottom: 0; } /* la sua linea si posa su quella sopra (mai doppia); niente linea di chiusura */
-.ft-nav { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
-.ft-nav a { background: var(--nero); padding: 20px var(--g); font-family: var(--display); font-weight: 700; font-size: clamp(20px, 5.4vw, 34px); line-height: 1; }
-.ft-nav a span { border-bottom: 2px solid transparent; padding-bottom: .08em; } /* la sottolineatura è un bordo vero, uguale su ogni browser */
-.ft-nav a[aria-current="page"] { color: var(--accento); }
+/* in alto: a sinistra il logo in un quadrato (→ Home), a destra Home, Work, About uno sotto l'altro, alti un terzo del quadrato */
+.ft-testa { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
+.ft-logo { background: var(--nero); aspect-ratio: 1; display: grid; place-items: center; color: var(--accento); }
+.ft-logo svg { width: 62%; height: auto; display: block; }
+.ft-nav { display: grid; grid-template-rows: repeat(3, 1fr); gap: 1px; background: var(--linea); }
+.ft-nav a, .ft-ig { background: var(--nero); display: grid; place-items: center; text-align: center; padding: 14px var(--g); font-family: var(--display); font-weight: 700; font-size: clamp(20px, 5.4vw, 34px); line-height: 1; }
+.ft-ig { padding-block: 22px; }
+.ft-nav a span, .ft-ig span { border-bottom: 2px solid transparent; padding-bottom: .08em; } /* la sottolineatura è un bordo vero, uguale su ogni browser */
 .ft-nav a[aria-current="page"] span { border-bottom-color: currentColor; }
-@media (hover: hover) { .ft-nav a:hover { color: var(--accento); } }
+@media (hover: hover) { .ft-nav a:hover, .ft-ig:hover, .ft-logo:hover { color: var(--neutro); } }
 .ft > .cella { padding-bottom: 28px; }
 .ft .piede { padding-block: 24px calc(24px + env(safe-area-inset-bottom, 0px)); }
 .ft .nlc { padding-block: 20px 24px; } /* 24 px tra ogni linea e quello che contiene (il pulsante sporge di 4) */
@@ -206,7 +215,7 @@ main { transition: opacity .7s ease; }
 .legali { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; }
 .legali a { color: var(--grigio); }
 @media (hover: hover) { .legali a:hover { color: var(--carta); } }
-@media (min-width: 900px) { .ft { grid-template-columns: 2fr 1fr; } .ft-nav { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 900px) { .ft-logo { aspect-ratio: auto; min-height: 320px; } .ft-logo svg { width: 170px; } } /* sul computer il quadrato sarebbe enorme: resta una fascia */
 
 /* pagine legali */
 .legale { padding-block: 40px 60px; max-width: 70ch; }
