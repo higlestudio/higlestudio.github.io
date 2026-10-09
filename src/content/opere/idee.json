@@ -13,12 +13,12 @@
     "/img/opere/boddi.jpg"
   ],
   "fondo": "#90979F",
-  "materiali_it": "⚠️ da confermare",
-  "materiali_en": "⚠️ to be confirmed",
-  "misure": "⚠️ da misurare",
+  "materiali_it": "da confermare",
+  "materiali_en": "to be confirmed",
+  "misure": "da misurare",
   "edizione_it": "Pezzo unico",
   "edizione_en": "Unique piece",
-  "testo_it": "⚠️ Qui va il testo dell'opera, dalle tue parole.",
-  "testo_en": "⚠️ The text of the work goes here, in your words.",
+  "testo_it": "Qui va il testo dell'opera, dalle tue parole.",
+  "testo_en": "The text of the work goes here, in your words.",
   "bozza": false
 }
