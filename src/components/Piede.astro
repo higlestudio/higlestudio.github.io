@@ -25,12 +25,14 @@ const anno = new Date().getFullYear();
   <a class="ft-ig" href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><span>Instagram</span></a>
   <div class="cella nlc">
     <form class="nl" id="nl" novalidate data-lingua={lang.toUpperCase()}
-      data-ok={t.nlOk} data-non-valida={t.nlNonValida} data-errore={t.nlErrore} data-spenta={t.nlSpenta}>
+      data-ok={t.nlOk} data-non-valida={t.nlNonValida} data-errore={t.nlErrore} data-spenta={t.nlSpenta}
+      data-nota={`${t.nlNota} ${t.nlNotaLink}${t.nlNotaFine}`}>
       <label for="nl-email" class="sr">{t.tuaEmail}</label>
       <input id="nl-email" name="EMAIL" type="email" placeholder={t.tuaEmail} autocomplete="email" />
       <input class="trappola" name="email_address_check" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <button type="submit">{t.iscriviti}</button>
     </form>
+    <p class="nl-nota">{t.nlNota} <a href={p.privacy}>{t.nlNotaLink}</a>{t.nlNotaFine}</p>
     <p class="nl-ok" id="nl-ok" role="status"></p>
   </div>
   <a class="ft-ig ft-mail" href={`mailto:${s.email}`}><span>{s.email}</span></a>

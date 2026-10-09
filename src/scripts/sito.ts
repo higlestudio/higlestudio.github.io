@@ -94,7 +94,8 @@ if (nl && esito) nl.addEventListener('submit', async (e) => {
   body.set('EMAIL', email);
   body.set('LINGUA', d.lingua!);
   body.set('locale', d.lingua!.toLowerCase());
-  body.set('CONSENSO_TESTO', `${new Date().toISOString()} | piede del sito ${location.pathname}`.slice(0, 190));
+  // il consenso: ora esatta, la frase che la persona aveva sotto gli occhi, la pagina (Brevo regge circa 200 caratteri)
+  body.set('CONSENSO_TESTO', `${new Date().toISOString()} | ${d.nota} | ${location.pathname}`.slice(0, 190));
   body.set('email_address_check', nl.querySelector<HTMLInputElement>('.trappola')!.value);
   let ok = false;
   try {

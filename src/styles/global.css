@@ -213,6 +213,8 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .nl button { background: var(--accento); color: var(--nero); font-weight: 700; padding: 10px 16px; border-radius: 999px; flex: none; }
 .nl button[disabled] { opacity: .5; }
 .nl .trappola { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.nl-nota { margin: 12px 0 0; font-size: 13px; color: var(--grigio); } /* il consenso, con il link alla privacy */
+.nl-nota a { color: var(--carta); text-decoration: underline; text-underline-offset: 2px; }
 .nl-ok { color: var(--carta); margin: 10px 0 0; }
 .nl-ok:empty { display: none; } /* lo spazio del messaggio compare solo quando c'è un messaggio */
 .ft .piede { display: flex; justify-content: space-between; align-items: center; gap: 18px; color: var(--grigio); font-size: 13px; }
