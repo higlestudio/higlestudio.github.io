@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Logomark from '../Logomark.astro';
+import Griglia from '../Griglia.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
 import { cicloInPrimoPiano, opere, titoloCiclo } from '../../dati';
 interface Props { lang: Lang }
@@ -44,33 +45,24 @@ const Locandina = evento.link ? 'a' : 'div';
     {!video && <svg class="play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>}
   </section>
 
-  <!-- il progetto, poi l'evento con la locandina (si accende e si spegne dal pannello) -->
-  <section class="pannelli prog-home" aria-labelledby="prog-t">
-    <div class="cella riga-prog">
+  <!-- l'evento con la locandina (si accende e si spegne dal pannello) -->
+  {evento.attivo && <section class="pannelli prog-home" aria-label={titoloEvento}>
+    <p class="cella evento-t">{titoloEvento}</p>
+    {evento.locandina && <Locandina class="cella locandina" href={evento.link}>
+      <img src={evento.locandina} alt={titoloEvento} loading="lazy" />
+    </Locandina>}
+  </section>}
+
+  <!-- poi il progetto: anno e titolo, le opere in griglia (9/10: la griglia che prima stava in Work) -->
+  <section class="prog-opere" aria-labelledby="prog-t" id="opere">
+    <div class="pannelli prog-home"><div class="cella riga-prog">
       <span class="anno num">{ciclo.data.anno}</span>
       <h2 id="prog-t">{titolo}</h2>
-    </div>
-    {evento.attivo && <>
-      <p class="cella evento-t">{titoloEvento}</p>
-      {evento.locandina && <Locandina class="cella locandina" href={evento.link}>
-        <img src={evento.locandina} alt={titoloEvento} loading="lazy" />
-      </Locandina>}
-    </>}
+    </div></div>
+    <Griglia lang={lang} opere={lista} />
   </section>
 
-  <ol class="opere" id="opere">
-    {lista.map((o) => (
-      <li class="opera">
-        <a href={p.opera(o.id)} data-opera>
-          <div class="foto" style={`--f:${o.data.fondo}`}>
-            <img src={o.data.foto} alt={o.data.titolo} loading="lazy" />
-          </div>
-          <div class="scheda"><span class="t">{o.data.titolo}</span></div>
-        </a>
-      </li>
-    ))}
-  </ol>
-
+  <!-- verso Work: casella crema, scritta nera -->
   <div class="pannelli scopri-box">
     <a class="cella scopri" href={p.archivio}>{t.scopri} <span aria-hidden="true">→</span></a>
   </div>

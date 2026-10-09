@@ -10,7 +10,9 @@ const p = percorsi[lang];
 const s = await sito();
 const anno = new Date().getFullYear();
 ---
-<!-- 9/10, dal disegno di Simone: in alto il logo in un quadrato e accanto Home, Work, About; poi Instagram, newsletter, note legali -->
+<!-- 9/10, dal disegno di Simone: in alto il logo nella sua casella (toccato si rompe, i petali rimbalzano e si torna in Home: scripts/piede.ts)
+     e accanto Home, Work, About; poi Instagram, newsletter, la mail, note legali -->
+<script>import '../scripts/piede.ts';</script>
 <footer class="pannelli ft">
   <div class="ft-testa">
     <a href={p.home} class="ft-logo" aria-label="Higle Studio, Home"><Logomark /></a>
@@ -31,6 +33,7 @@ const anno = new Date().getFullYear();
     </form>
     <p class="nl-ok" id="nl-ok" role="status"></p>
   </div>
+  <a class="ft-ig ft-mail" href={`mailto:${s.email}`}><span>{s.email}</span></a>
   <div class="cella piede">
     <nav class="legali" aria-label={t.noteLegali}>
       <a href={p.privacy}>{t.privacy}</a>

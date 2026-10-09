@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Griglia from '../Griglia.astro';
 import Statement from '../Statement.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
 import { cicli, opere, titoloCiclo } from '../../dati';
@@ -23,7 +22,17 @@ const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.i
       </div></summary>
       <!-- 9/10: sotto le opere il testo lungo del progetto; si chiude insieme al progetto -->
       <div class="apre">
-        <Griglia lang={lang} opere={o} />
+        <!-- 9/10: le opere a foto grandi, una sotto l'altra (il layout che prima stava in Home) -->
+        <ol class="opere">
+          {o.map((x) => (
+            <li class="opera">
+              <a href={percorsi[lang].opera(x.id)} data-opera>
+                <div class="foto" style={`--f:${x.data.fondo}`}><img src={x.data.foto} alt={x.data.titolo} loading="lazy" /></div>
+                <div class="scheda"><span class="t">{x.data.titolo}</span></div>
+              </a>
+            </li>
+          ))}
+        </ol>
         {(lang === 'it' ? c.data.statement_it : c.data.statement_en).trim() && <div class="pannelli st-work"><div class="cella">
           <Statement testo={lang === 'it' ? c.data.statement_it : c.data.statement_en} />
         </div></div>}

@@ -68,7 +68,7 @@ const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="preload" href="/fonts/Nohemi-Bold.woff2" as="font" type="font/woff2" crossorigin />
 </head>
-<body data-apri={t.apri}>
+<body data-apri={t.apri} data-pagina={pagina}>
   <div class="cur" aria-hidden="true"><span>{t.apri}</span></div>
   <slot name="prima" />
   <nav class="pill-nav" aria-label={t.menu}>
