@@ -14,6 +14,8 @@ const lista = await opere(ciclo.id);
 const titolo = titoloCiclo(ciclo, lang);
 const { video, copertina, evento } = ciclo.data;
 const titoloEvento = lang === 'it' ? evento.titolo_it : evento.titolo_en;
+const dataEvento = lang === 'it' ? evento.data_it : evento.data_en;
+const luogoEvento = lang === 'it' ? evento.luogo_it : evento.luogo_en;
 // la locandina porta al link dell'evento, se c'è
 const Locandina = evento.link ? 'a' : 'div';
 ---
@@ -46,8 +48,13 @@ const Locandina = evento.link ? 'a' : 'div';
   </section>
 
   <!-- l'evento con la locandina (si accende e si spegne dal pannello) -->
-  {evento.attivo && <section class="pannelli prog-home" aria-label={titoloEvento}>
-    <p class="cella evento-t">{titoloEvento}</p>
+  {evento.attivo && <section class="pannelli prog-home" aria-labelledby="evento-t">
+    <!-- come un biglietto: il titolo grande, sotto data e luogo affiancati -->
+    <h2 class="cella evento-t" id="evento-t">{titoloEvento}</h2>
+    {(dataEvento || luogoEvento) && <dl class="evento-info">
+      {dataEvento && <div class="cella"><dt>{t.data}</dt><dd>{dataEvento}</dd></div>}
+      {luogoEvento && <div class="cella"><dt>{t.luogo}</dt><dd>{luogoEvento}</dd></div>}
+    </dl>}
     {evento.locandina && <Locandina class="cella locandina" href={evento.link}>
       <img src={evento.locandina} alt={titoloEvento} loading="lazy" />
     </Locandina>}

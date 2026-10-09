@@ -52,8 +52,12 @@ collections:
         collapsed: true
         fields:
           - { name: attivo, label: "Mostra l'evento in Home", widget: boolean, default: false }
-          - { name: titolo_it, label: "Evento IT (es. Mostra · 12–20 novembre · Berlino)", widget: string, required: false }
-          - { name: titolo_en, label: "Evento EN", widget: string, required: false }
+          - { name: titolo_it, label: "Titolo IT (es. Prima mostra personale)", widget: string, required: false }
+          - { name: titolo_en, label: "Titolo EN", widget: string, required: false }
+          - { name: data_it, label: "Data IT (es. 12–20 novembre 2026)", widget: string, required: false }
+          - { name: data_en, label: "Data EN (es. 12–20 November 2026)", widget: string, required: false }
+          - { name: luogo_it, label: "Luogo IT (es. Berlino, Kreuzberg)", widget: string, required: false }
+          - { name: luogo_en, label: "Luogo EN (es. Berlin, Kreuzberg)", widget: string, required: false }
           - { name: locandina, label: "Locandina", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
           - { name: link, label: "Link (facoltativo: dove porta toccando la locandina)", widget: string, required: false }
 

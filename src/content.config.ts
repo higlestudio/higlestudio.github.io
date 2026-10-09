@@ -20,9 +20,13 @@ const cicli = defineCollection({
       attivo: z.boolean().default(false),
       titolo_it: z.string().default(''),
       titolo_en: z.string().default(''),
+      data_it: z.string().default(''),
+      data_en: z.string().default(''),
+      luogo_it: z.string().default(''),
+      luogo_en: z.string().default(''),
       locandina: z.string().optional(),
       link: z.string().optional(),
-    }).default({ attivo: false, titolo_it: '', titolo_en: '' }),
+    }).default({ attivo: false, titolo_it: '', titolo_en: '', data_it: '', data_en: '', luogo_it: '', luogo_en: '' }),
   }),
 });
 

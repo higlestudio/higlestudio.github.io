@@ -69,7 +69,13 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .riga-prog { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 14px; padding-block: 20px; }
 .riga-prog .anno { color: var(--grigio); font-size: 13px; font-weight: 500; width: 2.6em; }
 .riga-prog h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 6vw, 40px); line-height: .98; letter-spacing: -0.02em; text-wrap: balance; }
-.evento-t { margin: 0; text-align: center; font-weight: 600; font-size: 16px; }
+/* l'evento come un biglietto: titolo grande, sotto data e luogo in due caselle con l'etichetta piccola */
+.evento-t { margin: 0; padding-block: 26px 28px; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 64px); line-height: .95; letter-spacing: -0.03em; text-wrap: balance; }
+.prog-home > .evento-info { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
+.evento-info .cella { background: var(--nero); display: grid; align-content: start; gap: 6px; padding-block: 16px 18px; }
+.evento-info > :only-child { grid-column: 1 / -1; }
+.evento-info dt { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); }
+.evento-info dd { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3; }
 /* la locandina su una griglia di costruzione (dal disegno di Simone): stesso spazio sopra, sotto e ai lati,
    e quattro fili che passano lungo i suoi bordi e arrivano fino ai lati della casella */
 .prog-home > .locandina { --m: clamp(28px, 8vw, 64px); display: block; padding: var(--m);

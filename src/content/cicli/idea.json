@@ -9,9 +9,13 @@
   "copertina": "/img/progetti/prova-copertina.jpg",
   "evento": {
     "attivo": true,
-    "titolo_it": "⚠️ Evento · data · luogo",
-    "titolo_en": "⚠️ Event · date · place",
-    "locandina": "/img/progetti/prova-locandina.jpg"
+    "titolo_it": "⚠️ Titolo dell'evento",
+    "titolo_en": "⚠️ Event title",
+    "locandina": "/img/progetti/prova-locandina.jpg",
+    "data_it": "⚠️ 12–20 novembre 2026",
+    "data_en": "⚠️ 12–20 November 2026",
+    "luogo_it": "⚠️ Berlino, Kreuzberg",
+    "luogo_en": "⚠️ Berlin, Kreuzberg"
   },
   "video": "/img/progetti/prova-video.mp4"
 }
