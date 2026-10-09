@@ -50,8 +50,7 @@ const avvia = () => {
   // chi deve entrare, e come
   tutti('.statement .corpo p, .me .bio p').forEach((el) => el.classList.add('r-sale'));          // paragrafi: salgono e si schiariscono
   tutti('.op-testo p').forEach(parole);                                                            // testo dell'opera: per righe
-  tutti('.op-dati > *').forEach((el, i) => { el.classList.add('r-sale', 'r-corto'); ritardo(el, i * 0.08); }); // scheda: a cascata
-  tutti('#op-st, #op-altre').forEach((el) => el.classList.add('r-sx'));                            // etichette: da sinistra
+  tutti('.op-griglia > *').forEach((el, i) => { el.classList.add('r-sale', 'r-corto'); ritardo(el, i * 0.08); }); // scheda: a cascata
   tutti('.op-foto, .inv-grid:not(.gruppo .inv-grid) .im').forEach((el) => el.classList.add('r-tenda')); // foto: tendina (in Home no)
 
   // si scoprono una volta sola, poco prima di arrivare in fondo allo schermo

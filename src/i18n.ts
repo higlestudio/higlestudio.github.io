@@ -15,7 +15,7 @@ export const testi = {
     noteLegali: 'Note legali', privacy: 'Privacy', impressum: 'Impressum',
     apri: 'Apri', video: 'Video del progetto', data: 'Data', luogo: 'Luogo', scopri: 'Scopri tutto il progetto',
     anno: 'Anno', materiali: 'Materiali', misure: 'Misure', edizione: 'Edizione', ciclo: 'Progetto',
-    ilCiclo: 'Il progetto', altreOpere: 'Le altre opere del progetto', foto: 'Foto',
+    foto: 'Foto',
     email: 'Email', ritratto: 'Ritratto di Higle',
   },
   en: {
@@ -27,7 +27,7 @@ export const testi = {
     noteLegali: 'Legal', privacy: 'Privacy', impressum: 'Impressum',
     apri: 'Open', video: 'Project video', data: 'Date', luogo: 'Venue', scopri: 'See the whole project',
     anno: 'Year', materiali: 'Materials', misure: 'Dimensions', edizione: 'Edition', ciclo: 'Project',
-    ilCiclo: 'The project', altreOpere: 'Other works in the project', foto: 'Photos',
+    foto: 'Photos',
     email: 'Email', ritratto: 'Portrait of Higle',
   },
 } as const;

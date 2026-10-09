@@ -72,10 +72,10 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 /* l'evento come un biglietto: titolo grande, sotto data e luogo in due caselle con l'etichetta piccola */
 .evento-t { margin: 0; padding-block: 26px 28px; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 64px); line-height: .95; letter-spacing: -0.03em; text-wrap: balance; }
 .prog-home > .evento-info { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
-.evento-info .cella { background: var(--nero); display: grid; align-content: start; gap: 6px; padding-block: 16px 18px; }
+.evento-info .cella, .op-griglia .cella { background: var(--nero); display: grid; align-content: start; gap: 6px; padding-block: 16px 18px; }
 .evento-info > :only-child { grid-column: 1 / -1; }
-.evento-info dt { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); }
-.evento-info dd { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3; }
+.evento-info dt, .op-griglia dt { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); }
+.evento-info dd, .op-griglia dd { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3; }
 /* la locandina su una griglia di costruzione (dal disegno di Simone): stesso spazio sopra, sotto e ai lati,
    e quattro fili che passano lungo i suoi bordi e arrivano fino ai lati della casella */
 .prog-home > .locandina { --m: clamp(28px, 8vw, 64px); display: block; padding: var(--m);
@@ -96,7 +96,6 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .cella { padding: 18px var(--g); }
 .etichetta { margin: 0 0 10px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); display: flex; justify-content: space-between; gap: 12px; }
 
-.ciclo-t { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(38px, 11.2vw, 150px); line-height: .95; letter-spacing: -0.03em; text-wrap: balance; }
 
 .statement { margin-top: 22px; display: grid; gap: 22px; }
 .statement .lead { margin: 0; font-size: clamp(20px, 5.4vw, 34px); line-height: 1.28; font-weight: 500; max-width: 30ch; text-wrap: pretty; }
@@ -182,21 +181,18 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .trattini button { width: 30px; height: 18px; display: grid; place-items: center; }
 .trattini button::before { content: ''; width: 100%; height: 2px; border-radius: 2px; background: var(--carta); opacity: .28; transition: opacity .3s ease; }
 .trattini button[aria-current]::before { opacity: 1; }
-.op-testa { padding-block: 30px 30px; display: grid; gap: 30px; }
+.op-testa { padding-block: 30px; }
 .op-t { margin: 0 0 -0.16em; font-family: var(--display); font-weight: 700; font-size: clamp(56px, 18vw, 180px); line-height: .9; letter-spacing: -0.04em; text-align: center; } /* nome dell'opera grande e centrato; il margine negativo toglie lo spazio vuoto sotto le lettere, così sopra e sotto sembrano uguali */
-.op-dati { margin: 0 calc(-1 * var(--g)); padding: 18px var(--g) 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; border-top: 1px solid var(--linea); } /* la linea va da bordo a bordo, come le altre */
-.op-dati div { display: grid; gap: 2px; min-width: 0; }
-.op-dati div:last-child { grid-column: 1 / -1; }
-.op-dati dt { color: var(--grigio); font-size: 13px; }
-.op-dati dd { margin: 0; }
+/* i dati dell'opera in una griglia a caselle, come nel piede: due per riga, il progetto a tutta riga (stile delle caselle: vedi .evento-info) */
+.op-blocco > .op-griglia { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
+.op-prog { grid-column: 1 / -1; }
+.op-blocco > .cella:last-child { padding-block: 26px 34px; }
 .op-testo { max-width: 46ch; font-size: clamp(18px, 4.6vw, 24px); line-height: 1.4; }
 .op-testo p { margin: 0 0 .8em; }
 .inv-grid.adatta { grid-template-columns: repeat(6, 1fr); } /* righe sempre piene: le larghezze le decide Griglia.astro */
 @media (min-width: 900px) {
   .op-foto { aspect-ratio: auto; height: 100vh; }
-  .op-testa { grid-template-columns: 1fr 1fr; align-items: end; column-gap: 6vw; }
-  .op-t { grid-column: 1 / -1; }
-  .op-dati { grid-template-columns: repeat(4, 1fr); }
+  .op-blocco > .op-griglia { grid-template-columns: repeat(4, 1fr); }
 }
 
 
