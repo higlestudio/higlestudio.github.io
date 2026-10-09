@@ -44,15 +44,9 @@ main { position: relative; z-index: 2; }
 
 /* menu a pillola, in alto al centro, sempre visibile (8/10: spostato in alto; prima stava in basso) */
 .pill-nav { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); top: calc(14px + env(safe-area-inset-top, 0px)); display: flex; gap: 4px; align-items: stretch; font-size: 16px; font-weight: 600; }
-.pn-group { background: var(--carta); border-radius: 999px; display: flex; align-items: center; padding: 0 6px; box-shadow: 0 6px 20px rgba(0,0,0,.28); } /* colori invertiti: pillola crema, testo nero di brand */
-.pn-group a { padding: 14px 10px; color: color-mix(in srgb, var(--nero) 50%, var(--carta)); }
+.pn-group { background: var(--carta); border-radius: 999px; display: flex; align-items: center; padding: 0 8px; box-shadow: 0 6px 20px rgba(0,0,0,.28); } /* colori invertiti: pillola crema, testo nero di brand */
+.pn-group a { padding: 14px 14px; color: color-mix(in srgb, var(--nero) 50%, var(--carta)); }
 .pn-group a[aria-current="page"] { color: var(--nero); }
-/* ai lati del menu: pillole uguali (stessa altezza, crema, ombra), più strette. Sinistra la lingua, destra il logo nero → Home */
-.pill-lato { position: fixed; z-index: 10; top: calc(14px + env(safe-area-inset-top, 0px)); height: 52px; min-width: 52px; padding: 0 12px; display: grid; place-items: center; background: var(--carta); color: var(--nero); border-radius: 999px; box-shadow: 0 6px 20px rgba(0,0,0,.28); font-size: 16px; font-weight: 600; }
-.pill-lingua { left: var(--g); }
-.pill-logo { right: var(--g); width: 52px; padding: 0; }
-.pill-logo svg { width: 26px; height: auto; display: block; }
-@media (max-width: 374px) { .pill-nav { font-size: 14px; } .pn-group a { padding: 13px 7px; } .pill-lato { height: 47px; min-width: 47px; font-size: 14px; } .pill-logo { width: 47px; } } /* telefoni molto stretti */
 @media (hover: hover) { .pn-group a:hover { color: var(--nero); } }
 @media (min-width: 900px) { .pill-nav { font-size: 16px; } .pn-group a { padding: 14px 16px; } }
 
@@ -66,8 +60,8 @@ main { position: relative; z-index: 2; }
 @media (pointer: fine) { .hero2, .hero2 * { cursor: none; } }
 /* ingresso: i petali arrivano da fuori e compongono il logo; il resto compare dopo */
 html.intro .mk-btn svg { visibility: hidden; }
-html.intro main, html.intro .pill-nav, html.intro .pill-lato, html.intro-resto main, html.intro-resto .pill-nav, html.intro-resto .pill-lato { opacity: 0 !important; }
-.pill-nav, .pill-lato { transition: opacity .7s ease; } /* compaiono con il nero che si dissolve */
+html.intro main, html.intro .pill-nav, html.intro-resto main, html.intro-resto .pill-nav { opacity: 0 !important; }
+.pill-nav { transition: opacity .7s ease; } /* compaiono con il nero che si dissolve */
 main { transition: opacity .7s ease; }
 
 

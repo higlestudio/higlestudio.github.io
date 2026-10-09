@@ -27,7 +27,7 @@ if (puntatore && matchMedia('(pointer: fine)').matches) {
 }
 
 
-/* il cambio lingua (pillola in alto e piede): si ricorda l'ultima scelta, che si può sempre cambiare di nuovo */
+/* il cambio lingua nel piede: si ricorda l'ultima scelta, che si può sempre cambiare di nuovo */
 document.querySelectorAll<HTMLAnchorElement>('.lingua').forEach((a) => a.addEventListener('click', () => {
   try { localStorage.setItem('higle-lingua', a.hreflang); } catch {}
 }));
