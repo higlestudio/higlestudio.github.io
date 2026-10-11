@@ -17,8 +17,10 @@ interface Props {
   altra: string;
   /** false dove la pagina è già bilingue (404): niente cambio automatico */
   automatica?: boolean;
+  /** true per le pagine di servizio (iscrizione confermata): mai su Google, nemmeno dopo il lancio */
+  nascosta?: boolean;
 }
-const { lang, titolo, descrizione = '', pagina = null, altra, automatica = true } = Astro.props;
+const { lang, titolo, descrizione = '', pagina = null, altra, automatica = true, nascosta = false } = Astro.props;
 const t = testi[lang];
 const p = percorsi[lang];
 const qui = new URL(Astro.url.pathname, Astro.site);
@@ -42,7 +44,7 @@ const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
       }
     } catch (e) {}
   </script>}
-  {!LANCIATO && <meta name="robots" content="noindex, nofollow" />}
+  {(!LANCIATO || nascosta) && <meta name="robots" content="noindex, nofollow" />}
   <title>{titolo}</title>
   {descrizione && <meta name="description" content={descrizione} />}
   <link rel="canonical" href={qui} />

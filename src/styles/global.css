@@ -308,3 +308,6 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .vuoto-404 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(120px, 44vw, 380px); line-height: .85; letter-spacing: -0.05em; }
 .vuoto-frase { margin: 18px 0 0; font-size: clamp(20px, 5.4vw, 34px); font-weight: 500; }
 .vuoto-box { border-bottom: 0; }
+/* iscrizione confermata (/newsletter/): come la 404, ma la parola è più lunga del numero */
+.nl-ci-sei { font-size: clamp(76px, 24vw, 220px); }
+.vuoto-frase { max-width: 24ch; text-wrap: balance; }
