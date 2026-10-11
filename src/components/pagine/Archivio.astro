@@ -34,6 +34,8 @@ const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.i
           ))}
         </ol>
         {(lang === 'it' ? c.data.statement_it : c.data.statement_en).trim() && <div class="pannelli st-work"><div class="cella">
+          <!-- 11/10: il titolo del progetto anche qui, sopra il testo (in cima resta quello della tendina) -->
+          <h3 class="st-titolo"><span class="anno num">{anno}</span>{titoloCiclo(c, lang)}</h3>
           <Statement testo={lang === 'it' ? c.data.statement_it : c.data.statement_en} />
         </div></div>}
       </div>

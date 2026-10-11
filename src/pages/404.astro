@@ -1,16 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
-import Logomark from '../components/Logomark.astro';
+import { testi } from '../i18n';
 ---
 <Base lang="en" titolo="404 | Higle Studio" altra="/it/" automatica={false}>
-  <!-- pagina che non esiste: 404 grande, una frase, e sotto il logo rotto. Toccato, si ricompone e si torna in Home.
+  <!-- pagina che non esiste (11/10): "Errore" piccolo, 404 grande, una frase, e il tasto per tornare in Home (tolto il logo che si ricomponeva).
        Un solo file per tutte le lingue: lo script mostra l'italiano se l'indirizzo era sotto /it/ o il telefono è in italiano. -->
   <section class="vuoto">
+    <p class="vuoto-errore" data-lingua="en">{testi.en.errore}</p>
+    <p class="vuoto-errore" data-lingua="it" lang="it" hidden>{testi.it.errore}</p>
     <h1 class="vuoto-404">404</h1>
     <p class="vuoto-frase" data-lingua="en">Nothing here.</p>
     <p class="vuoto-frase" data-lingua="it" lang="it" hidden>Qui non c'è niente.</p>
-    <button type="button" class="vuoto-petali" aria-label="Home"><Logomark /></button>
-    <noscript><style>.vuoto-petali { visibility: visible; }</style></noscript>
   </section>
+  <div class="pannelli scopri-box vuoto-box">
+    <a class="cella scopri vuoto-home" href="/" data-lingua="en">{testi.en.vaiHome} <span aria-hidden="true">→</span></a>
+    <a class="cella scopri vuoto-home" href="/it/" data-lingua="it" lang="it" hidden>{testi.it.vaiHome} <span aria-hidden="true">→</span></a>
+  </div>
 </Base>
 <script>import '../scripts/vuoto.ts';</script>

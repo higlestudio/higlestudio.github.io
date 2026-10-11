@@ -31,13 +31,40 @@ document.querySelectorAll<HTMLAnchorElement>('.lingua').forEach((a) => a.addEven
 
 /* pagina dell'opera: le foto si sfogliano col dito; i trattini sotto dicono quale si vede e, toccati, ci saltano */
 const sfoglia = $('.sfoglia'), trattini = [...document.querySelectorAll<HTMLButtonElement>('.trattini button')];
+// 11/10: senza fine. Dopo l'ultima si torna alla prima (e prima della prima c'è l'ultima): ai due capi una copia della foto
+// dell'altro capo; quando ci si ferma su una copia, si salta senza movimento alla foto vera
 if (sfoglia && trattini.length > 1) {
-  const qui = () => Math.round(sfoglia.scrollLeft / sfoglia.clientWidth);
-  const vai = (n: number) => sfoglia.scrollTo({ left: n * sfoglia.clientWidth, behavior: 'smooth' });
-  const aggiorna = () => { const n = qui(); trattini.forEach((b, i) => (i === n ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current'))); };
-  sfoglia.addEventListener('scroll', aggiorna, { passive: true });
+  const n = trattini.length;
+  const vere = [...sfoglia.querySelectorAll('img')];
+  const copia = (img: HTMLImageElement) => { const c = img.cloneNode() as HTMLImageElement; c.alt = ''; c.setAttribute('aria-hidden', 'true'); c.loading = 'eager'; return c; };
+  sfoglia.prepend(copia(vere[n - 1])); sfoglia.append(copia(vere[0]));
+  const w = () => sfoglia.clientWidth;
+  const salta = (i: number) => { sfoglia.style.scrollSnapType = 'none'; sfoglia.scrollLeft = i * w(); void sfoglia.offsetWidth; sfoglia.style.scrollSnapType = ''; };
+  salta(1);
+  const qui = () => Math.round(sfoglia.scrollLeft / w()); // 0 = copia dell'ultima, 1…n = vere, n+1 = copia della prima
+  const vai = (i: number) => sfoglia.scrollTo({ left: (i + 1) * w(), behavior: 'smooth' });
+  const aggiorna = () => {
+    const vera = (qui() - 1 + n) % n;
+    trattini.forEach((b, i) => (i === vera ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
+  };
+  // a scorrimento finito (col dito o coi trattini): se si è su una copia, si va alla vera
+  // (mai col dito ancora appoggiato, e solo con la foto ferma al suo posto: il salto così non si vede)
+  let ferma = 0, dito = false;
+  const fermo = () => {
+    const i = qui();
+    if (dito || Math.abs(sfoglia.scrollLeft - i * w()) > 2) return;
+    if (i === 0) salta(n); else if (i === n + 1) salta(1);
+    aggiorna();
+  };
+  const aspetta = () => { clearTimeout(ferma); ferma = setTimeout(fermo, 120); };
+  sfoglia.addEventListener('scroll', () => { aggiorna(); aspetta(); }, { passive: true });
+  sfoglia.addEventListener('touchstart', () => { dito = true; }, { passive: true });
+  sfoglia.addEventListener('touchend', () => { dito = false; aspetta(); }, { passive: true });
+  sfoglia.addEventListener('touchcancel', () => { dito = false; aspetta(); }, { passive: true });
   trattini.forEach((b, i) => b.addEventListener('click', () => vai(i)));
-  sfoglia.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') vai(qui() - 1); if (e.key === 'ArrowRight') vai(qui() + 1); });
+  sfoglia.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') vai(qui() - 2); if (e.key === 'ArrowRight') vai(qui()); });
+  let largo = innerWidth;
+  addEventListener('resize', () => { if (innerWidth !== largo) { largo = innerWidth; salta(qui()); } });
 }
 
 /* Work: un progetto aperto alla volta. Se si chiude quello sopra, la riga appena aperta resta in vista */

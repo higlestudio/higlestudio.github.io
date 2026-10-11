@@ -52,6 +52,8 @@ const avvia = () => {
   tutti('.op-testo p').forEach(parole);                                                            // testo dell'opera: per righe
   tutti('.op-griglia > *').forEach((el, i) => { el.classList.add('r-sale', 'r-corto'); ritardo(el, i * 0.08); }); // scheda: a cascata
   tutti('.op-foto, .inv-grid:not(.gruppo .inv-grid) .im').forEach((el) => el.classList.add('r-tenda')); // foto: tendina (in Home no)
+  tutti('.opere .foto').forEach((el) => el.classList.add('r-posa'));                              // Work: le foto grandi salgono e si posano
+  tutti('.st-work .st-titolo').forEach((el) => el.classList.add('r-sale'));
 
   // si scoprono una volta sola, poco prima di arrivare in fondo allo schermo
   const vista = new IntersectionObserver((voci) => voci.forEach((v) => {
@@ -61,7 +63,7 @@ const avvia = () => {
     el.classList.add('visto');
     vista.unobserve(el);
   }), { rootMargin: '0px 0px -9% 0px' });
-  tutti('.r-sale, .r-righe, .r-sx, .r-tenda').forEach((el) => vista.observe(el));
+  tutti('.r-sale, .r-righe, .r-sx, .r-tenda, .r-posa').forEach((el) => vista.observe(el));
 
   // Work: le foto di un progetto si scoprono quando il progetto si apre (quello in primo piano subito);
   // sul telefono una riga alla volta (le due della riga insieme), sul computer una dopo l'altra

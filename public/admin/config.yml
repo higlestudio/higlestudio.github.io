@@ -46,12 +46,15 @@ collections:
       - { name: statement_en, label: "Statement EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
       - { name: video, label: "Video in cima alla Home (mp4, facoltativo; parte da solo, senza audio, a ciclo)", widget: file, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
       - { name: copertina, label: "Copertina del video (foto verticale; si vede finché il video parte, o al suo posto se il video manca)", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
-      - name: evento
-        label: "Evento in Home (mostra, presentazione…)"
-        widget: object
+      - name: eventi
+        label: "Eventi in Home (mostre, presentazioni…: aggiungine quanti vuoi, escono in quest'ordine; trascinali per cambiarlo)"
+        label_singular: Evento
+        widget: list
         collapsed: true
+        required: false
+        summary: "{{fields.titolo_it}} · {{fields.data_it}}{{fields.attivo | ternary('', ' · spento')}}"
         fields:
-          - { name: attivo, label: "Mostra l'evento in Home", widget: boolean, default: false }
+          - { name: attivo, label: "Mostra in Home", widget: boolean, default: true }
           - { name: titolo_it, label: "Titolo IT (es. Prima mostra personale)", widget: string, required: false }
           - { name: titolo_en, label: "Titolo EN", widget: string, required: false }
           - { name: data_it, label: "Data IT (es. 12–20 novembre 2026)", widget: string, required: false }
