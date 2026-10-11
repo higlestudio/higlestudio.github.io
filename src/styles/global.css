@@ -69,7 +69,7 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
    per tutta l'altezza della sezione (più di due schermi): intanto le nuvole salgono e scoprono il testo */
 .nuvole { position: relative; height: 200svh; }
 .nv-scena { position: sticky; top: 0; height: 100svh; overflow: clip; }
-.nv-testo { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; padding: var(--testa) var(--g) 40px; text-align: center; opacity: .2; will-change: opacity, transform; }
+.nv-testo { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; padding: var(--testa) var(--g) 40px; text-align: center; opacity: 0; will-change: opacity, transform; }
 .nv-sopra { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 72px); line-height: .95; letter-spacing: -0.03em; }
 .nv-anno { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(96px, 34vw, 300px); line-height: .82; letter-spacing: -0.05em; }
 .nv-titolo { margin: 8px 0 0; max-width: 26ch; font-size: clamp(16px, 4.2vw, 22px); line-height: 1.35; color: var(--neutro); text-wrap: balance; }

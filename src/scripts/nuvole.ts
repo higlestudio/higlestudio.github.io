@@ -15,8 +15,8 @@ if (scena) {
     const p = calmo ? 1 : Math.min(1, Math.max(0, -scena.getBoundingClientRect().top / corsa)); // 0 in cima, 1 a fine scena
     const q = p * p * (3 - 2 * p); // parte e arriva morbida
     nuvole.forEach((n) => { n.el.style.transform = `translate3d(${q * n.dx * largo}px, ${-q * n.v * alto}px, 0)`; });
-    const t = Math.min(1, Math.max(0, (p - 0.12) / 0.45)); // il testo compare mentre le nuvole si aprono
-    testo.style.opacity = String(0.2 + 0.8 * t); // si intravede già fra le nuvole
+    const t = Math.min(1, Math.max(0, (p - 0.45) / 0.35)); // il testo compare solo quando le nuvole se ne sono andate (11/10)
+    testo.style.opacity = String(t);
     testo.style.transform = `translate3d(0, ${(1 - t) * 24}px, 0)`;
   };
   const chiedi = () => { if (!attesa) { attesa = true; requestAnimationFrame(disegna); } };

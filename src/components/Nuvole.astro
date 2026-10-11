@@ -5,22 +5,31 @@
 interface Props { sopra: string; anno: number; titolo: string; giu: string }
 const { sopra, anno, titolo, giu } = Astro.props;
 
-// ogni nuvola: forma (cerchi + base arrotondata), posto (% dello schermo), larghezza, velocità di salita, deriva di lato, davanti/dietro
-const forme = {
-  a: { vb: '0 0 200 100', base: [20, 55, 160, 35], cerchi: [[50, 55, 30], [95, 40, 38], [140, 52, 28], [165, 65, 20]] },
-  b: { vb: '0 0 160 110', base: [15, 70, 130, 32], cerchi: [[45, 68, 28], [80, 45, 40], [118, 62, 30]] },
-  c: { vb: '0 0 240 80', base: [10, 48, 220, 26], cerchi: [[40, 48, 22], [80, 36, 30], [125, 30, 30], [165, 40, 26], [205, 50, 18]] },
-  d: { vb: '0 0 120 80', base: [10, 48, 100, 26], cerchi: [[38, 48, 24], [70, 36, 30], [95, 52, 18]] },
-  e: { vb: '0 0 220 120', base: [20, 80, 180, 32], cerchi: [[55, 78, 32], [95, 52, 44], [145, 60, 38], [185, 82, 22]] },
-} as const;
+// 11/10, seconda versione: nuvole gonfie tutte intorno, anche sotto (prima avevano la base piatta). Ogni forma è un gruppo di cerchi
+// [x, y, raggio]; il riquadro si calcola da solo, stretto attorno ai cerchi
+const forme: Record<string, number[][]> = {
+  a: [[30, 60, 26], [62, 40, 32], [100, 30, 36], [138, 42, 30], [166, 62, 24], [140, 74, 24], [100, 78, 26], [60, 76, 24], [100, 55, 34]],
+  b: [[30, 62, 24], [55, 38, 28], [88, 30, 32], [118, 48, 26], [128, 72, 22], [95, 82, 24], [58, 82, 22], [80, 58, 30]],
+  c: [[22, 44, 18], [50, 30, 24], [86, 22, 28], [124, 26, 26], [158, 36, 22], [184, 48, 16], [150, 58, 18], [110, 60, 20], [70, 58, 20], [40, 56, 16], [100, 42, 24]],
+  d: [[24, 46, 18], [48, 30, 22], [76, 28, 20], [96, 44, 16], [74, 56, 18], [46, 56, 16], [60, 44, 20]],
+  e: [[28, 60, 24], [52, 38, 26], [86, 26, 32], [124, 34, 28], [152, 54, 24], [132, 76, 22], [96, 82, 24], [58, 80, 22], [90, 56, 32]],
+  f: [[26, 50, 20], [54, 32, 26], [90, 26, 26], [120, 40, 22], [132, 58, 16], [104, 66, 20], [66, 66, 22], [36, 62, 16], [80, 48, 26]],
+};
+const riquadro = (c: number[][]) => {
+  const x0 = Math.min(...c.map(([x, , r]) => x - r)), y0 = Math.min(...c.map(([, y, r]) => y - r));
+  const x1 = Math.max(...c.map(([x, , r]) => x + r)), y1 = Math.max(...c.map(([, y, r]) => y + r));
+  return `${x0} ${y0} ${x1 - x0} ${y1 - y0}`;
+};
+// posto (% dello schermo, dall'alto: tutte sotto il menu), larghezza (% della larghezza), velocità di salita, deriva di lato, davanti/dietro.
+// Distanziate: non si toccano fra loro
 const nuvole = [
-  { f: 'd', x: 4, y: 9, w: 34, v: 0.5, dx: -0.05, dietro: true },
-  { f: 'c', x: 56, y: 17, w: 68, v: 0.8, dx: 0.12, dietro: true },
-  { f: 'e', x: -30, y: 44, w: 86, v: 1.1, dx: -0.14, dietro: true },
-  { f: 'a', x: 2, y: 31, w: 98, v: 1.5, dx: -0.06, dietro: false },
-  { f: 'b', x: 40, y: 55, w: 82, v: 1.9, dx: 0.1, dietro: false },
-  { f: 'a', x: -22, y: 72, w: 74, v: 2.3, dx: -0.12, dietro: false },
-] as const;
+  { f: 'd', x: 6, y: 14, w: 34, v: 0.5, dx: -0.05, dietro: true },
+  { f: 'c', x: 54, y: 23, w: 58, v: 0.8, dx: 0.12, dietro: true },
+  { f: 'a', x: 8, y: 36, w: 74, v: 1.5, dx: -0.06, dietro: false },
+  { f: 'e', x: -22, y: 60, w: 58, v: 1.1, dx: -0.14, dietro: true },
+  { f: 'b', x: 56, y: 66, w: 56, v: 1.9, dx: 0.1, dietro: false },
+  { f: 'f', x: 8, y: 86, w: 48, v: 2.3, dx: -0.12, dietro: false },
+];
 ---
 <section class="nuvole" aria-labelledby="nv-t">
   <div class="nv-scena">
@@ -32,15 +41,13 @@ const nuvole = [
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
       </a>
     </div>
-    {nuvole.map((n) => {
-      const s = forme[n.f];
-      return <div class:list={['nv', { dietro: n.dietro }]} style={`--x:${n.x}%; --y:${n.y}%; --w:${n.w}; --v:${n.v}; --dx:${n.dx}`} aria-hidden="true">
-        <svg viewBox={s.vb}>
-          <rect x={s.base[0]} y={s.base[1]} width={s.base[2]} height={s.base[3]} rx={s.base[3] / 2} />
-          {s.cerchi.map(([cx, cy, r]) => <circle cx={cx} cy={cy} r={r} />)}
+    {nuvole.map((n) => (
+      <div class:list={['nv', { dietro: n.dietro }]} style={`--x:${n.x}%; --y:${n.y}%; --w:${n.w}; --v:${n.v}; --dx:${n.dx}`} aria-hidden="true">
+        <svg viewBox={riquadro(forme[n.f])}>
+          {forme[n.f].map(([cx, cy, r]) => <circle cx={cx} cy={cy} r={r} />)}
         </svg>
-      </div>;
-    })}
+      </div>
+    ))}
   </div>
 </section>
 <script>import '../scripts/nuvole.ts';</script>
