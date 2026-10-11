@@ -64,15 +64,15 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
     </section>;
   })}
 
-  <!-- poi il progetto: le opere in griglia, e subito sotto, insieme, il titolo, un po' di testo e "Scopri tutto il progetto" (11/10) -->
+  <!-- poi il progetto: il titolo con un po' di testo, le opere in griglia, "Scopri tutto il progetto" (11/10: testo e galleria scambiati) -->
   <section class="prog-opere" aria-labelledby="prog-t" id="opere">
-    <Griglia lang={lang} opere={lista} />
     <div class="pannelli prog-home prog-intro"><div class="cella">
       <p class="prog-sopra num"><span>{t.ciclo}</span><span>{ciclo.data.anno}</span></p>
       <h2 id="prog-t">{titolo}</h2>
       {lead && <p class="prog-lead" set:html={lead} />}
       <p class="prog-sotto num">{lista.length} {t.opere} · {lista.map((o) => o.data.titolo).join(', ')}</p>
     </div></div>
+    <Griglia lang={lang} opere={lista} />
     <!-- verso Work: casella crema, scritta nera -->
     <div class="pannelli scopri-box">
       <a class="cella scopri" href={p.archivio}>{t.scopri} <span aria-hidden="true">→</span></a>
