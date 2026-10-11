@@ -3,16 +3,13 @@ import Base from '../layouts/Base.astro';
 import { testi } from '../i18n';
 ---
 <Base lang="en" titolo="404 | Higle Studio" altra="/it/" automatica={false}>
-  <!-- pagina che non esiste (11/10): "Error 404" grande, "Error" sopra il numero, una frase, e il tasto per tornare in Home (tolto il logo che si ricomponeva).
+  <!-- pagina che non esiste (11/10): "Error" sopra il 404, larga quanto il numero; una frase, e la pillola per tornare in Home (come la pagina della newsletter) (tolto il logo che si ricomponeva).
        Un solo file per tutte le lingue: lo script mostra l'italiano se l'indirizzo era sotto /it/ o il telefono è in italiano. -->
   <section class="vuoto">
-    <h1 class="vuoto-404"><span class="vuoto-errore" data-lingua="en">{testi.en.errore}</span><span class="vuoto-errore" data-lingua="it" lang="it" hidden>{testi.it.errore}</span> 404</h1>
+    <h1 class="vuoto-404"><span class="vuoto-errore" data-lingua="en">{testi.en.errore}</span><span class="vuoto-errore" data-lingua="it" lang="it" hidden>{testi.it.errore}</span><span class="vuoto-numero">404</span></h1>
     <p class="vuoto-frase" data-lingua="en">Nothing here.</p>
     <p class="vuoto-frase" data-lingua="it" lang="it" hidden>Qui non c'è niente.</p>
+    <div class="scopri-pillola"><a href="/" data-lingua="en">{testi.en.vaiHome} <span aria-hidden="true">→</span></a><a href="/it/" data-lingua="it" lang="it" hidden>{testi.it.vaiHome} <span aria-hidden="true">→</span></a></div>
   </section>
-  <div class="pannelli scopri-box vuoto-box">
-    <a class="cella scopri vuoto-home" href="/" data-lingua="en">{testi.en.vaiHome} <span aria-hidden="true">→</span></a>
-    <a class="cella scopri vuoto-home" href="/it/" data-lingua="it" lang="it" hidden>{testi.it.vaiHome} <span aria-hidden="true">→</span></a>
-  </div>
 </Base>
 <script>import '../scripts/vuoto.ts';</script>

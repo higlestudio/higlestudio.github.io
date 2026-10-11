@@ -303,11 +303,12 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 
 /* pagina 404 (11/10): "Errore" piccolo, 404 grande, una frase; sotto, a tutta larghezza, la casella crema che riporta in Home.
    Tutto insieme alto quanto lo schermo sotto il menu: la casella si vede subito */
-.vuoto { min-height: calc(100svh - var(--testa) - 92px); padding: 32px var(--g) 48px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.vuoto-errore { display: block; font-size: .36em; line-height: 1; letter-spacing: -0.03em; margin-bottom: .04em; } /* "Error" in Nohemi sopra il 404, largo quanto basta (11/10: la scritta piccola non piaceva) */
+.vuoto { min-height: calc(100svh - var(--testa)); padding: 32px var(--g) 48px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.vuoto-404 .vuoto-errore, .vuoto-404 .vuoto-numero { display: block; width: fit-content; margin-inline: auto; }
+.vuoto-errore { font-size: .5em; line-height: .9; letter-spacing: -0.04em; margin-bottom: .02em; } /* "Error" sopra il 404, larga quanto il numero: la grandezza giusta la calcola scripts/vuoto.ts */
 .vuoto-404 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(120px, 44vw, 380px); line-height: .85; letter-spacing: -0.05em; }
 .vuoto-frase { margin: 18px 0 0; font-size: clamp(20px, 5.4vw, 34px); font-weight: 500; }
-.vuoto-box { border-bottom: 0; }
+.vuoto .scopri-pillola { padding: 40px 0 0; } /* la pillola sotto la frase, come nella pagina della newsletter */
 /* iscrizione confermata (/newsletter/): come la 404, ma la parola è più lunga del numero */
 .nl-ci-sei { font-size: clamp(56px, 17vw, 190px); white-space: nowrap; } /* "Grazie" e "Thank you" su una riga */
 .nl-grazie { min-height: calc(100svh - var(--testa)); } /* senza la casella sotto: la pagina è tutta sua, la pillola sta sotto la frase */
