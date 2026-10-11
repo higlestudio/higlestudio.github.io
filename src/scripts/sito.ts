@@ -98,9 +98,14 @@ gruppi.forEach((g) => g.querySelector('summary')!.addEventListener('click', (e) 
   };
 }));
 
-/* newsletter → Brevo (form "Iscrizione landing IT", lista #3). Si accende prima del lancio, con la privacy pronta. */
-const NEWSLETTER_ATTIVA = false;
-const BREVO = 'https://32545a85.sibforms.com/serve/MUIFAD67pef7d01AR_c9Gi1IFh9ftt3lvxoTKfBWakwxPV3Z7ATQCNvNPkDrY07CUlfPUn3TC2P7wuYxoAL7YRaALS7AyX10D3bLXF71y795z1-cpFm5a-Qgkz4BShN7omjR2DdilIgsFqm8SC8lFego1adnEShFArCiOzyHeD9M4zUVWJU0o0YWPHMBoSuJGX88xTE5fQyjC5wNrQ==';
+/* newsletter → Brevo: due moduli con doppia conferma, uno per lingua (così la mail di conferma arriva nella lingua giusta),
+   una lista sola "Newsletter sito" (#4) con LINGUA. Dopo il clic nella mail si arriva su /newsletter/ o /it/newsletter/.
+*/
+const NEWSLETTER_ATTIVA = true; // accesa l'11/10 per scelta di Simone: sito ancora nascosto a Google. Privacy vera da mettere prima del lancio.
+const BREVO: Record<string, string> = {
+  IT: 'https://32545a85.sibforms.com/serve/MUIFAPoLPrbdDc1Kv3wUoeblhc_HSTXsF3_JiqczjW5CBF0UlCihVtaKIG1RLWk7TH0IfmR32fB143ARJzKE6CNdeaA1ricTAGXcTM01ZHd1hFMyhpSNutQXOFYNBbb6byZr3ykqWB3nubQSTWp6yo34WnGeWIZ9dRmTgqdE0zim5vgk2MSJCEWEsMN1Y5LKsZAmHQfm5Q-WxNOrxQ==',
+  EN: 'https://32545a85.sibforms.com/serve/MUIFAMYfEFi1V37iatGErWasY4aZMSc_rjAHgRVZKUqK-WdsFud93_z0zV-CAd0ke9w92yOSbvlY45fzodNXoS2GKVi_P6FzCMFk4ZGRsXy15AWdhhe_NeuR00mEfA9ArOzdgBOKJkLFL-iolTJW7tSQ-62DjMLtPQwRs7S7UHA6zewJuikjY9zRLmVzdaH1DPqTjDnS_rFsqjLopQ==',
+};
 const nl = $<HTMLFormElement>('#nl'), esito = $('#nl-ok');
 // iPhone: chiusa la tastiera, Safari a volte lascia la pagina spostata con un vuoto sotto il piede; la rimettiamo a posto
 // (solo alla chiusura della tastiera e solo se serve: toccare lo scroll mentre si scorre fa tremare la pagina)
@@ -126,7 +131,7 @@ if (nl && esito) nl.addEventListener('submit', async (e) => {
   body.set('email_address_check', nl.querySelector<HTMLInputElement>('.trappola')!.value);
   let ok = false;
   try {
-    const r = await fetch(BREVO, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
+    const r = await fetch(BREVO[d.lingua!] ?? BREVO.EN, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
     const j = await r.json().catch(() => null);
     ok = r.ok && !!j && j.success === true;
   } catch {}
