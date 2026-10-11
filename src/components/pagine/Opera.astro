@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
-import { titoloCiclo, md } from '../../dati';
+import { titoloCiclo, md, fondoDi } from '../../dati';
 import { getEntry } from 'astro:content';
 interface Props { lang: Lang; opera: any }
 const { lang, opera } = Astro.props;
@@ -12,11 +12,13 @@ const ciclo = (await getEntry('cicli', o.ciclo))!;
 const nomeCiclo = titoloCiclo(ciclo, lang);
 const it = lang === 'it';
 const foto = [o.foto, ...o.altre_foto];
+// ogni foto col suo fondo, preso da lei (dati.ts); il riquadro prende quello della prima
+const fondi = await Promise.all(foto.map((f) => fondoDi(f, o.fondo)));
 ---
 <Base lang={lang} titolo={`${o.titolo} | Higle Studio`} pagina="archivio" descrizione={`${o.titolo}, ${o.anno}. ${nomeCiclo}`} altra={percorsi[altra].opera(opera.id)}>
-  <figure class="op-foto" style={`--f:${o.fondo}`}>
+  <figure class="op-foto" style={`--f:${fondi[0]}`}>
     <div class="sfoglia" tabindex={foto.length > 1 ? 0 : undefined} aria-label={foto.length > 1 ? `${t.foto}: ${o.titolo}` : undefined}>
-      {foto.map((f, n) => <img src={f} alt={foto.length > 1 ? `${o.titolo}, ${n + 1}/${foto.length}` : o.titolo} loading={n ? 'lazy' : 'eager'} />)}
+      {foto.map((f, n) => <img src={f} style={`--f:${fondi[n]}`} alt={foto.length > 1 ? `${o.titolo}, ${n + 1}/${foto.length}` : o.titolo} loading={n ? 'lazy' : 'eager'} />)}
     </div>
   </figure>
   {foto.length > 1 && (

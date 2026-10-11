@@ -43,7 +43,7 @@ const opere = defineCollection({
     foto: z.string(),
     foto_quadrata: z.string().optional(),
     altre_foto: z.array(z.string()).max(4).default([]),
-    fondo: z.string().default('#33302C'),
+    fondo: z.string().optional(), // vuoto = preso dalla foto (dati.ts, fondoDi)
     materiali_it: z.string().default(''),
     materiali_en: z.string().default(''),
     misure: z.string().default(''),

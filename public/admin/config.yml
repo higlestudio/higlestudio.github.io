@@ -87,7 +87,7 @@ collections:
       - { name: foto, label: "Foto principale (orizzontale 4:3)", widget: image }
       - { name: foto_quadrata, label: "Foto quadrata per Work (facoltativa: se manca si usa la principale)", widget: image, required: false }
       - { name: altre_foto, label: "Altre foto, da sfogliare nella pagina dell'opera (fino a 4, facoltative; trascinale per cambiare l'ordine)", widget: list, field: { name: foto, label: Foto, widget: image }, max: 4, required: false }
-      - { name: fondo, label: "Colore di fondo dietro la foto", widget: color, default: "#33302C" }
+      - { name: fondo, label: "Colore di fondo dietro la foto (lascialo vuoto: lo prende da solo dai bordi della foto; sceglilo solo per forzarne uno)", widget: color, required: false }
       - { name: materiali_it, label: "Materiali IT", widget: string }
       - { name: materiali_en, label: "Materiali EN", widget: string }
       - { name: misure, label: "Misure (es. 22 × 14 × 10 cm)", widget: string }

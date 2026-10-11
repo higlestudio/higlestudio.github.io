@@ -208,7 +208,7 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 /* più foto: si sfogliano col dito, una alla volta */
 .sfoglia { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .sfoglia::-webkit-scrollbar { display: none; }
-.sfoglia img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; display: block; scroll-snap-align: start; scroll-snap-stop: always; }
+.sfoglia img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; display: block; scroll-snap-align: start; scroll-snap-stop: always; background: var(--f); } /* ogni foto col suo fondo, preso da lei (11/10) */
 /* trattini sotto la foto: uno per foto, pieno quello che si vede */
 .trattini { display: flex; justify-content: center; gap: 4px; padding: 10px var(--g) 4px; }
 .trattini button { width: 30px; height: 18px; display: grid; place-items: center; }
