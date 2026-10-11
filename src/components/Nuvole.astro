@@ -13,6 +13,7 @@ const forme: Record<string, Forma> = {
   d: { base: [10, 44, 104, 28], bozzi: [[44, 40, 24], [82, 44, 20]] },
   h: { base: [10, 40, 140, 26], bozzi: [[50, 38, 24], [98, 30, 30]] },
   i: { base: [10, 50, 160, 30], bozzi: [[48, 48, 26], [94, 36, 34], [138, 52, 20]] },
+  j: { base: [10, 56, 220, 34], bozzi: [[70, 52, 38], [146, 40, 48], [204, 60, 26]] },
   e: { base: [18, 70, 184, 34], bozzi: [[66, 64, 32], [122, 52, 42], [174, 68, 24]] },
   // la nuvola di Boddi: larga e bassa, i bozzi più alti al centro, dove poggia i piedi
   g: { base: [10, 62, 300, 40], bozzi: [[82, 56, 44], [168, 44, 54], [250, 62, 36]] },
@@ -27,6 +28,7 @@ const riquadro = ({ base: [bx, by, bw, bh], bozzi }: Forma) => {
 // così il piede sinistro affonda nella nuvola e il destro ci sta sopra (11/10)
 // le nuvole dietro: posto (% dello schermo), larghezza (% della larghezza), velocità di salita, deriva di lato
 const nuvole = [
+  { f: 'j', x: 50, y: 11, w: 66, v: 0.6, dx: 0.1 },
   { f: 'd', x: 4, y: 23, w: 34, v: 0.5, dx: -0.05 },
   { f: 'c', x: 58, y: 33, w: 58, v: 0.8, dx: 0.12 },
   { f: 'h', x: -14, y: 45, w: 40, v: 0.9, dx: -0.1 },
