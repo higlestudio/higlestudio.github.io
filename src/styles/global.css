@@ -68,7 +68,7 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 /* Home, in cima finché manca il video: le nuvole (Nuvole.astro, scripts/nuvole.ts). La scena è alta uno schermo e resta ferma
    per tutta l'altezza della sezione (più di due schermi): intanto le nuvole salgono e scoprono il testo */
 .nuvole { position: relative; height: 200svh; }
-.nv-scena { position: sticky; top: 0; height: 100svh; overflow: clip; }
+.nv-scena { position: sticky; top: 0; height: 100lvh; /* 11/10: l'altezza intera dello schermo, a barra del browser chiusa: la scena è uguale su ogni telefono */ overflow: clip; }
 .nv-testo { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; padding: var(--testa) var(--g) 40px; text-align: center; opacity: 0; will-change: opacity, transform; }
 .nv-sopra { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 72px); line-height: .95; letter-spacing: -0.03em; }
 .nv-anno { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(96px, 34vw, 300px); line-height: .82; letter-spacing: -0.05em; }
@@ -76,11 +76,11 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .nv-giu { display: grid; place-items: center; width: 56px; height: 56px; margin-top: 18px; border: 1.5px solid var(--carta); border-radius: 50%; }
 .nv-giu svg { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 @media (hover: hover) { .nv-giu:hover { background: var(--carta); } .nv-giu:hover svg { stroke: var(--nero); } }
-.nv { position: absolute; left: var(--x); top: var(--y); width: min(calc(var(--w) * 1vw), calc(var(--w) * .75svh)); z-index: 2; will-change: transform; }
+.nv { position: absolute; left: var(--x); top: var(--y); width: min(calc(var(--w) * 1vw), calc(var(--w) * .46lvh)); z-index: 2; will-change: transform; }
 .nv.dietro { z-index: 1; }
 .nv svg { display: block; width: 100%; height: auto; overflow: visible; }
 /* Boddi in piedi sulla sua nuvola, al centro (11/10): sale con le altre, un po' più veloce. --larg è la larghezza della nuvola */
-.nv-boddi { --larg: min(86vw, 46svh); left: 50%; top: calc(58svh - .72 * var(--larg)); width: var(--larg); margin-left: calc(var(--larg) / -2); z-index: 3; } /* 11/10: più in basso, con aria fra il cervello e il menu */
+.nv-boddi { --larg: min(95vw, 45lvh); left: 50%; top: 29lvh; width: var(--larg); margin-left: calc(var(--larg) / -2); z-index: 3; } /* 11/10, dallo screenshot di Simone: il cervello a 29% dello schermo, la nuvola larga quasi tutto */
 .nv-galleggia { position: relative; }
 .nv-boddi .boddi { display: block; width: 56%; margin: 0 auto; position: relative; z-index: 1; } /* intero, dietro la nuvola: il piede sinistro ci affonda */
 .nv-boddi .nv-forma { position: relative; z-index: 2; margin-top: -14%; }
