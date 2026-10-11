@@ -78,8 +78,14 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 @media (hover: hover) { .nv-giu:hover { background: var(--carta); } .nv-giu:hover svg { stroke: var(--nero); } }
 .nv { position: absolute; left: var(--x); top: var(--y); width: min(calc(var(--w) * 1vw), calc(var(--w) * .75svh)); z-index: 2; will-change: transform; }
 .nv.dietro { z-index: 1; }
-.nv svg { display: block; width: 100%; height: auto; fill: var(--carta); }
-.nv.dietro svg { fill: var(--neutro); }
+.nv svg { display: block; width: 100%; height: auto; overflow: visible; }
+/* fumetto pop: ombra piatta sfalsata, contorno nero spesso, pieno crema (dietro: neutro, con l'ombra grigia), pieghe nere */
+.nv-ombra { fill: var(--neutro); stroke: var(--neutro); }
+.nv.dietro .nv-ombra { fill: var(--grigio); stroke: var(--grigio); }
+.nv-bordo { fill: var(--nero); stroke: var(--nero); }
+.nv-pieno { fill: var(--carta); }
+.nv.dietro .nv-pieno { fill: var(--neutro); }
+.nv-pieghe { fill: none; stroke: var(--nero); stroke-linecap: round; }
 /* e intanto galleggiano piano, ognuna col suo respiro */
 @keyframes galleggia { 50% { translate: 0 -2.5%; } }
 @media (prefers-reduced-motion: no-preference) {
