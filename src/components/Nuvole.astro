@@ -37,11 +37,13 @@ const piega = ([x1, y1, r1]: number[], [x2, y2, r2]: number[]) => {
   const p = (t: number) => `${(x2 + r2 * Math.cos(t)).toFixed(1)} ${(y2 + r2 * Math.sin(t)).toFixed(1)}`;
   return `M${p(t0)} A${r2} ${r2} 0 0 ${verso > 0 ? 1 : 0} ${p(t1)}`;
 };
+// Boddi è disegnato due volte: intero dietro la nuvola, e davanti solo lo stivale destro (quello a destra sullo schermo):
+// così il piede sinistro affonda nella nuvola e il destro ci sta sopra (11/10)
 // le nuvole dietro: posto (% dello schermo), larghezza (% della larghezza), velocità di salita, deriva di lato
 const nuvole = [
-  { f: 'd', x: 4, y: 14, w: 34, v: 0.5, dx: -0.05 },
-  { f: 'c', x: 58, y: 24, w: 58, v: 0.8, dx: 0.12 },
-  { f: 'e', x: -24, y: 58, w: 58, v: 1.1, dx: -0.14 },
+  { f: 'd', x: 4, y: 19, w: 34, v: 0.5, dx: -0.05 },
+  { f: 'c', x: 58, y: 29, w: 58, v: 0.8, dx: 0.12 },
+  { f: 'e', x: -24, y: 62, w: 58, v: 1.1, dx: -0.14 },
 ];
 ---
 <section class="nuvole" aria-labelledby="nv-t">
@@ -69,7 +71,7 @@ const nuvole = [
       </svg>;
       return n.boddi
         ? <div class="nv nv-boddi" style={`--v:${n.v}; --dx:${n.dx}`} aria-hidden="true">
-            <div class="nv-galleggia"><img class="boddi" src="/img/boddi.svg" alt="" />{nuvola}</div>
+            <div class="nv-galleggia"><img class="boddi" src="/img/boddi.svg" alt="" />{nuvola}<img class="boddi boddi-davanti" src="/img/boddi.svg" alt="" /></div>
           </div>
         : <div class="nv dietro" style={`--x:${n.x}%; --y:${n.y}%; --w:${n.w}; --v:${n.v}; --dx:${n.dx}`} aria-hidden="true">{nuvola}</div>;
     })}

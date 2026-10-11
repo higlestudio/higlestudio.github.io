@@ -80,9 +80,12 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .nv.dietro { z-index: 1; }
 .nv svg { display: block; width: 100%; height: auto; overflow: visible; }
 /* Boddi in piedi sulla sua nuvola, al centro (11/10): sale con le altre, un po' più veloce. --larg è la larghezza della nuvola */
-.nv-boddi { --larg: min(86vw, 50svh); left: 50%; top: calc(50svh - .74 * var(--larg)); width: var(--larg); margin-left: calc(var(--larg) / -2); z-index: 3; }
-.nv-boddi .boddi { display: block; width: 56%; margin: 0 auto; position: relative; z-index: 2; } /* gli stivali davanti al bordo della nuvola */
-.nv-boddi .nv-forma { position: relative; z-index: 1; margin-top: -13%; }
+.nv-boddi { --larg: min(86vw, 46svh); left: 50%; top: calc(56svh - .72 * var(--larg)); width: var(--larg); margin-left: calc(var(--larg) / -2); z-index: 3; } /* 11/10: più in basso, con aria fra il cervello e il menu */
+.nv-galleggia { position: relative; }
+.nv-boddi .boddi { display: block; width: 56%; margin: 0 auto; position: relative; z-index: 1; } /* intero, dietro la nuvola: il piede sinistro ci affonda */
+.nv-boddi .nv-forma { position: relative; z-index: 2; margin-top: -14%; }
+/* la copia davanti alla nuvola: solo lo stivale destro (sullo schermo), che così ci sta sopra */
+.nv-boddi .boddi-davanti { position: absolute; top: 0; left: 22%; z-index: 3; clip-path: inset(66% 0 0 45%); }
 /* fumetto pop: ombra piatta sfalsata, contorno nero spesso, pieno crema (dietro: neutro, con l'ombra grigia), pieghe nere */
 .nv-ombra { fill: var(--neutro); stroke: var(--neutro); }
 .nv.dietro .nv-ombra { fill: var(--grigio); stroke: var(--grigio); }
