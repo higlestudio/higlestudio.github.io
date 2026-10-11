@@ -11,7 +11,7 @@ type Forma = { base: number[]; bozzi: number[][] };
 const forme: Record<string, Forma> = {
   c: { base: [10, 44, 200, 30], bozzi: [[60, 40, 30], [125, 32, 38], [178, 48, 22]] },
   d: { base: [10, 44, 104, 28], bozzi: [[44, 40, 24], [82, 44, 20]] },
-  e: { base: [18, 74, 184, 36], bozzi: [[72, 62, 40], [144, 68, 32]] },
+  e: { base: [18, 70, 184, 34], bozzi: [[66, 64, 32], [122, 52, 42], [174, 68, 24]] },
   // la nuvola di Boddi: larga e bassa, i bozzi più alti al centro, dove poggia i piedi
   g: { base: [10, 62, 300, 40], bozzi: [[82, 56, 44], [168, 44, 54], [250, 62, 36]] },
 };
@@ -25,9 +25,9 @@ const riquadro = ({ base: [bx, by, bw, bh], bozzi }: Forma) => {
 // così il piede sinistro affonda nella nuvola e il destro ci sta sopra (11/10)
 // le nuvole dietro: posto (% dello schermo), larghezza (% della larghezza), velocità di salita, deriva di lato
 const nuvole = [
-  { f: 'd', x: 4, y: 19, w: 34, v: 0.5, dx: -0.05 },
-  { f: 'c', x: 58, y: 29, w: 58, v: 0.8, dx: 0.12 },
-  { f: 'e', x: -24, y: 62, w: 58, v: 1.1, dx: -0.14 },
+  { f: 'd', x: 4, y: 23, w: 34, v: 0.5, dx: -0.05 },
+  { f: 'c', x: 58, y: 33, w: 58, v: 0.8, dx: 0.12 },
+  { f: 'e', x: -12, y: 68, w: 52, v: 1.1, dx: -0.14 },
 ];
 ---
 <section class="nuvole" aria-labelledby="nv-t">

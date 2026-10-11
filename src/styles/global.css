@@ -80,7 +80,7 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .nv.dietro { z-index: 1; }
 .nv svg { display: block; width: 100%; height: auto; overflow: visible; }
 /* Boddi in piedi sulla sua nuvola, al centro (11/10): sale con le altre, un po' più veloce. --larg è la larghezza della nuvola */
-.nv-boddi { --larg: min(86vw, 46svh); left: 50%; top: calc(56svh - .72 * var(--larg)); width: var(--larg); margin-left: calc(var(--larg) / -2); z-index: 3; } /* 11/10: più in basso, con aria fra il cervello e il menu */
+.nv-boddi { --larg: min(86vw, 46svh); left: 50%; top: calc(61svh - .72 * var(--larg)); width: var(--larg); margin-left: calc(var(--larg) / -2); z-index: 3; } /* 11/10: più in basso, con aria fra il cervello e il menu */
 .nv-galleggia { position: relative; }
 .nv-boddi .boddi { display: block; width: 56%; margin: 0 auto; position: relative; z-index: 1; } /* intero, dietro la nuvola: il piede sinistro ci affonda */
 .nv-boddi .nv-forma { position: relative; z-index: 2; margin-top: -14%; }
