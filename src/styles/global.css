@@ -86,13 +86,12 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .nv-boddi .nv-forma { position: relative; z-index: 2; margin-top: -14%; }
 /* la copia davanti alla nuvola: solo lo stivale destro (sullo schermo), che così ci sta sopra */
 .nv-boddi .boddi-davanti { position: absolute; top: 0; left: 22%; z-index: 3; clip-path: inset(66% 0 0 45%); }
-/* fumetto pop: ombra piatta sfalsata, contorno nero spesso, pieno crema (dietro: neutro, con l'ombra grigia), pieghe nere */
+/* ombra piatta sfalsata, contorno nero fine, pieno crema (dietro: neutro, con l'ombra grigia) */
 .nv-ombra { fill: var(--neutro); stroke: var(--neutro); }
 .nv.dietro .nv-ombra { fill: var(--grigio); stroke: var(--grigio); }
 .nv-bordo { fill: var(--nero); stroke: var(--nero); }
 .nv-pieno { fill: var(--carta); }
 .nv.dietro .nv-pieno { fill: var(--neutro); }
-.nv-pieghe { fill: none; stroke: var(--nero); stroke-linecap: round; }
 /* e intanto galleggiano piano, ognuna col suo respiro */
 @keyframes galleggia { 50% { translate: 0 -2.5%; } }
 @media (prefers-reduced-motion: no-preference) {

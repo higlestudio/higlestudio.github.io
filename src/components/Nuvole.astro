@@ -5,37 +5,21 @@
 interface Props { sopra: string; anno: number; giu: string }
 const { sopra, anno, giu } = Astro.props;
 
-// stile fumetto pop (scelto da Simone): pochi bozzi grandi sopra una base arrotondata, contorno nero spesso, ombra piatta sfalsata,
-// e le pieghe nere dove un bozzo entra in quello accanto. Ogni forma: base [x, y, larghezza, altezza] + bozzi [x, y, raggio]
+// 11/10, quarta versione: morbide e semplici (scelto da Simone): due o tre bozzi grandi e rotondi sopra una base arrotondata,
+// contorno nero fine, ombra piatta sfalsata, niente pieghe dentro. Ogni forma: base [x, y, larghezza, altezza] + bozzi [x, y, raggio]
 type Forma = { base: number[]; bozzi: number[][] };
 const forme: Record<string, Forma> = {
-  c: { base: [10, 46, 220, 30], bozzi: [[40, 46, 24], [82, 34, 32], [128, 30, 32], [172, 40, 26], [208, 52, 16]] },
-  d: { base: [10, 46, 104, 28], bozzi: [[36, 46, 22], [68, 36, 28], [98, 50, 16]] },
-  e: { base: [18, 78, 184, 36], bozzi: [[52, 78, 30], [94, 54, 42], [146, 62, 36], [186, 84, 20]] },
+  c: { base: [10, 44, 200, 30], bozzi: [[60, 40, 30], [125, 32, 38], [178, 48, 22]] },
+  d: { base: [10, 44, 104, 28], bozzi: [[44, 40, 24], [82, 44, 20]] },
+  e: { base: [18, 74, 184, 36], bozzi: [[72, 62, 40], [144, 68, 32]] },
   // la nuvola di Boddi: larga e bassa, i bozzi più alti al centro, dove poggia i piedi
-  g: { base: [10, 62, 300, 40], bozzi: [[46, 66, 30], [100, 50, 42], [162, 44, 46], [224, 52, 40], [278, 68, 28]] },
+  g: { base: [10, 62, 300, 40], bozzi: [[82, 56, 44], [168, 44, 54], [250, 62, 36]] },
 };
-const BORDO = 6, OMBRA = 7; // spessore del contorno e spostamento dell'ombra, in unità del disegno
+const BORDO = 3.5, OMBRA = 7; // spessore del contorno e spostamento dell'ombra, in unità del disegno
 const riquadro = ({ base: [bx, by, bw, bh], bozzi }: Forma) => {
   const x0 = Math.min(bx, ...bozzi.map(([x, , r]) => x - r)) - BORDO, y0 = Math.min(by, ...bozzi.map(([, y, r]) => y - r)) - BORDO;
   const x1 = Math.max(bx + bw, ...bozzi.map(([x, , r]) => x + r)) + BORDO + OMBRA, y1 = Math.max(by + bh, ...bozzi.map(([, y, r]) => y + r)) + BORDO + OMBRA;
   return `${x0} ${y0} ${x1 - x0} ${y1 - y0}`;
-};
-// la piega (11/10, rifatta: prima erano archi messi a caso): dove il bordo di un bozzo incontra quello prima, il suo bordo
-// continua per un tratto dentro l'altro bozzo, come nei fumetti. Si parte dal punto d'incontro più alto dei due cerchi.
-const piega = ([x1, y1, r1]: number[], [x2, y2, r2]: number[]) => {
-  const d = Math.hypot(x2 - x1, y2 - y1);
-  if (d >= r1 + r2 || d <= Math.abs(r1 - r2)) return '';
-  const a = (r1 * r1 - r2 * r2 + d * d) / (2 * d), h = Math.sqrt(r1 * r1 - a * a);
-  const mx = x1 + (a * (x2 - x1)) / d, my = y1 + (a * (y2 - y1)) / d;
-  const px = (s: number) => [mx + (s * h * (y2 - y1)) / d, my - (s * h * (x2 - x1)) / d];
-  const [ix, iy] = [px(1), px(-1)].sort((p, q) => p[1] - q[1])[0]; // il punto d'incontro più in alto
-  const t0 = Math.atan2(iy - y2, ix - x2);
-  // verso quale lato il bordo entra nell'altro bozzo
-  const dentro = (t: number) => Math.hypot(x2 + r2 * Math.cos(t) - x1, y2 + r2 * Math.sin(t) - y1) < r1;
-  const verso = dentro(t0 - 0.3) ? -1 : 1, t1 = t0 + verso * 0.55; // ~32 gradi
-  const p = (t: number) => `${(x2 + r2 * Math.cos(t)).toFixed(1)} ${(y2 + r2 * Math.sin(t)).toFixed(1)}`;
-  return `M${p(t0)} A${r2} ${r2} 0 0 ${verso > 0 ? 1 : 0} ${p(t1)}`;
 };
 // Boddi è disegnato due volte: intero dietro la nuvola, e davanti solo lo stivale destro (quello a destra sullo schermo):
 // così il piede sinistro affonda nella nuvola e il destro ci sta sopra (11/10)
@@ -58,7 +42,7 @@ const nuvole = [
     {[...nuvole.map((n) => ({ ...n, boddi: false })), { f: 'g', x: 0, y: 0, w: 0, v: 1.6, dx: 0, boddi: true }].map((n) => {
       const s = forme[n.f];
       const [bx, by, bw, bh] = s.base;
-      // la sagoma (base + bozzi), disegnata tre volte: ombra, contorno (più spesso), pieno; sopra le pieghe
+      // la sagoma (base + bozzi), disegnata tre volte: ombra, contorno (più spesso), pieno
       const sagoma = <>
         <rect x={bx} y={by} width={bw} height={bh} rx={bh / 2} />
         {s.bozzi.map(([cx, cy, r]) => <circle cx={cx} cy={cy} r={r} />)}
@@ -67,7 +51,6 @@ const nuvole = [
         <g class="nv-ombra" transform={`translate(${OMBRA} ${OMBRA})`} stroke-width={BORDO * 2}>{sagoma}</g>
         <g class="nv-bordo" stroke-width={BORDO * 2}>{sagoma}</g>
         <g class="nv-pieno">{sagoma}</g>
-        <g class="nv-pieghe" stroke-width={BORDO * 0.7}>{s.bozzi.slice(1).map((b, i) => <path d={piega(s.bozzi[i], b)} />)}</g>
       </svg>;
       return n.boddi
         ? <div class="nv nv-boddi" style={`--v:${n.v}; --dx:${n.dx}`} aria-hidden="true">
