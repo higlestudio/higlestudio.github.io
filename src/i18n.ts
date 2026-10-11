@@ -15,7 +15,7 @@ export const testi = {
     noteLegali: 'Note legali', privacy: 'Privacy', impressum: 'Impressum',
     apri: 'Apri', video: 'Video del progetto', data: 'Data', luogo: 'Luogo', scopri: 'Scopri tutto il progetto',
     anno: 'Anno', materiali: 'Materiali', misure: 'Misure', edizione: 'Edizione', ciclo: 'Progetto',
-    foto: 'Foto', opere: 'opere', nuovoProgetto: 'Nuovo progetto', errore: 'Errore', vaiHome: 'Torna alla Home', nlCiSei: 'Ci sei.', nlConfermata: "Iscrizione confermata. Ti scrivo quando c'è qualcosa da vedere.", nlTitolo: 'Iscrizione confermata',
+    foto: 'Foto', opere: 'opere', nuovoProgetto: 'Nuovo progetto', errore: 'Errore', vaiHome: 'Torna alla Home', nlCiSei: 'Grazie', nlConfermata: 'per la tua iscrizione. Riceverai poche email, ma buone.', nlTitolo: 'Iscrizione confermata',
     email: 'Email', ritratto: 'Ritratto di Higle',
   },
   en: {
@@ -27,7 +27,7 @@ export const testi = {
     noteLegali: 'Legal', privacy: 'Privacy', impressum: 'Impressum',
     apri: 'Open', video: 'Project video', data: 'Date', luogo: 'Venue', scopri: 'See the whole project',
     anno: 'Year', materiali: 'Materials', misure: 'Dimensions', edizione: 'Edition', ciclo: 'Project',
-    foto: 'Photos', opere: 'works', nuovoProgetto: 'New project', errore: 'Error', vaiHome: 'Go to Home', nlCiSei: "You're in.", nlConfermata: "Subscription confirmed. I'll write when there's something to see.", nlTitolo: 'Subscription confirmed',
+    foto: 'Photos', opere: 'works', nuovoProgetto: 'New project', errore: 'Error', vaiHome: 'Go to Home', nlCiSei: 'Thank you', nlConfermata: "for subscribing. You'll get few emails, but good ones.", nlTitolo: 'Subscription confirmed',
     email: 'Email', ritratto: 'Portrait of Higle',
   },
 } as const;

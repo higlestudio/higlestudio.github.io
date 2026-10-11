@@ -309,5 +309,7 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .vuoto-frase { margin: 18px 0 0; font-size: clamp(20px, 5.4vw, 34px); font-weight: 500; }
 .vuoto-box { border-bottom: 0; }
 /* iscrizione confermata (/newsletter/): come la 404, ma la parola è più lunga del numero */
-.nl-ci-sei { font-size: clamp(76px, 24vw, 220px); }
+.nl-ci-sei { font-size: clamp(56px, 17vw, 190px); white-space: nowrap; } /* "Grazie" e "Thank you" su una riga */
+.nl-grazie { min-height: calc(100svh - var(--testa)); } /* senza la casella sotto: la pagina è tutta sua, la pillola sta sotto la frase */
+.nl-grazie .scopri-pillola { padding: 40px 0 0; }
 .vuoto-frase { max-width: 24ch; text-wrap: balance; }

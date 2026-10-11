@@ -7,13 +7,11 @@ const t = testi[lang];
 const altra: Lang = lang === 'it' ? 'en' : 'it';
 ---
 <!-- iscrizione confermata (11/10): ci si arriva dal clic nella mail di conferma di Brevo, un modulo per lingua.
-     Stessa forma della 404: una parola grande, una riga, la casella crema per tornare in Home. Mai su Google. -->
+     "Grazie" grande, la frase sotto, e la pillola crema per tornare in Home (come "Scopri tutto il progetto"). Mai su Google. -->
 <Base lang={lang} titolo={`${t.nlTitolo} | Higle Studio`} altra={percorsi[altra].newsletter} automatica={false} nascosta>
-  <section class="vuoto">
+  <section class="vuoto nl-grazie">
     <h1 class="vuoto-404 nl-ci-sei">{t.nlCiSei}</h1>
     <p class="vuoto-frase">{t.nlConfermata}</p>
+    <div class="scopri-pillola"><a href={percorsi[lang].home}>{t.vaiHome} <span aria-hidden="true">→</span></a></div>
   </section>
-  <div class="pannelli scopri-box vuoto-box">
-    <a class="cella scopri" href={percorsi[lang].home}>{t.vaiHome} <span aria-hidden="true">→</span></a>
-  </div>
 </Base>
