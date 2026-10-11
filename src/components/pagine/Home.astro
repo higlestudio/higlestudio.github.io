@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Logomark from '../Logomark.astro';
 import Griglia from '../Griglia.astro';
+import Nuvole from '../Nuvole.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
 import { cicloInPrimoPiano, opere, titoloCiclo, statement } from '../../dati';
 interface Props { lang: Lang }
@@ -38,13 +39,10 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
   </div>
   <h1 class="sr">Higle Studio</h1>
 
-  <!-- 9/10: in cima il video del progetto (finché non c'è, la copertina con il segno del play) -->
-  <section class="video" aria-label={t.video}>
-    {video
-      ? <video src={video} poster={copertina} autoplay muted loop playsinline preload="metadata"></video>
-      : copertina && <img src={copertina} alt="" />}
-    {!video && <svg class="play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>}
-  </section>
+  <!-- in cima il video del progetto, se c'è (dal pannello). 11/10: finché manca, le nuvole che salgono e scoprono il progetto -->
+  {video
+    ? <section class="video" aria-label={t.video}><video src={video} poster={copertina} autoplay muted loop playsinline preload="metadata"></video></section>
+    : <Nuvole sopra={t.nuovoProgetto} anno={ciclo.data.anno} titolo={titolo} giu="#opere" />}
 
   <!-- gli eventi, ognuno con la sua locandina, nell'ordine del pannello (11/10: possono essere più di uno; si spengono uno per uno) -->
   {eventi.map((e, i) => {

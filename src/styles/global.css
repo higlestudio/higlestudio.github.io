@@ -65,6 +65,30 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .video video, .video img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .video .play { position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; translate: -50% -50%; fill: none; stroke: var(--carta); stroke-width: 1.2; stroke-linejoin: round; filter: drop-shadow(0 2px 12px rgba(0,0,0,.35)); }
 
+/* Home, in cima finché manca il video: le nuvole (Nuvole.astro, scripts/nuvole.ts). La scena è alta uno schermo e resta ferma
+   per tutta l'altezza della sezione (più di due schermi): intanto le nuvole salgono e scoprono il testo */
+.nuvole { position: relative; height: 200svh; }
+.nv-scena { position: sticky; top: 0; height: 100svh; overflow: clip; }
+.nv-testo { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; padding: var(--testa) var(--g) 40px; text-align: center; opacity: .2; will-change: opacity, transform; }
+.nv-sopra { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 72px); line-height: .95; letter-spacing: -0.03em; }
+.nv-anno { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(96px, 34vw, 300px); line-height: .82; letter-spacing: -0.05em; }
+.nv-titolo { margin: 8px 0 0; max-width: 26ch; font-size: clamp(16px, 4.2vw, 22px); line-height: 1.35; color: var(--neutro); text-wrap: balance; }
+.nv-giu { display: grid; place-items: center; width: 56px; height: 56px; margin-top: 18px; border: 1.5px solid var(--carta); border-radius: 50%; }
+.nv-giu svg { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+@media (hover: hover) { .nv-giu:hover { background: var(--carta); } .nv-giu:hover svg { stroke: var(--nero); } }
+.nv { position: absolute; left: var(--x); top: var(--y); width: min(calc(var(--w) * 1vw), calc(var(--w) * .75svh)); z-index: 2; will-change: transform; }
+.nv.dietro { z-index: 1; }
+.nv svg { display: block; width: 100%; height: auto; fill: var(--carta); }
+.nv.dietro svg { fill: var(--neutro); }
+/* e intanto galleggiano piano, ognuna col suo respiro */
+@keyframes galleggia { 50% { translate: 0 -2.5%; } }
+@media (prefers-reduced-motion: no-preference) {
+  .nv svg { animation: galleggia 7s ease-in-out infinite; }
+  .nv:nth-of-type(2n) svg { animation-duration: 9s; animation-delay: -3s; }
+  .nv:nth-of-type(3n) svg { animation-duration: 11s; animation-delay: -5s; }
+}
+#opere { scroll-margin-top: var(--testa); } /* la freccia porta qui: le opere sotto il menu, non dietro */
+
 /* Home: il progetto (anno e titolo), l'evento e la locandina */
 .prog-home { border-top: 0; }
 .evento + .evento { margin-top: -1px; } /* più eventi uno sotto l'altro: un filo solo fra i due */
@@ -266,7 +290,7 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 /* pagina 404 (11/10): "Errore" piccolo, 404 grande, una frase; sotto, a tutta larghezza, la casella crema che riporta in Home.
    Tutto insieme alto quanto lo schermo sotto il menu: la casella si vede subito */
 .vuoto { min-height: calc(100svh - var(--testa) - 92px); padding: 32px var(--g) 48px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.vuoto-errore { margin: 0 0 14px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); }
+.vuoto-errore { display: block; font-size: .36em; line-height: 1; letter-spacing: -0.03em; margin-bottom: .04em; } /* "Error" in Nohemi sopra il 404, largo quanto basta (11/10: la scritta piccola non piaceva) */
 .vuoto-404 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(120px, 44vw, 380px); line-height: .85; letter-spacing: -0.05em; }
 .vuoto-frase { margin: 18px 0 0; font-size: clamp(20px, 5.4vw, 34px); font-weight: 500; }
 .vuoto-box { border-bottom: 0; }

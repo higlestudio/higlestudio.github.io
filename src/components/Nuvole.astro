@@ -1,0 +1,46 @@
+---
+// in cima alla Home, finché il progetto non ha il suo video (11/10, idea di Simone): nuvole disegnate a vettore, sparse,
+// alcune escono dai bordi. Scorrendo salgono, ognuna alla sua velocità, e scoprono "Nuovo progetto", l'anno e il titolo;
+// la freccia porta giù alle opere (scripts/nuvole.ts). Le nuvole davanti sono crema, quelle dietro color neutro.
+interface Props { sopra: string; anno: number; titolo: string; giu: string }
+const { sopra, anno, titolo, giu } = Astro.props;
+
+// ogni nuvola: forma (cerchi + base arrotondata), posto (% dello schermo), larghezza, velocità di salita, deriva di lato, davanti/dietro
+const forme = {
+  a: { vb: '0 0 200 100', base: [20, 55, 160, 35], cerchi: [[50, 55, 30], [95, 40, 38], [140, 52, 28], [165, 65, 20]] },
+  b: { vb: '0 0 160 110', base: [15, 70, 130, 32], cerchi: [[45, 68, 28], [80, 45, 40], [118, 62, 30]] },
+  c: { vb: '0 0 240 80', base: [10, 48, 220, 26], cerchi: [[40, 48, 22], [80, 36, 30], [125, 30, 30], [165, 40, 26], [205, 50, 18]] },
+  d: { vb: '0 0 120 80', base: [10, 48, 100, 26], cerchi: [[38, 48, 24], [70, 36, 30], [95, 52, 18]] },
+  e: { vb: '0 0 220 120', base: [20, 80, 180, 32], cerchi: [[55, 78, 32], [95, 52, 44], [145, 60, 38], [185, 82, 22]] },
+} as const;
+const nuvole = [
+  { f: 'd', x: 4, y: 9, w: 34, v: 0.5, dx: -0.05, dietro: true },
+  { f: 'c', x: 56, y: 17, w: 68, v: 0.8, dx: 0.12, dietro: true },
+  { f: 'e', x: -30, y: 44, w: 86, v: 1.1, dx: -0.14, dietro: true },
+  { f: 'a', x: 2, y: 31, w: 98, v: 1.5, dx: -0.06, dietro: false },
+  { f: 'b', x: 40, y: 55, w: 82, v: 1.9, dx: 0.1, dietro: false },
+  { f: 'a', x: -22, y: 72, w: 74, v: 2.3, dx: -0.12, dietro: false },
+] as const;
+---
+<section class="nuvole" aria-labelledby="nv-t">
+  <div class="nv-scena">
+    <div class="nv-testo">
+      <p class="nv-sopra" id="nv-t">{sopra}</p>
+      <p class="nv-anno num">{anno}</p>
+      <p class="nv-titolo">{titolo}</p>
+      <a class="nv-giu" href={giu} aria-label={sopra}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
+      </a>
+    </div>
+    {nuvole.map((n) => {
+      const s = forme[n.f];
+      return <div class:list={['nv', { dietro: n.dietro }]} style={`--x:${n.x}%; --y:${n.y}%; --w:${n.w}; --v:${n.v}; --dx:${n.dx}`} aria-hidden="true">
+        <svg viewBox={s.vb}>
+          <rect x={s.base[0]} y={s.base[1]} width={s.base[2]} height={s.base[3]} rx={s.base[3] / 2} />
+          {s.cerchi.map(([cx, cy, r]) => <circle cx={cx} cy={cy} r={r} />)}
+        </svg>
+      </div>;
+    })}
+  </div>
+</section>
+<script>import '../scripts/nuvole.ts';</script>
