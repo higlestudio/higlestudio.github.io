@@ -52,13 +52,20 @@ main { position: relative; z-index: 2; }
 .pn-group a { padding: 14px 14px; color: color-mix(in srgb, var(--nero) 50%, var(--carta)); }
 .pn-group a[aria-current="page"] { color: var(--nero); }
 @media (hover: hover) { .pn-group a:hover { color: var(--nero); } }
-@media (min-width: 900px) { .pill-nav { font-size: 16px; } .pn-group a { padding: 14px 16px; } }
+/* computer: il menu cresce un poco con lo schermo (16px fino a ~1900 px, poi fino a 22px sui 2560); lo spazio in cima lo segue (14/10) */
+@media (min-width: 900px) {
+  :root { --menu: clamp(16px, .85vw, 22px); --testa: calc(var(--menu) * 3.25 + 26px); }
+  .pill-nav { font-size: var(--menu); }
+  .pn-group { padding: 0 .5em; }
+  .pn-group a { padding: .875em 1em; }
+}
 /* 14/10 (Simone): sul telefono il menu ha sempre la stessa proporzione dello schermo, con o senza zoom: le misure sono
    in percentuale della larghezza (vw), tarate perché su un iPhone da 390 punti resti identico a prima (16px, 14px, 8px) */
 @media (max-width: 899px) {
-  .pill-nav { font-size: 4.1vw; top: calc(3.6vw + env(safe-area-inset-top, 0px)); gap: 1vw; }
-  .pn-group { padding: 0 2.05vw; }
-  .pn-group a { padding: 3.6vw; }
+  /* 14/10: fermo alla misura di un telefono grande (430 punti): sui tablet non cresce oltre */
+  .pill-nav { font-size: min(4.1vw, 17.6px); top: calc(min(3.6vw, 15.5px) + env(safe-area-inset-top, 0px)); gap: min(1vw, 4.3px); }
+  .pn-group { padding: 0 min(2.05vw, 8.8px); }
+  .pn-group a { padding: min(3.6vw, 15.5px); }
 }
 
 /* ingresso della Home (scripts/hero.ts): un velo nero sopra tutto, i petali compongono il logo al centro, poi il velo si dissolve */
@@ -391,14 +398,15 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 /* Pagina opera su computer (14/10, "foto a schermo, testo accanto"): la foto 4:3 alta quanto lo schermo, coi trattini sotto;
    accanto il nome e la scheda in colonna; sotto, a tutta riga, il testo dell'opera. Stesse cose del telefono, altro ordine */
 @media (min-width: 900px) {
-  .op-pagina { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; }
+  .op-pagina { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; border-top: 1px solid var(--linea); } /* 14/10: un filo in alto chiude il riquadro, come sul telefono */
   .op-pagina > .op-foto { grid-column: 1; grid-row: 1 / span 2; height: calc(100svh - var(--testa) - 40px); max-width: 78vw; }
+  .op-pagina:not(:has(.trattini)) > .op-foto { height: calc(100svh - var(--testa)); } /* una foto sola o nessuna: niente spazio per i trattini */
   .op-pagina > .trattini { grid-column: 1; grid-row: 3; height: 40px; align-items: center; padding-block: 0; }
   .op-blocco { display: contents; } /* i suoi pezzi entrano nella griglia della pagina */
-  .op-blocco > .op-testa { grid-column: 2; grid-row: 1; padding-block: 44px 28px; border-left: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+  .op-blocco > .op-testa { grid-column: 2; grid-row: 1; padding-block: clamp(24px, 5svh, 44px) clamp(16px, 3svh, 28px); border-left: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
   .op-t { text-align: left; font-size: clamp(56px, 6.4vw, 140px); }
-  .op-blocco > .op-griglia { grid-column: 2; grid-row: 2 / span 2; align-content: start; gap: 0; background: var(--nero); border-left: 1px solid var(--linea); }
-  .op-griglia .cella { border-bottom: 1px solid var(--linea); }
+  .op-blocco > .op-griglia { grid-column: 2; grid-row: 2 / span 2; grid-auto-rows: 1fr; align-content: stretch; gap: 0; background: var(--nero); border-left: 1px solid var(--linea); } /* 14/10: le voci si dividono tutta l'altezza, niente casellina vuota in fondo */
+  .op-griglia .cella { border-bottom: 1px solid var(--linea); padding-block: clamp(10px, 1.9svh, 18px) clamp(11px, 2.1svh, 20px); } /* sugli schermi bassi (iPad) le voci si stringono, così la scheda non supera la foto */
   .op-blocco > .cella:last-child { grid-column: 1 / -1; grid-row: 4; border-top: 1px solid var(--linea); padding-block: 56px 72px; }
   .op-testo { max-width: 52ch; font-size: clamp(20px, 1.7vw, 28px); }
 }
