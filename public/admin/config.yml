@@ -44,10 +44,8 @@ collections:
       - { name: in_primo_piano, label: "In primo piano (apre la Home e parte aperto in Work)", widget: boolean, default: false }
       - { name: statement_it, label: "Statement IT (il primo paragrafo esce grande)", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
       - { name: statement_en, label: "Statement EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
-      - { name: video, label: "Video in cima alla Home (mp4, facoltativo; parte da solo, senza audio, a ciclo)", widget: file, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
-      - { name: copertina, label: "Copertina del video (foto verticale; si vede finché il video parte, o al suo posto se il video manca)", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
       - name: eventi
-        label: "Eventi in Home (mostre, presentazioni…: aggiungine quanti vuoi, escono in quest'ordine; trascinali per cambiarlo)"
+        label: "Eventi in Home (mostre, presentazioni…: aggiungine quanti vuoi, escono in quest'ordine; trascinali per cambiarlo). Se nessuno è acceso, in Home la parte degli eventi non c'è"
         label_singular: Evento
         widget: list
         collapsed: true
@@ -61,10 +59,10 @@ collections:
           - { name: data_en, label: "Data EN (es. 12–20 November 2026)", widget: string, required: false }
           - { name: luogo_it, label: "Luogo IT (es. Berlino, Kreuzberg)", widget: string, required: false }
           - { name: luogo_en, label: "Luogo EN (es. Berlin, Kreuzberg)", widget: string, required: false }
-          - { name: testo_it, label: "Qualche riga IT, sotto il luogo (per ora si vede solo su computer)", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
+          - { name: testo_it, label: "Qualche riga IT (sul telefono si apre con la freccetta accanto al titolo; sul computer sta sotto il luogo)", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
           - { name: testo_en, label: "Qualche riga EN", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
-          - { name: locandina, label: "Locandina", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
-          - { name: link, label: "Link (facoltativo: dove porta toccando la locandina)", widget: string, required: false }
+          - { name: locandina, label: "Locandina (verticale; finché manca si vede un riquadro vuoto)", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
+          - { name: link, label: "Link (facoltativo: dove porta toccando la locandina, se c'è)", widget: string, required: false }
 
   - name: opere
     label: Opere
@@ -77,17 +75,16 @@ collections:
     media_folder: /public/img/opere
     public_folder: /img/opere
     identifier_field: titolo
-    summary: "{{numero}} — {{titolo}} ({{ciclo}}){{bozza | ternary(' · bozza', '')}}"
-    sortable_fields: [numero, titolo, anno]
+    summary: "{{ordine}} — {{titolo}} ({{ciclo}}){{bozza | ternary(' · bozza', '')}}"
+    sortable_fields: [ordine, titolo, anno]
     fields:
       - { name: slug, label: "Nome breve (minuscole, senza spazi, non cambiarlo dopo: è l'indirizzo della pagina)", widget: string }
       - { name: titolo, label: Titolo, widget: string }
       - { name: ciclo, label: Progetto, widget: relation, collection: cicli, value_field: "{{slug}}", search_fields: [titolo_it], display_fields: [titolo_it] }
-      - { name: numero, label: "Numero (es. 005)", widget: string }
       - { name: ordine, label: "Ordine nel progetto (1, 2, 3…)", widget: number, value_type: int }
       - { name: anno, label: Anno, widget: number, value_type: int }
       - { name: foto, label: "Foto principale (orizzontale 4:3; finché manca si vede un riquadro vuoto)", widget: image, required: false }
-      - { name: foto_quadrata, label: "Foto quadrata per Work (facoltativa: se manca si usa la principale)", widget: image, required: false }
+      - { name: foto_quadrata, label: "Foto quadrata per la griglia della Home (facoltativa: se manca si usa la principale)", widget: image, required: false }
       - { name: altre_foto, label: "Altre foto, da sfogliare nella pagina dell'opera (fino a 4, facoltative; trascinale per cambiare l'ordine)", widget: list, field: { name: foto, label: Foto, widget: image }, max: 4, required: false }
       - { name: fondo, label: "Colore di fondo dietro la foto (lascialo vuoto: lo prende da solo dai bordi della foto; sceglilo solo per forzarne uno)", widget: color, required: false }
       - { name: materiali_it, label: "Materiali IT", widget: string }

@@ -12,10 +12,7 @@ const cicli = defineCollection({
     in_primo_piano: z.boolean().default(false),
     statement_it: z.string().default(''),
     statement_en: z.string().default(''),
-    // in cima alla Home: il video del progetto; la copertina si vede finché parte (o al posto del video, se manca)
-    video: z.string().optional(),
-    copertina: z.string().optional(),
-    // in Home, sotto il video: gli eventi del progetto (mostre, presentazioni…), ognuno con la sua locandina, nell'ordine del pannello.
+    // in Home, sotto le nuvole: gli eventi del progetto (mostre, presentazioni…), ognuno con la sua locandina, nell'ordine del pannello.
     // Spento = non si vede (11/10: da uno solo a una lista)
     eventi: z.array(z.object({
       attivo: z.boolean().default(true),
@@ -25,7 +22,7 @@ const cicli = defineCollection({
       data_en: z.string().default(''),
       luogo_it: z.string().default(''),
       luogo_en: z.string().default(''),
-      testo_it: z.string().default(''), // 14/10: qualche riga sotto il luogo (per ora solo su computer)
+      testo_it: z.string().default(''), // 14/10: qualche riga sotto il titolo (telefono: si apre con la freccetta) o sotto il luogo (computer)
       testo_en: z.string().default(''),
       locandina: z.string().optional(),
       link: z.string().optional(),
@@ -39,7 +36,6 @@ const opere = defineCollection({
     slug: z.string().optional(),
     titolo: z.string(),
     ciclo: z.string(),
-    numero: z.string(),
     ordine: z.number().default(0),
     anno: z.number(),
     foto: z.string().default(''), // 14/10: facoltativa finché non ci sono gli scatti definitivi (al suo posto un riquadro vuoto)

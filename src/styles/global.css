@@ -79,13 +79,9 @@ html.intro .ingresso, html.intro-resto .ingresso, .ingresso.esce { display: grid
 html.intro .ingresso svg { visibility: hidden; } /* finché lo script non fa partire i petali */
 html.intro, html.intro body, html.intro-resto, html.intro-resto body { overflow: hidden; touch-action: none; } /* durante l'ingresso la pagina è ferma */
 
-/* Home, in cima: il video del progetto, alto quanto lo schermo sotto il menu. Finché manca, la copertina con il segno del play */
-body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo alto: il menu ci galleggia sopra */
-.video { position: relative; height: 100svh; background: var(--fondo-foto); overflow: hidden; }
-.video video, .video img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.video .play { position: absolute; left: 50%; top: 50%; width: 72px; height: 72px; translate: -50% -50%; fill: none; stroke: var(--carta); stroke-width: 1.2; stroke-linejoin: round; filter: drop-shadow(0 2px 12px rgba(0,0,0,.35)); }
+body[data-pagina="home"] { padding-top: 0; } /* in Home la scena parte dal bordo alto: il menu ci galleggia sopra */
 
-/* Home, in cima finché manca il video: le nuvole (Nuvole.astro, scripts/nuvole.ts). La scena è alta uno schermo e resta ferma
+/* Home, in cima: le nuvole (Nuvole.astro, scripts/nuvole.ts). La scena è alta uno schermo e resta ferma
    per tutta l'altezza della sezione (più di due schermi): intanto le nuvole salgono e scoprono il testo */
 .nuvole { position: relative; height: 200svh; }
 .nv-scena { position: sticky; top: 0; height: 100lvh; /* 11/10: l'altezza intera dello schermo, a barra del browser chiusa: la scena è uguale su ogni telefono */ overflow: clip; }
@@ -164,6 +160,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   background-position: calc(var(--m) - 1px) 0, calc(100% - var(--m) + 1px) 0, 0 calc(var(--m) - 1px), 0 calc(100% - var(--m) + 1px);
   background-repeat: no-repeat; }
 .locandina img { display: block; width: 100%; height: auto; position: relative; }
+.loc-vuota { width: 100%; aspect-ratio: 1 / 1.414; background: var(--fondo-foto); position: relative; } /* 14/10: senza locandina, il suo spazio vuoto (formato A, come un manifesto) */
 
 /* Home, verso Work (11/10): una pillola crema al centro, con aria sopra e sotto, staccata dal piede */
 .scopri-pillola { display: flex; justify-content: center; padding: 56px var(--g) 88px; }
@@ -363,6 +360,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   .evento { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
   .evento > .locandina { grid-column: 1; grid-row: 1 / span 3; display: grid; place-items: center; }
   .evento > .locandina img { width: auto; max-width: 100%; max-height: calc(100svh - var(--testa) - 2 * var(--m)); }
+  .evento > .locandina .loc-vuota { width: auto; height: calc(100svh - var(--testa) - 2 * var(--m)); max-width: 100%; }
   .evento > .evento-testa { display: contents; } /* sul computer titolo e righe sono due caselle della griglia */
   .evento .et-riga { grid-column: 2; grid-row: 1; background: var(--nero); padding-inline: var(--g); }
   .evento .evento-t { padding-block: 48px 32px; font-size: clamp(34px, 3.6vw, 64px); }
