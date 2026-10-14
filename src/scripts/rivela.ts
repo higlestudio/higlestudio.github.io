@@ -18,11 +18,11 @@ const pronta = () => new Promise<void>((ok) => {
 const tutti = <T extends HTMLElement = HTMLElement>(sel: string) => [...document.querySelectorAll<T>(sel)];
 
 // tutto il testo con la tendina: Home (eventi, titolo e testo del progetto), Work (titolo e statement),
-// About (Instagram, mail, "Higle", bio), pagina opera (solo la descrizione)
+// About ("Higle" e bio; Instagram e mail fermi, 14/10), pagina opera (solo la descrizione)
 const TESTO = [
   '.evento-t', '.evento-info dt', '.evento-info dd', '.prog-intro h2', '.prog-lead',
   '.st-work .st-titolo', '.statement .lead', '.statement .corpo > *',
-  '.me .ft-ig', '.me .etichetta', '.me .bio > *',
+  '.me .etichetta', '.me .bio > *',
   '.op-testo > *',
 ].join(', ');
 
