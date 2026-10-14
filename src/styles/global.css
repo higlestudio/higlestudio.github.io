@@ -165,8 +165,8 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .statement .corpo { display: grid; gap: 1em; max-width: 62ch; font-size: 16px; line-height: 1.65; color: var(--neutro); }
 .statement .corpo p { margin: 0; }
 @media (min-width: 900px) {
-  .statement { grid-template-columns: 5fr 6fr; gap: 6vw; margin-top: 40px; align-items: start; }
-  .statement .corpo { font-size: 17px; }
+  .statement { margin-top: 40px; gap: 32px; } /* 14/10: una colonna sola anche su computer (Simone: su due colonne non si capisce) */
+  .statement .corpo { font-size: 18px; max-width: 64ch; }
 }
 
 /* le opere: foto orizzontali, a tutta larghezza sul telefono, a tutto schermo sul computer */
@@ -351,4 +351,19 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   .prog-intro .cella { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; column-gap: 6vw; padding-block: 64px 56px; }
   .prog-intro h2 { font-size: clamp(56px, 6.4vw, 120px); }
   .prog-lead { font-size: clamp(18px, 1.5vw, 24px); }
+}
+
+/* Work su computer (14/10): ogni opera una schermata, la foto su due terzi e accanto il nome grande (solo il nome, come sul telefono);
+   una a sinistra e una a destra, per dare ritmo scorrendo. In alto il testo del progetto, in una colonna */
+@media (min-width: 900px) {
+  .opere { gap: 1px; background: var(--linea); }
+  .opera { height: calc(100svh - var(--testa)); }
+  .opera a { grid-template-columns: auto minmax(0, 1fr); grid-template-rows: 1fr; height: 100%; background: var(--nero); }
+  .opera .foto { height: 100%; aspect-ratio: 4 / 3; max-width: 78vw; } /* la foto 4:3 alta tutto lo schermo, senza fasce ai lati; il testo prende il resto */
+  .opera:nth-child(even) a { grid-template-columns: minmax(0, 1fr) auto; }
+  .opera:nth-child(even) .foto { order: 2; }
+  .opera .scheda { align-content: end; justify-items: start; gap: 14px; padding: 48px var(--g); border-left: 1px solid var(--linea); }
+  .opera:nth-child(even) .scheda { border-left: 0; border-right: 1px solid var(--linea); }
+  .opera .scheda .t { font-size: clamp(48px, 5.6vw, 112px); line-height: .9; letter-spacing: -0.035em; }
+  @media (hover: hover) { .opera a:hover .t { color: var(--neutro); } }
 }
