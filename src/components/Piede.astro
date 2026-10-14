@@ -30,7 +30,7 @@ const anno = new Date().getFullYear();
       <label for="nl-email" class="sr">{t.tuaEmail}</label>
       <input id="nl-email" name="EMAIL" type="email" placeholder={t.tuaEmail} autocomplete="email" />
       <input class="trappola" name="email_address_check" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <button type="submit">{t.iscriviti}</button>
+      <button type="submit"><span class="pl-t">{t.iscriviti}</span></button>
     </form>
     <p class="nl-nota">{t.nlNota} <a href={p.privacy}>{t.nlNotaLink}</a>{t.nlNotaFine}</p>
     <p class="nl-ok" id="nl-ok" role="status"></p>

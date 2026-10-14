@@ -27,7 +27,7 @@ function piedeInItaliano() {
   const email = $<HTMLInputElement>('#nl-email');
   if (email) email.placeholder = t.tuaEmail;
   const etichetta = $('label[for="nl-email"]'); if (etichetta) etichetta.textContent = t.tuaEmail;
-  const bottone = $('#nl button'); if (bottone) bottone.textContent = t.iscriviti;
+  const bottone = $('#nl button .pl-t'); if (bottone) bottone.textContent = t.iscriviti;
   const nota = $('.nl-nota');
   if (nota) nota.innerHTML = `${t.nlNota} <a href="${p.privacy}">${t.nlNotaLink}</a>${t.nlNotaFine}`;
   const legali = document.querySelectorAll<HTMLAnchorElement>('.ft .legali a');

@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Logomark from '../Logomark.astro';
 import Griglia from '../Griglia.astro';
 import Nuvole from '../Nuvole.astro';
+import Freccia from '../Freccia.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
 import { cicloInPrimoPiano, opere, titoloCiclo, statement } from '../../dati';
 interface Props { lang: Lang }
@@ -73,7 +74,7 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
     <Griglia lang={lang} opere={lista} />
     <!-- verso Work (11/10): una pillola crema con la scritta nera, al centro, con spazio sopra e sotto: staccata dal piede -->
     <div class="scopri-pillola">
-      <a href={p.archivio}>{t.scopri} <span aria-hidden="true">→</span></a>
+      <a href={p.archivio}><span class="pl-t">{t.scopri}</span><Freccia /></a>
     </div>
   </section>
 </Base>
