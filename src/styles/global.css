@@ -49,7 +49,7 @@ main { position: relative; z-index: 2; }
 /* menu a pillola, in alto al centro, sempre visibile (8/10: spostato in alto; prima stava in basso) */
 .pill-nav { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%); top: calc(14px + env(safe-area-inset-top, 0px)); display: flex; gap: 4px; align-items: stretch; font-size: 16px; font-weight: 600; }
 .pn-group { background: var(--carta); border-radius: 999px; display: flex; align-items: center; padding: 0 8px; box-shadow: 0 6px 20px rgba(0,0,0,.28); } /* colori invertiti: pillola crema, testo nero di brand */
-.pn-group a { padding: 14px 14px; color: color-mix(in srgb, var(--nero) 50%, var(--carta)); }
+.pn-group a { padding: 14px 14px; color: color-mix(in srgb, var(--nero) 65%, var(--carta)); } /* 14/10: le voci non attive al 65% di nero (prima 50%): contrasto 4,6, leggibile anche per chi vede poco */
 .pn-group a[aria-current="page"] { color: var(--nero); }
 @media (hover: hover) { .pn-group a:hover { color: var(--nero); } }
 /* computer: il menu cresce un poco con lo schermo (16px fino a ~1900 px, poi fino a 22px sui 2560); lo spazio in cima lo segue (14/10) */
@@ -98,7 +98,7 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home la scena parte dal bordo
 /* Boddi in piedi sulla sua nuvola, al centro (11/10): sale con le altre, un po' più veloce. --larg è la larghezza della nuvola */
 .nv-boddi { --larg: min(95vw, 45lvh); left: 50%; top: 29lvh; width: var(--larg); margin-left: calc(var(--larg) / -2); z-index: 3; } /* 11/10, dallo screenshot di Simone: il cervello a 29% dello schermo, la nuvola larga quasi tutto */
 .nv-galleggia { position: relative; }
-.nv-boddi .boddi { display: block; width: 56%; margin: 0 auto; position: relative; z-index: 1; } /* intero, dietro la nuvola: il piede sinistro ci affonda */
+.nv-boddi .boddi { display: block; width: 56%; height: auto; margin: 0 auto; position: relative; z-index: 1; } /* intero, dietro la nuvola: il piede sinistro ci affonda */
 .nv-boddi .nv-forma { position: relative; z-index: 2; margin-top: -14%; }
 /* la copia davanti alla nuvola: solo lo stivale destro (sullo schermo), che così ci sta sopra */
 .nv-boddi .boddi-davanti { position: absolute; top: 0; left: 22%; z-index: 3; clip-path: inset(66% 0 0 45%); }
