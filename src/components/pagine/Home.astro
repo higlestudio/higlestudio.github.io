@@ -5,7 +5,7 @@ import Griglia from '../Griglia.astro';
 import Nuvole from '../Nuvole.astro';
 import Freccia from '../Freccia.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
-import { cicloInPrimoPiano, opere, titoloCiclo, statement } from '../../dati';
+import { cicloInPrimoPiano, opere, titoloCiclo, statement, md } from '../../dati';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = testi[lang];
@@ -50,6 +50,7 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
     const titoloEvento = it ? e.titolo_it : e.titolo_en;
     const dataEvento = it ? e.data_it : e.data_en;
     const luogoEvento = it ? e.luogo_it : e.luogo_en;
+    const testoEvento = ((it ? e.testo_it : e.testo_en) ?? '').trim();
     // la locandina porta al link dell'evento, se c'è
     const Locandina = e.link ? 'a' : 'div';
     return <section class="pannelli prog-home evento" aria-labelledby={`evento-${i}`}>
@@ -59,6 +60,8 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
         {dataEvento && <div class="cella"><dt>{t.data}</dt><dd>{dataEvento}</dd></div>}
         {luogoEvento && <div class="cella"><dt>{t.luogo}</dt><dd>{luogoEvento}</dd></div>}
       </dl>}
+      {/* 14/10: qualche riga sotto il luogo; per ora solo su computer (global.css) */}
+      {testoEvento && <div class="cella evento-testo" set:html={md(testoEvento)} />}
       {e.locandina && <Locandina class="cella locandina" href={e.link}>
         <img src={e.locandina} alt={titoloEvento} loading="lazy" />
       </Locandina>}

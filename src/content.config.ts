@@ -25,6 +25,8 @@ const cicli = defineCollection({
       data_en: z.string().default(''),
       luogo_it: z.string().default(''),
       luogo_en: z.string().default(''),
+      testo_it: z.string().default(''), // 14/10: qualche riga sotto il luogo (per ora solo su computer)
+      testo_en: z.string().default(''),
       locandina: z.string().optional(),
       link: z.string().optional(),
     })).default([]),

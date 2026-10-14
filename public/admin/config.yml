@@ -61,6 +61,8 @@ collections:
           - { name: data_en, label: "Data EN (es. 12–20 November 2026)", widget: string, required: false }
           - { name: luogo_it, label: "Luogo IT (es. Berlino, Kreuzberg)", widget: string, required: false }
           - { name: luogo_en, label: "Luogo EN (es. Berlin, Kreuzberg)", widget: string, required: false }
+          - { name: testo_it, label: "Qualche riga IT, sotto il luogo (per ora si vede solo su computer)", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
+          - { name: testo_en, label: "Qualche riga EN", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
           - { name: locandina, label: "Locandina", widget: image, required: false, media_folder: /public/img/progetti, public_folder: /img/progetti }
           - { name: link, label: "Link (facoltativo: dove porta toccando la locandina)", widget: string, required: false }
 
