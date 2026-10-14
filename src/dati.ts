@@ -33,8 +33,9 @@ export function statement(md: string) {
 /** il colore di fondo dietro una foto, preso dalla foto stessa (11/10): la media dei suoi bordi, dove la foto incontra il riquadro.
  *  Si calcola alla pubblicazione, quindi caricata una foto nuova il fondo si aggiorna da solo. Un colore scelto nel pannello vince. */
 const fondi = new Map<string, Promise<string>>();
-export function fondoDi(foto: string, scelto?: string): Promise<string> {
+export function fondoDi(foto: string | undefined, scelto?: string): Promise<string> {
   if (scelto) return Promise.resolve(scelto);
+  if (!foto) return Promise.resolve('#33302C'); // 14/10: senza foto, il riquadro vuoto resta grigio scuro
   if (!fondi.has(foto)) fondi.set(foto, (async () => {
     try {
       const N = 32; // la foto ridotta a 32 × 32: bastano i bordi

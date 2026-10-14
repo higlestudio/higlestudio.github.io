@@ -86,7 +86,7 @@ collections:
       - { name: numero, label: "Numero (es. 005)", widget: string }
       - { name: ordine, label: "Ordine nel progetto (1, 2, 3…)", widget: number, value_type: int }
       - { name: anno, label: Anno, widget: number, value_type: int }
-      - { name: foto, label: "Foto principale (orizzontale 4:3)", widget: image }
+      - { name: foto, label: "Foto principale (orizzontale 4:3; finché manca si vede un riquadro vuoto)", widget: image, required: false }
       - { name: foto_quadrata, label: "Foto quadrata per Work (facoltativa: se manca si usa la principale)", widget: image, required: false }
       - { name: altre_foto, label: "Altre foto, da sfogliare nella pagina dell'opera (fino a 4, facoltative; trascinale per cambiare l'ordine)", widget: list, field: { name: foto, label: Foto, widget: image }, max: 4, required: false }
       - { name: fondo, label: "Colore di fondo dietro la foto (lascialo vuoto: lo prende da solo dai bordi della foto; sceglilo solo per forzarne uno)", widget: color, required: false }

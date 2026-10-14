@@ -55,13 +55,23 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
     const Locandina = e.link ? 'a' : 'div';
     return <section class="pannelli prog-home evento" aria-labelledby={`evento-${i}`}>
       <!-- come un biglietto: il titolo grande, sotto data e luogo affiancati -->
-      <h2 class="cella evento-t" id={`evento-${i}`}>{titoloEvento}</h2>
+      <!-- 14/10: il titolo e, subito sotto, qualche riga. Sul telefono le righe sono chiuse e si aprono con la freccetta
+           accanto al titolo (che c'è solo se c'è il testo); sul computer stanno sotto il luogo, sempre aperte (casella vuota se non c'è testo) -->
+      <div class="cella evento-testa">
+        <div class="et-riga">
+          <h2 class="evento-t" id={`evento-${i}`}>{titoloEvento}</h2>
+          {testoEvento && <button type="button" class="evento-apri" aria-expanded="false" aria-controls={`evento-testo-${i}`} aria-label={t.info}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.75v14.5" /><path d="m5.5 12.75 6.5 6.5 6.5-6.5" /></svg>
+          </button>}
+        </div>
+        <div class:list={['evento-testo', { vuoto: !testoEvento }]} id={`evento-testo-${i}`}>
+          <div class="et-dentro"><div class="et-testo" set:html={md(testoEvento)} /></div>
+        </div>
+      </div>
       {(dataEvento || luogoEvento) && <dl class="evento-info">
         {dataEvento && <div class="cella"><dt>{t.data}</dt><dd>{dataEvento}</dd></div>}
         {luogoEvento && <div class="cella"><dt>{t.luogo}</dt><dd>{luogoEvento}</dd></div>}
       </dl>}
-      {/* 14/10: qualche riga sotto il luogo; per ora solo su computer (global.css) */}
-      {testoEvento && <div class="cella evento-testo" set:html={md(testoEvento)} />}
       {e.locandina && <Locandina class="cella locandina" href={e.link}>
         <img src={e.locandina} alt={titoloEvento} loading="lazy" />
       </Locandina>}
@@ -81,4 +91,4 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
     </div>
   </section>
 </Base>
-<script>import '../../scripts/hero.ts'; import '../../scripts/rivela.ts';</script>
+<script>import '../../scripts/hero.ts';</script>

@@ -42,7 +42,7 @@ const opere = defineCollection({
     numero: z.string(),
     ordine: z.number().default(0),
     anno: z.number(),
-    foto: z.string(),
+    foto: z.string().default(''), // 14/10: facoltativa finché non ci sono gli scatti definitivi (al suo posto un riquadro vuoto)
     foto_quadrata: z.string().optional(),
     altre_foto: z.array(z.string()).max(4).default([]),
     fondo: z.string().optional(), // vuoto = preso dalla foto (dati.ts, fondoDi)

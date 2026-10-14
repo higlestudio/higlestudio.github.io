@@ -17,10 +17,8 @@ const s = await sito();
     <a class="ft-ig ft-mail" href={`mailto:${s.email}`}><Icona nome="mail" /><span>{s.email}</span></a>
     <div class="cella testo">
       <h2 class="sr" id="me-t">Higle</h2> <!-- 14/10: la scritta "Higle" sopra la bio tolta, resta solo per i lettori di schermo -->
-
       <div class="bio" set:html={md(lang === 'it' ? s.bio_it : s.bio_en)} />
     </div>
     <img class="ph" src={s.ritratto} alt={t.ritratto} loading="lazy" />
   </section>
 </Base>
-<script>import '../../scripts/rivela.ts';</script>

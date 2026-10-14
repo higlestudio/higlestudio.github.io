@@ -8,15 +8,19 @@ const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector
 const puntatore = $('.cur');
 if (puntatore && matchMedia('(pointer: fine)').matches) {
   const etichetta = puntatore.querySelector('span')!;
-  etichetta.textContent = document.body.dataset.apri || 'Apri';
+  const apri = document.body.dataset.apri || 'Apri';
+  etichetta.textContent = apri;
   let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
   addEventListener('mousemove', (e) => {
     x = e.clientX; y = e.clientY;
     const el = e.target as Element;
     const suOpera = !!el.closest('[data-opera]');
-    puntatore.classList.toggle('apri', suOpera);
+    const suFoto = !!el.closest('.sfoglia[tabindex]'); // 14/10: sulle foto da sfogliare le frecce, si trascina
+    etichetta.textContent = suFoto ? '← →' : apri;
+    puntatore.classList.toggle('apri', suOpera || suFoto);
     puntatore.classList.toggle('link', !suOpera && !!el.closest('a, button'));
     puntatore.classList.toggle('testo', !!el.closest('input'));
+    puntatore.classList.toggle('chiaro', !suOpera && !suFoto && !!el.closest('.pn-group, .scopri-pillola a, .nl button')); // su crema: nero
   }, { passive: true });
   (function segui() { cx += (x - cx) * 0.22; cy += (y - cy) * 0.22; puntatore.style.transform = `translate(${cx}px, ${cy}px)`; requestAnimationFrame(segui); })();
   document.addEventListener('mouseleave', () => { puntatore.style.opacity = '0'; });
@@ -51,6 +55,7 @@ if (sfoglia && trattini.length > 1) {
   // (mai col dito ancora appoggiato, e solo con la foto ferma al suo posto: il salto così non si vede)
   let ferma = 0, dito = false;
   const fermo = () => {
+    if (!dito && sfoglia.classList.contains('lasciata')) { sfoglia.classList.remove('lasciata'); sfoglia.style.scrollSnapType = ''; }
     const i = qui();
     if (dito || Math.abs(sfoglia.scrollLeft - i * w()) > 2) return;
     if (i === 0) salta(n); else if (i === n + 1) salta(1);
@@ -62,6 +67,27 @@ if (sfoglia && trattini.length > 1) {
   sfoglia.addEventListener('touchend', () => { dito = false; aspetta(); }, { passive: true });
   sfoglia.addEventListener('touchcancel', () => { dito = false; aspetta(); }, { passive: true });
   trattini.forEach((b, i) => b.addEventListener('click', () => vai(i)));
+  // 14/10 (Simone): sul computer si sfoglia anche trascinando col mouse, come col dito. Basta un piccolo tratto
+  // (un decimo della foto) per passare alla successiva o alla precedente; altrimenti torna dov'era
+  sfoglia.querySelectorAll('img').forEach((img) => { img.draggable = false; });
+  let presa: { x: number; da: number; i: number } | null = null;
+  sfoglia.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    presa = { x: e.clientX, da: sfoglia.scrollLeft, i: qui() };
+    dito = true; sfoglia.style.scrollSnapType = 'none'; sfoglia.classList.add('trascina');
+    sfoglia.setPointerCapture(e.pointerId);
+  });
+  sfoglia.addEventListener('pointermove', (e) => { if (presa) sfoglia.scrollLeft = presa.da - (e.clientX - presa.x); });
+  const lascia = (e: PointerEvent) => {
+    if (!presa) return;
+    const tratto = e.clientX - presa.x, i = presa.i;
+    presa = null; dito = false; sfoglia.classList.remove('trascina'); sfoglia.classList.add('lasciata');
+    const dove = Math.abs(tratto) > w() / 10 ? i - Math.sign(tratto) : i; // indice nella fila con le copie
+    sfoglia.scrollTo({ left: dove * w(), behavior: 'smooth' });
+    aspetta(); // lo scatto torna quando lo scorrimento è finito (in fermo)
+  };
+  sfoglia.addEventListener('pointerup', lascia);
+  sfoglia.addEventListener('pointercancel', lascia);
   sfoglia.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') vai(qui() - 2); if (e.key === 'ArrowRight') vai(qui()); });
   let largo = innerWidth;
   addEventListener('resize', () => { if (innerWidth !== largo) { largo = innerWidth; salta(qui()); } });
@@ -75,7 +101,6 @@ const scorri = (g: HTMLDetailsElement, apri: boolean) => {
   const a = g.querySelector<HTMLElement>('.apre')!;
   a.getAnimations().forEach((x) => x.cancel());
   g.classList.toggle('aperto', apri); // la freccia gira subito, insieme alla griglia
-  if (apri) document.dispatchEvent(new CustomEvent('work:aperto', { detail: g }));
   if (apri) g.open = true;
   const h = a.scrollHeight;
   const anim = a.animate(
@@ -139,3 +164,9 @@ if (nl && esito) nl.addEventListener('submit', async (e) => {
   esito.textContent = ok ? d.ok! : d.errore!;
   if (ok) nl.reset();
 });
+
+/* Home, l'evento sul telefono (14/10): la freccetta accanto al titolo apre e chiude le righe sotto */
+document.querySelectorAll<HTMLButtonElement>('.evento-apri').forEach((b) => b.addEventListener('click', () => {
+  const aperto = b.closest('.evento')!.classList.toggle('aperto');
+  b.setAttribute('aria-expanded', String(aperto));
+}));

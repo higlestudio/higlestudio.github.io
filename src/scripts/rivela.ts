@@ -3,7 +3,7 @@
    14/10 (Simone): un'animazione sola per tutto il testo, la tendina come le foto, che per il testo scende dall'alto in basso.
    Si muove il blocco intero, il testo non si tocca: a capo e spaziature restano identici (la messa a fuoco parola per parola
    li spostava). In Home, Work, About e sulla descrizione dell'opera; nella pagina opera nome e scheda sono fermi.
-   Caricato da Home, Work, About e pagina opera. */
+   Caricato su ogni pagina insieme a sito.ts (14/10: un file solo invece di quattro): dove non c'è niente da animare non fa niente. */
 
 const html = document.documentElement;
 const movimento = matchMedia('(prefers-reduced-motion: no-preference)').matches;

@@ -20,6 +20,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body { background: var(--nero); color: var(--carta); overscroll-behavior-y: none; } /* niente rimbalzo elastico: il menu fisso non si stacca dalla pagina */
+html { scrollbar-gutter: stable; } /* 14/10: su Windows lo spazio della barra di scorrimento resta sempre riservato: quando una pagina diventa corta (Work che si chiude) la barra sparisce e tutto saltava di lato, freccia compresa */
 body { overflow-x: clip; margin: 0; padding-top: var(--testa); font-family: var(--font); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
@@ -36,7 +37,10 @@ main { position: relative; z-index: 2; }
   html, body, a, button, input { cursor: none; }
   .cur { display: grid; place-items: center; position: fixed; left: 0; top: 0; z-index: 99; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--accento); pointer-events: none; transition: width .25s, height .25s, margin .25s, background .25s; font-size: 13px; font-weight: 700; color: var(--nero); }
   .cur span { opacity: 0; transition: opacity .2s; white-space: nowrap; }
-  .cur.link { width: 36px; height: 36px; margin: -18px 0 0 -18px; background: color-mix(in srgb, var(--accento) 50%, transparent); }
+  /* 14/10 (Simone): solo pallino pieno, mai trasparente. Su ciò che si clicca si ingrandisce un poco; su ciò che è crema
+     e si clicca (menu, pillole, Iscriviti) diventa nero come lo sfondo, per vedersi. Sulle opere il cerchio "Apri"; nel campo la lineetta */
+  .cur.link { width: 24px; height: 24px; margin: -12px 0 0 -12px; }
+  .cur.chiaro { background: var(--nero); }
   .cur.apri { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
   .cur.apri span { opacity: 1; }
   .cur.testo { width: 3px; height: 26px; margin: -13px 0 0 -1px; border-radius: 2px; }
@@ -49,6 +53,13 @@ main { position: relative; z-index: 2; }
 .pn-group a[aria-current="page"] { color: var(--nero); }
 @media (hover: hover) { .pn-group a:hover { color: var(--nero); } }
 @media (min-width: 900px) { .pill-nav { font-size: 16px; } .pn-group a { padding: 14px 16px; } }
+/* 14/10 (Simone): sul telefono il menu ha sempre la stessa proporzione dello schermo, con o senza zoom: le misure sono
+   in percentuale della larghezza (vw), tarate perché su un iPhone da 390 punti resti identico a prima (16px, 14px, 8px) */
+@media (max-width: 899px) {
+  .pill-nav { font-size: 4.1vw; top: calc(3.6vw + env(safe-area-inset-top, 0px)); gap: 1vw; }
+  .pn-group { padding: 0 2.05vw; }
+  .pn-group a { padding: 3.6vw; }
+}
 
 /* ingresso della Home (scripts/hero.ts): un velo nero sopra tutto, i petali compongono il logo al centro, poi il velo si dissolve */
 .ingresso { display: none; position: fixed; inset: 0; z-index: 20; place-items: center; background: var(--nero); color: var(--accento); transition: opacity .5s ease; }
@@ -74,7 +85,6 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 .nv-testo { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 14px; padding: var(--testa) var(--g) 40px; text-align: center; opacity: 0; will-change: opacity, transform; }
 .nv-sopra { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 72px); line-height: .95; letter-spacing: -0.03em; }
 .nv-anno { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(96px, 34vw, 300px); line-height: .82; letter-spacing: -0.05em; }
-.nv-titolo { margin: 8px 0 0; max-width: 26ch; font-size: clamp(16px, 4.2vw, 22px); line-height: 1.35; color: var(--neutro); text-wrap: balance; }
 .nv-giu { display: grid; place-items: center; width: 56px; height: 56px; margin-top: 18px; border: 1.5px solid var(--carta); border-radius: 50%; }
 .nv-giu svg { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 @media (hover: hover) { .nv-giu:hover { background: var(--carta); } .nv-giu:hover svg { stroke: var(--nero); } }
@@ -123,7 +133,20 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .prog-home > .evento-info { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--linea); }
 .evento-info .cella, .op-griglia .cella { background: var(--nero); display: grid; align-content: start; gap: 6px; padding-block: 16px 18px; }
 .evento-info > :only-child { grid-column: 1 / -1; }
-.evento-testo { display: none; } /* qualche riga sotto il luogo: per ora solo su computer (14/10) */
+/* 14/10: il titolo dell'evento e, sotto, qualche riga. Sul telefono chiuse: si aprono con la freccetta accanto al titolo
+   (c'è solo se c'è il testo), scorrendo in altezza; la freccetta gira come quella dei progetti in Work */
+.evento > .evento-testa { padding-block: 0; }
+.et-riga { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.evento-apri { flex: none; width: 44px; height: 44px; display: grid; place-items: center; margin-right: -10px; }
+.evento-apri svg { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; will-change: transform; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+.evento.aperto .evento-apri svg { transform: rotate(180deg); }
+.evento-testo { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.2,.8,.2,1); color: var(--neutro); font-size: 16px; line-height: 1.6; }
+.evento.aperto .evento-testo { grid-template-rows: 1fr; }
+.evento-testo.vuoto { display: none; }
+.et-dentro { min-height: 0; overflow: hidden; }
+.et-testo { padding-bottom: 26px; }
+.et-testo p { margin: 0 0 .8em; max-width: 42ch; }
+.et-testo p:last-child { margin-bottom: 0; }
 .evento-info dt, .op-griglia dt { font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); }
 .evento-info dd, .op-griglia dd { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.3; }
 /* la locandina su una griglia di costruzione (dal disegno di Simone): stesso spazio sopra, sotto e ai lati,
@@ -135,9 +158,6 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   background-repeat: no-repeat; }
 .locandina img { display: block; width: 100%; height: auto; position: relative; }
 
-/* Home, in fondo: verso Work */
-.scopri-box { margin-top: -1px; }
-.scopri-box > .scopri { display: block; background: var(--carta); color: var(--nero); text-align: center; padding-block: 28px; font-family: var(--display); font-weight: 700; font-size: clamp(20px, 5.4vw, 34px); line-height: 1; } /* una casella crema con la scritta nera, angoli dritti */
 /* Home, verso Work (11/10): una pillola crema al centro, con aria sopra e sotto, staccata dal piede */
 .scopri-pillola { display: flex; justify-content: center; padding: 56px var(--g) 88px; }
 .scopri-pillola a { display: inline-flex; gap: .5em; align-items: center; background: var(--carta); color: var(--nero); border-radius: 999px; padding: 18px 30px; font-family: var(--display); font-weight: 700; font-size: clamp(17px, 4.6vw, 24px); line-height: 1; }
@@ -151,7 +171,6 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   .scopri-pillola a { padding-block: 22px; }
   .ft .nl button { padding-block: 16px; }
 }
-@media (hover: hover) { .scopri-box > .scopri:hover { background: var(--neutro); } }
 
 /* pannelli a tutta larghezza, separati da un filo */
 .pannelli { display: grid; gap: 1px; background: var(--linea); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
@@ -201,7 +220,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .gruppo summary::-webkit-details-marker { display: none; }
 .gruppo .riga { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 14px; padding-block: 20px; }
 .gruppo .anno { color: var(--grigio); font-size: 13px; font-weight: 500; width: 2.6em; }
-.gruppo .freccia { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transform-origin: 50% 50%; transition: transform .36s cubic-bezier(.2,.8,.2,1); } /* gira su se stessa, senza spostarsi */
+.gruppo .freccia { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transform-origin: 50% 50%; will-change: transform; transition: transform .36s cubic-bezier(.2,.8,.2,1); } /* gira su se stessa, senza spostarsi; 14/10: disegno centrato nel riquadro e rotazione come blocco unico (will-change), così su Windows non tremola */
 .gruppo.aperto .freccia { transform: rotate(180deg); transition-duration: .48s; } /* stessi tempi della griglia: .48s ad aprire, .36s a chiudere */
 .st-work { border-top: 0; }
 .st-work .cella { padding-block: 28px 40px; }
@@ -227,6 +246,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 /* più foto: si sfogliano col dito, una alla volta */
 .sfoglia { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .sfoglia::-webkit-scrollbar { display: none; }
+.sfoglia.trascina { user-select: none; } /* col mouse si trascina (14/10); il cursore del sito mostra le frecce */
 .sfoglia img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; display: block; scroll-snap-align: start; scroll-snap-stop: always; background: var(--f); } /* ogni foto col suo fondo, preso da lei (11/10) */
 /* trattini sotto la foto: uno per foto, pieno quello che si vede */
 .trattini { display: flex; justify-content: center; gap: 4px; padding: 10px var(--g) 4px; }
@@ -243,8 +263,8 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .op-testo p { margin: 0 0 .8em; }
 .inv-grid.adatta { grid-template-columns: repeat(6, 1fr); } /* righe sempre piene: le larghezze le decide Griglia.astro */
 @media (min-width: 900px) {
-  .op-foto { aspect-ratio: auto; height: 100vh; }
-  .op-blocco > .op-griglia { grid-template-columns: repeat(4, 1fr); }
+  .op-foto { aspect-ratio: 4 / 3; }
+  .op-blocco > .op-griglia { grid-template-columns: 1fr; }
 }
 
 
@@ -336,16 +356,18 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   .evento { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
   .evento > .locandina { grid-column: 1; grid-row: 1 / span 3; display: grid; place-items: center; }
   .evento > .locandina img { width: auto; max-width: 100%; max-height: calc(100svh - var(--testa) - 2 * var(--m)); }
-  .evento > .evento-t { grid-column: 2; grid-row: 1; padding-block: 48px 32px; font-size: clamp(34px, 3.6vw, 64px); }
+  .evento > .evento-testa { display: contents; } /* sul computer titolo e righe sono due caselle della griglia */
+  .evento .et-riga { grid-column: 2; grid-row: 1; background: var(--nero); padding-inline: var(--g); }
+  .evento .evento-t { padding-block: 48px 32px; font-size: clamp(34px, 3.6vw, 64px); }
+  .evento-apri { display: none; }
   .evento > .evento-info { grid-column: 2; grid-row: 2; grid-template-columns: 1fr; align-content: start; align-self: start; gap: 0; background: var(--nero); }
   .evento > .evento-info .cella { border-bottom: 1px solid var(--linea); }
   /* 14/10: sotto il luogo qualche riga (solo su computer); e sotto l'evento un filo che lo chiude, come quelli di costruzione sopra */
-  .evento > .evento-testo { display: block; grid-column: 2; grid-row: 3; padding-block: 22px 40px; color: var(--neutro); font-size: 16px; line-height: 1.6; }
-  .evento-testo p { margin: 0 0 .8em; max-width: 42ch; }
-  .evento-testo p:last-child { margin-bottom: 0; }
+  .evento .evento-testo, .evento .evento-testo.vuoto { display: block; grid-column: 2; grid-row: 3; background: var(--nero); padding: 22px var(--g) 40px; } /* sempre aperte; vuota se non c'è testo */
+  .et-testo { padding-bottom: 0; }
   .evento + .prog-opere .prog-intro { margin-top: 0; }
   .evento:not(:has(.locandina)) { grid-template-columns: 1fr; } /* evento senza locandina: tutta la riga al testo */
-  .evento:not(:has(.locandina)) > * { grid-column: 1; grid-row: auto; }
+  .evento:not(:has(.locandina)) :is(.et-riga, .evento-info, .evento-testo) { grid-column: 1; grid-row: auto; }
 
   /* Home, il progetto: titolo a sinistra, il primo paragrafo accanto, allineati in basso */
   .prog-intro .cella { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; column-gap: 6vw; padding-block: 64px 56px; }
@@ -354,16 +376,29 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 }
 
 /* Work su computer (14/10): ogni opera una schermata, la foto su due terzi e accanto il nome grande (solo il nome, come sul telefono);
-   una a sinistra e una a destra, per dare ritmo scorrendo. In alto il testo del progetto, in una colonna */
+   14/10: tutte le foto in colonna a destra, il nome a sinistra (prima alternate). In alto il testo del progetto, in una colonna */
 @media (min-width: 900px) {
   .opere { gap: 1px; background: var(--linea); }
   .opera { height: calc(100svh - var(--testa)); }
-  .opera a { grid-template-columns: auto minmax(0, 1fr); grid-template-rows: 1fr; height: 100%; background: var(--nero); }
+  .opera a { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr; height: 100%; background: var(--nero); }
   .opera .foto { height: 100%; aspect-ratio: 4 / 3; max-width: 78vw; } /* la foto 4:3 alta tutto lo schermo, senza fasce ai lati; il testo prende il resto */
-  .opera:nth-child(even) a { grid-template-columns: minmax(0, 1fr) auto; }
-  .opera:nth-child(even) .foto { order: 2; }
-  .opera .scheda { align-content: end; justify-items: start; gap: 14px; padding: 48px var(--g); border-left: 1px solid var(--linea); }
-  .opera:nth-child(even) .scheda { border-left: 0; border-right: 1px solid var(--linea); }
+  .opera .foto { order: 2; }
+  .opera .scheda { align-content: end; justify-items: start; gap: 14px; padding: 48px var(--g); border-right: 1px solid var(--linea); }
   .opera .scheda .t { font-size: clamp(48px, 5.6vw, 112px); line-height: .9; letter-spacing: -0.035em; }
   @media (hover: hover) { .opera a:hover .t { color: var(--neutro); } }
+}
+
+/* Pagina opera su computer (14/10, "foto a schermo, testo accanto"): la foto 4:3 alta quanto lo schermo, coi trattini sotto;
+   accanto il nome e la scheda in colonna; sotto, a tutta riga, il testo dell'opera. Stesse cose del telefono, altro ordine */
+@media (min-width: 900px) {
+  .op-pagina { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; }
+  .op-pagina > .op-foto { grid-column: 1; grid-row: 1 / span 2; height: calc(100svh - var(--testa) - 40px); max-width: 78vw; }
+  .op-pagina > .trattini { grid-column: 1; grid-row: 3; height: 40px; align-items: center; padding-block: 0; }
+  .op-blocco { display: contents; } /* i suoi pezzi entrano nella griglia della pagina */
+  .op-blocco > .op-testa { grid-column: 2; grid-row: 1; padding-block: 44px 28px; border-left: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
+  .op-t { text-align: left; font-size: clamp(56px, 6.4vw, 140px); }
+  .op-blocco > .op-griglia { grid-column: 2; grid-row: 2 / span 2; align-content: start; gap: 0; background: var(--nero); border-left: 1px solid var(--linea); }
+  .op-griglia .cella { border-bottom: 1px solid var(--linea); }
+  .op-blocco > .cella:last-child { grid-column: 1 / -1; grid-row: 4; border-top: 1px solid var(--linea); padding-block: 56px 72px; }
+  .op-testo { max-width: 52ch; font-size: clamp(20px, 1.7vw, 28px); }
 }

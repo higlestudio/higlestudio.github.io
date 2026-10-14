@@ -20,7 +20,7 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
       <summary class="pannelli"><div class="cella riga">
         <span class="anno num">{anno}</span>
         <h2>{titoloCiclo(c, lang)}</h2>
-        <svg class="freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
+        <svg class="freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.75v14.5" /><path d="m5.5 12.75 6.5 6.5 6.5-6.5" /></svg>
       </div></summary>
       <!-- 14/10: prima tutto il testo del progetto, poi le opere; si chiude insieme al progetto -->
       <div class="apre">
@@ -34,7 +34,7 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
           {o.map((x) => (
             <li class="opera">
               <a href={percorsi[lang].opera(x.id)} data-opera>
-                <div class="foto" style={`--f:${fondi.get(x.id)}`}><img src={x.data.foto} alt={x.data.titolo} loading="lazy" /></div>
+                <div class="foto" style={`--f:${fondi.get(x.id)}`}>{x.data.foto && <img src={x.data.foto} alt={x.data.titolo} loading="lazy" />}</div>
                 <div class="scheda"><span class="t">{x.data.titolo}</span></div>
               </a>
             </li>
@@ -44,4 +44,3 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
     </details>
   ))}
 </Base>
-<script>import '../../scripts/rivela.ts';</script>

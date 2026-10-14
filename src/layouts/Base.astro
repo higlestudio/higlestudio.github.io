@@ -87,6 +87,6 @@ const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
     <slot />
     <Piede lang={lang} pagina={pagina} altra={altra} />
   </main>
-  <script>import '../scripts/sito.ts';</script>
+  <script>import '../scripts/sito.ts'; import '../scripts/rivela.ts';</script>
 </body>
 </html>

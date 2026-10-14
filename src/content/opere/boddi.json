@@ -5,7 +5,7 @@
   "numero": "004",
   "ordine": 4,
   "anno": 2026,
-  "foto": "/img/opere/boddi-fronte.webp",
+  "foto": "",
   "materiali_it": "da confermare",
   "materiali_en": "to be confirmed",
   "misure": "",
@@ -13,11 +13,5 @@
   "edizione_en": "Unique piece",
   "testo_it": "Qui va il testo dell'opera, dalle tue parole.",
   "testo_en": "The text of the work goes here, in your words.",
-  "foto_quadrata": "/img/opere/boddi-q.webp",
-  "altre_foto": [
-    "/img/opere/boddi-tre-quarti.webp",
-    "/img/opere/boddi-profilo-sinistro.webp",
-    "/img/opere/boddi-profilo-destro.webp",
-    "/img/opere/boddi-retro.webp"
-  ]
+  "altre_foto": []
 }
