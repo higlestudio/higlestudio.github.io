@@ -295,13 +295,15 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
 /* comparse allo scorrimento (scripts/rivela.ts): le classi le mette lo script, "visto" arriva quando l'elemento entra sullo schermo.
-   14/10: un'animazione sola per tutto il testo (scelta di Simone): le parole si mettono a fuoco, da sfocate e trasparenti
-   a nitide, in ordine di lettura. Le foto: tendina (pagina opera) o salgono e si posano (Work). */
+   14/10: un'animazione sola per tutto il testo (scelta di Simone): la tendina delle foto, che sul testo scende dall'alto
+   in basso, in ordine di lettura. Si muove il blocco intero, il testo non si tocca, quindi niente si sposta (la messa a fuoco
+   parola per parola cambiava gli a capo). Il margine negativo lascia respirare accenti e lettere che sporgono.
+   Le foto: tendina che sale (pagina opera, griglia della Home) o salgono e si posano (Work). */
 @media (prefers-reduced-motion: no-preference) {
   .r-tenda { clip-path: inset(100% 0 0 0); transition: clip-path 1.1s cubic-bezier(.76,0,.24,1) var(--ritardo, 0s); }
   .r-tenda.visto { clip-path: inset(0 0 0 0); }
-  .r-fuoco .r-p { display: inline-block; opacity: 0; filter: blur(10px); transition: opacity .9s cubic-bezier(.33,1,.68,1) var(--ritardo, 0s), filter 1.1s cubic-bezier(.33,1,.68,1) var(--ritardo, 0s); }
-  .r-fuoco.visto .r-p { opacity: 1; filter: none; }
+  .r-scende { clip-path: inset(-.3em -.3em 100% -.3em); transition: clip-path 1s cubic-bezier(.76,0,.24,1); }
+  .r-scende.visto { clip-path: inset(-.3em -.3em -.3em -.3em); }
 }
 
 /* pagina 404 (11/10): "Errore" piccolo, 404 grande, una frase; sotto, a tutta larghezza, la casella crema che riporta in Home.
