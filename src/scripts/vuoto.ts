@@ -1,7 +1,10 @@
-/* pagina 404: la lingua. Italiano se l'indirizzo era sotto /it/ o il telefono è in italiano. */
+/* pagina 404: la lingua, come nel resto del sito (14/10): prima quella scelta nel piede (ricordata da sito.ts),
+   poi l'indirizzo (sotto /it/ = italiano), poi la lingua del telefono. */
 import { percorsi, testi } from '../i18n';
 
-const italiano = location.pathname.startsWith('/it/') || /^it\b/i.test(navigator.language || '');
+let scelta: string | null = null;
+try { scelta = localStorage.getItem('higle-lingua'); } catch {}
+const italiano = scelta ? scelta === 'it' : location.pathname.startsWith('/it/') || /^it\b/i.test(navigator.language || '');
 if (italiano) {
   document.documentElement.lang = 'it';
   document.querySelectorAll<HTMLElement>('.vuoto [data-lingua], .vuoto-box [data-lingua]').forEach((el) => { el.hidden = el.dataset.lingua !== 'it'; });
