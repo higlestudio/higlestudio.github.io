@@ -22,8 +22,13 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
         <h2>{titoloCiclo(c, lang)}</h2>
         <svg class="freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
       </div></summary>
-      <!-- 9/10: sotto le opere il testo lungo del progetto; si chiude insieme al progetto -->
+      <!-- 14/10: prima tutto il testo del progetto, poi le opere; si chiude insieme al progetto -->
       <div class="apre">
+        {(lang === 'it' ? c.data.statement_it : c.data.statement_en).trim() && <div class="pannelli st-work"><div class="cella">
+          <!-- 11/10: il titolo del progetto anche qui, sopra il testo (in cima resta quello della tendina) -->
+          <h3 class="st-titolo"><span class="anno num">{anno}</span><span>{titoloCiclo(c, lang)}</span></h3>
+          <Statement testo={lang === 'it' ? c.data.statement_it : c.data.statement_en} />
+        </div></div>}
         <!-- 9/10: le opere a foto grandi, una sotto l'altra (il layout che prima stava in Home) -->
         <ol class="opere">
           {o.map((x) => (
@@ -35,11 +40,6 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
             </li>
           ))}
         </ol>
-        {(lang === 'it' ? c.data.statement_it : c.data.statement_en).trim() && <div class="pannelli st-work"><div class="cella">
-          <!-- 11/10: il titolo del progetto anche qui, sopra il testo (in cima resta quello della tendina) -->
-          <h3 class="st-titolo"><span class="anno num">{anno}</span>{titoloCiclo(c, lang)}</h3>
-          <Statement testo={lang === 'it' ? c.data.statement_it : c.data.statement_en} />
-        </div></div>}
       </div>
     </details>
   ))}

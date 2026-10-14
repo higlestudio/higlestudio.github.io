@@ -33,7 +33,7 @@ const fondi = await Promise.all(foto.map((f) => fondoDi(f, o.fondo)));
     <dl class="op-griglia num">
       <div class="cella"><dt>{t.anno}</dt><dd>{o.anno}</dd></div>
       <div class="cella"><dt>{t.materiali}</dt><dd>{it ? o.materiali_it : o.materiali_en}</dd></div>
-      <div class="cella"><dt>{t.misure}</dt><dd>{o.misure}</dd></div>
+      <div class="cella"><dt>{t.misure}</dt><dd>{o.misure || t.daMisurare}</dd></div>
       <div class="cella"><dt>{t.edizione}</dt><dd>{it ? o.edizione_it : o.edizione_en}</dd></div>
       <div class="cella op-prog"><dt>{t.ciclo}</dt><dd>{nomeCiclo}</dd></div>
     </dl>

@@ -13,6 +13,6 @@ const s = await sito();
     <h1 class="titolo-legale">{t.privacy}</h1>
     <div class="nota-legale" set:html={md(lang === 'it' ? s.privacy_it : s.privacy_en)} />
     <h2 id="impressum">{t.impressum}</h2>
-    <div class="nota-legale" set:html={md(s.impressum)} />
+    <div class="nota-legale" set:html={md(lang === 'it' ? s.impressum_it : s.impressum_en)} />
   </section>
 </Base>

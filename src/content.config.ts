@@ -65,7 +65,8 @@ const pagine = defineCollection({
     bio_en: z.string(),
     privacy_it: z.string(),
     privacy_en: z.string(),
-    impressum: z.string(),
+    impressum_it: z.string(),
+    impressum_en: z.string(),
   }),
 });
 

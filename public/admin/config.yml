@@ -90,7 +90,7 @@ collections:
       - { name: fondo, label: "Colore di fondo dietro la foto (lascialo vuoto: lo prende da solo dai bordi della foto; sceglilo solo per forzarne uno)", widget: color, required: false }
       - { name: materiali_it, label: "Materiali IT", widget: string }
       - { name: materiali_en, label: "Materiali EN", widget: string }
-      - { name: misure, label: "Misure (es. 22 × 14 × 10 cm)", widget: string }
+      - { name: misure, label: "Misure (es. 22 × 14 × 10 cm; vuoto = \"da misurare\")", widget: string, required: false }
       - { name: edizione_it, label: "Edizione IT", widget: string, default: "Pezzo unico" }
       - { name: edizione_en, label: "Edizione EN", widget: string, default: "Unique piece" }
       - { name: testo_it, label: "Testo IT", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
@@ -114,4 +114,5 @@ collections:
           - { name: bio_en, label: "Bio EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
           - { name: privacy_it, label: "Privacy IT", widget: markdown }
           - { name: privacy_en, label: "Privacy EN", widget: markdown }
-          - { name: impressum, label: Impressum, widget: markdown }
+          - { name: impressum_it, label: "Impressum IT", widget: markdown }
+          - { name: impressum_en, label: "Impressum EN", widget: markdown }

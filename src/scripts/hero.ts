@@ -24,12 +24,21 @@ if (velo && radice.classList.contains('intro')) {
   addEventListener('touchmove', ferma, { passive: false });
   addEventListener('wheel', ferma, { passive: false });
   addEventListener('keydown', ferma);
+  // 14/10 (Simone): il logo non si sovrappone mai alla scena. In tre tempi: prima il logo si dissolve sul nero,
+  // poi il nero si dissolve sulla pagina vuota, e solo allora la scena si apre (nuvole e Boddi entrano, global.css)
+  let finito = false;
   const fine = () => {
-    if (!inCorso) return; inCorso = false;
-    velo.classList.add('esce'); // il nero, col logo, si dissolve
-    radice.classList.remove('intro-resto');
-    setTimeout(() => velo.remove(), 800);
-    removeEventListener('touchmove', ferma); removeEventListener('wheel', ferma); removeEventListener('keydown', ferma);
+    if (finito) return; finito = true;
+    velo.classList.add('logo-via');
+    setTimeout(() => {
+      velo.classList.add('esce');
+      setTimeout(() => {
+        inCorso = false;
+        radice.classList.remove('intro', 'intro-resto');
+        velo.remove();
+        removeEventListener('touchmove', ferma); removeEventListener('wheel', ferma); removeEventListener('keydown', ferma);
+      }, 550);
+    }, 450);
   };
   Promise.all(voli.map((a) => a.finished)).then(() => setTimeout(fine, 450), fine);
   setTimeout(fine, 4500); // in ogni caso, mai bloccata oltre 4,5 secondi

@@ -47,7 +47,9 @@ const nuvole = [
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5v14.5" /><path d="m5.5 13 6.5 6.5 6.5-6.5" /></svg>
       </a>
     </div>
-    {[...nuvole.map((n) => ({ ...n, boddi: false })), { f: 'g', x: 0, y: 0, w: 0, v: 1.6, dx: 0, boddi: true }].map((n) => {
+    {[...nuvole.map((n) => ({ ...n, boddi: false })), { f: 'g', x: 0, y: 0, w: 0, v: 1.6, dx: 0, boddi: true }].map((n, i) => {
+      // 14/10, l'apertura dopo l'ingresso: ogni nuvola arriva dal suo lato (--da), una dopo l'altra (--ap); Boddi sale dal basso
+      const da = n.x + n.w / 2 < 50 ? -1 : 1, ap = n.boddi ? 0.15 : i * 0.06;
       const s = forme[n.f];
       const [bx, by, bw, bh] = s.base;
       // la sagoma (base + bozzi), disegnata tre volte: ombra, contorno (più spesso), pieno
@@ -61,10 +63,10 @@ const nuvole = [
         <g class="nv-pieno">{sagoma}</g>
       </svg>;
       return n.boddi
-        ? <div class="nv nv-boddi" style={`--v:${n.v}; --dx:${n.dx}`} aria-hidden="true">
+        ? <div class="nv nv-boddi" style={`--v:${n.v}; --dx:${n.dx}; --ap:${ap}s`} aria-hidden="true">
             <div class="nv-galleggia"><img class="boddi" src="/img/boddi.svg" alt="" />{nuvola}<img class="boddi boddi-davanti" src="/img/boddi.svg" alt="" /></div>
           </div>
-        : <div class="nv dietro" style={`--x:${n.x}%; --y:${n.y}%; --w:${n.w}; --v:${n.v}; --dx:${n.dx}`} aria-hidden="true">{nuvola}</div>;
+        : <div class="nv dietro" style={`--x:${n.x}%; --y:${n.y}%; --w:${n.w}; --v:${n.v}; --dx:${n.dx}; --da:${da}; --ap:${ap}s`} aria-hidden="true">{nuvola}</div>;
     })}
   </div>
 </section>

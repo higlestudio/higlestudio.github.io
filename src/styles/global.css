@@ -51,8 +51,10 @@ main { position: relative; z-index: 2; }
 @media (min-width: 900px) { .pill-nav { font-size: 16px; } .pn-group a { padding: 14px 16px; } }
 
 /* ingresso della Home (scripts/hero.ts): un velo nero sopra tutto, i petali compongono il logo al centro, poi il velo si dissolve */
-.ingresso { display: none; position: fixed; inset: 0; z-index: 20; place-items: center; background: var(--nero); color: var(--accento); transition: opacity .7s ease; }
+.ingresso { display: none; position: fixed; inset: 0; z-index: 20; place-items: center; background: var(--nero); color: var(--accento); transition: opacity .5s ease; }
 html.intro .ingresso, html.intro-resto .ingresso, .ingresso.esce { display: grid; }
+.ingresso svg { transition: opacity .4s ease; }
+.ingresso.logo-via svg { opacity: 0; } /* 14/10: prima se ne va il logo, poi il nero (hero.ts) */
 .ingresso.esce { opacity: 0; pointer-events: none; }
 .ingresso svg { width: min(64vw, 420px); height: auto; overflow: visible; display: block; }
 .ingresso svg path { transform-box: fill-box; transform-origin: 50% 50%; }
@@ -99,6 +101,11 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
   .nv:not(.nv-boddi):nth-of-type(2n) svg { animation-duration: 9s; animation-delay: -3s; }
   .nv:not(.nv-boddi):nth-of-type(3n) svg { animation-duration: 11s; animation-delay: -5s; }
 }
+/* 14/10: dopo l'ingresso la scena si apre: le nuvole arrivano dai lati, Boddi sale dal basso (sotto il nero non si vede niente,
+   così il logo non si sovrappone mai alla scena). "translate" non tocca il "transform" che nuvole.ts usa per lo scorrimento */
+html.intro .nv, html.intro-resto .nv { opacity: 0; translate: calc(var(--da, 0) * 70vw) 0; }
+html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
+.nv { transition: translate 1.3s cubic-bezier(.16,1,.3,1) var(--ap, 0s), opacity .7s ease var(--ap, 0s); }
 #opere { scroll-margin-top: var(--testa); } /* la freccia porta qui: le opere sotto il menu, non dietro */
 
 /* Home: il progetto (anno e titolo), l'evento e la locandina */
@@ -288,17 +295,13 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home il video parte dal bordo
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
 /* comparse allo scorrimento (scripts/rivela.ts): le classi le mette lo script, "visto" arriva quando l'elemento entra sullo schermo.
-   Stesse curve di prima: uscita morbida per testi e foto, entrata e uscita morbide per la tendina. */
+   14/10: un'animazione sola per tutto il testo (scelta di Simone): le parole si mettono a fuoco, da sfocate e trasparenti
+   a nitide, in ordine di lettura. Le foto: tendina (pagina opera) o salgono e si posano (Work). */
 @media (prefers-reduced-motion: no-preference) {
-  .r-sale { opacity: 0; translate: 0 24px; transition: opacity .8s cubic-bezier(.33,1,.68,1) var(--ritardo, 0s), translate .8s cubic-bezier(.33,1,.68,1) var(--ritardo, 0s); }
-  .r-sale.r-corto { translate: 0 16px; transition-duration: .6s; }
-  .r-sx { opacity: 0; translate: -24px 0; transition: opacity .7s cubic-bezier(.33,1,.68,1), translate .7s cubic-bezier(.33,1,.68,1); }
-  .r-sale.visto, .r-sx.visto { opacity: 1; translate: 0 0; }
   .r-tenda { clip-path: inset(100% 0 0 0); transition: clip-path 1.1s cubic-bezier(.76,0,.24,1) var(--ritardo, 0s); }
   .r-tenda.visto { clip-path: inset(0 0 0 0); }
-  .r-parola { display: inline-block; overflow: clip; vertical-align: top; }
-  .r-parola > span { display: inline-block; translate: 0 105%; transition: translate .9s cubic-bezier(.25,1,.5,1) var(--ritardo, 0s); }
-  .visto .r-parola > span { translate: 0 0; }
+  .r-fuoco .r-p { display: inline-block; opacity: 0; filter: blur(10px); transition: opacity .9s cubic-bezier(.33,1,.68,1) var(--ritardo, 0s), filter 1.1s cubic-bezier(.33,1,.68,1) var(--ritardo, 0s); }
+  .r-fuoco.visto .r-p { opacity: 1; filter: none; }
 }
 
 /* pagina 404 (11/10): "Errore" piccolo, 404 grande, una frase; sotto, a tutta larghezza, la casella crema che riporta in Home.
