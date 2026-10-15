@@ -35,15 +35,18 @@ main { position: relative; z-index: 2; }
 .cur { display: none; }
 @media (pointer: fine) {
   html, body, a, button, input { cursor: none; }
-  .cur { display: grid; place-items: center; position: fixed; left: 0; top: 0; z-index: 99; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--accento); pointer-events: none; transition: width .25s, height .25s, margin .25s, background .25s; font-size: 13px; font-weight: 700; color: var(--nero); }
+  /* 16/10: un cerchio solo, grande quanto "Apri" (84 px), rimpicciolito con lo zoom: pallino 14 px, link 24 px,
+     lineetta nel campo della newsletter. Lo zoom (scale) è separato dalla posizione (translate, scritta da sito.ts) */
+  .cur { display: grid; place-items: center; position: fixed; left: 0; top: 0; z-index: 99; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--accento); pointer-events: none; opacity: 0; scale: calc(14 / 84); will-change: translate, scale; transition: scale .25s, background .25s, opacity .2s; font-size: 13px; font-weight: 700; color: var(--nero); }
+  .cur.vivo { opacity: 1; }
   .cur span { opacity: 0; transition: opacity .2s; white-space: nowrap; }
   /* 14/10 (Simone): solo pallino pieno, mai trasparente. Su ciò che si clicca si ingrandisce un poco; su ciò che è crema
      e si clicca (menu, pillole, Iscriviti) diventa nero come lo sfondo, per vedersi. Sulle opere il cerchio "Apri"; nel campo la lineetta */
-  .cur.link { width: 24px; height: 24px; margin: -12px 0 0 -12px; }
+  .cur.link { scale: calc(24 / 84); }
   .cur.chiaro { background: var(--nero); }
-  .cur.apri { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
+  .cur.apri { scale: 1; }
   .cur.apri span { opacity: 1; }
-  .cur.testo { width: 3px; height: 26px; margin: -13px 0 0 -1px; border-radius: 2px; }
+  .cur.testo { scale: calc(3 / 84) calc(26 / 84); }
 }
 
 /* menu a pillola, in alto al centro, sempre visibile (8/10: spostato in alto; prima stava in basso) */

@@ -4,27 +4,29 @@ if (!location.hash) { scrollTo(0, 0); addEventListener('pageshow', (e) => { if (
 
 const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s);
 
-/* cursore: solo con il mouse */
+/* cursore: solo con il mouse. 16/10: attaccato alla punta del mouse, senza scia (prima inseguiva con ritardo e sembrava
+   lento), e si ridisegna solo quando il mouse si muove: al massimo una volta per fotogramma, mai da fermo.
+   Le misure (link, "Apri", lineetta) cambiano con uno zoom in CSS, il modo più leggero per il browser */
 const puntatore = $('.cur');
 if (puntatore && matchMedia('(pointer: fine)').matches) {
   const etichetta = puntatore.querySelector('span')!;
-  const apri = document.body.dataset.apri || 'Apri';
-  etichetta.textContent = apri;
-  let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y;
+  const apri = etichetta.textContent || 'Apri';
+  let x = 0, y = 0, attesa = false;
+  const disegna = () => { attesa = false; puntatore.style.translate = `${x}px ${y}px`; }; // translate, non transform: così lo zoom del CSS non tocca la posizione
   addEventListener('mousemove', (e) => {
     x = e.clientX; y = e.clientY;
+    if (!attesa) { attesa = true; requestAnimationFrame(disegna); }
     const el = e.target as Element;
     const suOpera = !!el.closest('[data-opera]');
     const suFoto = !!el.closest('.sfoglia[tabindex]'); // 14/10: sulle foto da sfogliare le frecce, si trascina
     etichetta.textContent = suFoto ? '← →' : apri;
+    puntatore.classList.add('vivo'); // compare al primo movimento, non in mezzo allo schermo
     puntatore.classList.toggle('apri', suOpera || suFoto);
     puntatore.classList.toggle('link', !suOpera && !!el.closest('a, button'));
     puntatore.classList.toggle('testo', !!el.closest('input'));
     puntatore.classList.toggle('chiaro', !suOpera && !suFoto && !!el.closest('.pn-group, .scopri-pillola a, .nl button')); // su crema: nero
   }, { passive: true });
-  (function segui() { cx += (x - cx) * 0.22; cy += (y - cy) * 0.22; puntatore.style.transform = `translate(${cx}px, ${cy}px)`; requestAnimationFrame(segui); })();
-  document.addEventListener('mouseleave', () => { puntatore.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { puntatore.style.opacity = '1'; });
+  document.addEventListener('mouseleave', () => puntatore.classList.remove('vivo'));
 }
 
 
