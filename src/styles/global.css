@@ -183,7 +183,6 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .pannelli { display: grid; gap: 1px; background: var(--linea); border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
 .pannelli > * { background: var(--nero); min-width: 0; }
 .cella { padding: 18px var(--g); }
-.etichetta { margin: 0 0 10px; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--grigio); display: flex; justify-content: space-between; gap: 12px; }
 
 
 .statement { margin-top: 22px; display: grid; gap: 22px; }
@@ -204,12 +203,6 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 @media (hover: hover) { .opera a:hover .foto img { transform: scale(1.015); } }
 .scheda { display: grid; padding: 12px var(--g) 18px; align-items: center; }
 .scheda .t { font-family: var(--display); font-weight: 700; font-size: 16px; }
-@media (min-width: 900px) {
-  .opera { height: 100vh; }
-  .opera a { height: 100%; grid-template-rows: minmax(0, 1fr) auto; }
-  .foto { aspect-ratio: auto; }
-  .scheda { padding-block: 16px 24px; }
-}
 
 
 /* griglia d'archivio */
@@ -268,9 +261,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .op-blocco > .cella:last-child { padding-block: 26px 34px; }
 .op-testo { max-width: 46ch; font-size: clamp(18px, 4.6vw, 24px); line-height: 1.4; }
 .op-testo p { margin: 0 0 .8em; }
-.inv-grid.adatta { grid-template-columns: repeat(6, 1fr); } /* righe sempre piene: le larghezze le decide Griglia.astro */
 @media (min-width: 900px) {
-  .op-foto { aspect-ratio: 4 / 3; }
   .op-blocco > .op-griglia { grid-template-columns: 1fr; }
 }
 
