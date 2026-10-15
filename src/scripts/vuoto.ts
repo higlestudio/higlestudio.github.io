@@ -32,7 +32,6 @@ function piedeInItaliano() {
   if (nota) nota.innerHTML = `${t.nlNota} <a href="${p.privacy}">${t.nlNotaLink}</a>${t.nlNotaFine}`;
   const legali = document.querySelectorAll<HTMLAnchorElement>('.ft .legali a');
   if (legali[0]) { legali[0].href = p.privacy; legali[0].textContent = t.privacy; }
-  if (legali[1]) legali[1].href = `${p.privacy}#impressum`;
   const lingua = $<HTMLAnchorElement>('.lingua');
   if (lingua) { lingua.href = percorsi.en.home; lingua.lang = lingua.hreflang = 'en'; lingua.textContent = testi.it.altraLinguaNome; }
   $('.legali')?.setAttribute('aria-label', t.noteLegali);

@@ -100,7 +100,7 @@ collections:
     label: Pagine
     files:
       - name: sito
-        label: "Contatti, bio e note legali"
+        label: "Contatti, bio, privacy e Impressum"
         file: src/content/pagine/sito.json
         format: json
         media_folder: /public/img/pagine
@@ -111,7 +111,6 @@ collections:
           - { name: ritratto, label: Ritratto, widget: image }
           - { name: bio_it, label: "Bio IT", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
           - { name: bio_en, label: "Bio EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
-          - { name: privacy_it, label: "Privacy IT", widget: markdown }
-          - { name: privacy_en, label: "Privacy EN", widget: markdown }
-          - { name: impressum_it, label: "Impressum IT", widget: markdown }
-          - { name: impressum_en, label: "Impressum EN", widget: markdown }
+          - { name: privacy_link, label: "Privacy: link alla policy Iubenda (una sola, in inglese; la apre la pagina Privacy del sito)", widget: string }
+          - { name: impressum_it, label: "Impressum IT (per ora non si vede sul sito)", widget: markdown }
+          - { name: impressum_en, label: "Impressum EN (per ora non si vede sul sito)", widget: markdown }

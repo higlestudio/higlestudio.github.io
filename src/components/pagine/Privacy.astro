@@ -1,18 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { percorsi, testi, type Lang } from '../../i18n';
-import { sito, md } from '../../dati';
+import Freccia from '../Freccia.astro';
+import { testi, type Lang } from '../../i18n';
+import { sito } from '../../dati';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const t = testi[lang];
-const altra: Lang = lang === 'it' ? 'en' : 'it';
 const s = await sito();
+const en = testi.en;
 ---
-<Base lang={lang} titolo={`${t.privacy} | Higle Studio`} altra={percorsi[altra].privacy}>
-  <section class="wrap legale">
-    <h1 class="titolo-legale">{t.privacy}</h1>
-    <div class="nota-legale" set:html={md(lang === 'it' ? s.privacy_it : s.privacy_en)} />
-    <h2 id="impressum">{t.impressum}</h2>
-    <div class="nota-legale" set:html={md(lang === 'it' ? s.impressum_it : s.impressum_en)} />
+<!-- 15/10: una sola privacy, in inglese, generata con Iubenda (piano Free): la pagina dice due parole e apre la policy in una
+     nuova scheda. /it/privacy/ è la stessa pagina in inglese con una riga in italiano (niente redirect: il cambio automatico di
+     lingua lo rimanderebbe indietro, all'infinito). Niente cambio automatico di lingua qui: chi arriva dalla riga della newsletter
+     in italiano resta sulla pagina inglese. L'Impressum per ora non si pubblica (campi tenuti nel pannello). Come la 404. -->
+<Base lang={lang} titolo={`${en.privacy} | Higle Studio`} descrizione={en.privacyRiga} altra={lang === 'it' ? '/privacy/' : '/it/privacy/'} automatica={false}>
+  <section class="vuoto privacy">
+    <h1 class="vuoto-404 privacy-t" lang="en">{en.privacy}</h1>
+    <p class="vuoto-frase" lang="en">{en.privacyRiga}</p>
+    {lang === 'it' && <p class="vuoto-frase privacy-it">{testi.it.privacySoloEn}</p>}
+    <div class="scopri-pillola"><a href={s.privacy_link} target="_blank" rel="noopener" lang="en"><span class="pl-t">{en.privacyLeggi}</span><Freccia /></a></div>
   </section>
 </Base>

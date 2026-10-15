@@ -61,9 +61,8 @@ const pagine = defineCollection({
     ritratto: z.string(),
     bio_it: z.string(),
     bio_en: z.string(),
-    privacy_it: z.string(),
-    privacy_en: z.string(),
-    impressum_it: z.string(),
+    privacy_link: z.string(), // 15/10: la policy Iubenda, in inglese (una sola)
+    impressum_it: z.string(), // 15/10: per ora non pubblicato (residenza ancora in Italia)
     impressum_en: z.string(),
   }),
 });
