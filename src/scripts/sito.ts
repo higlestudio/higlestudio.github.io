@@ -22,7 +22,7 @@ if (puntatore && matchMedia('(pointer: fine)').matches) {
     etichetta.textContent = suFoto ? '← →' : apri;
     puntatore.classList.add('vivo'); // compare al primo movimento, non in mezzo allo schermo
     puntatore.classList.toggle('apri', suOpera || suFoto);
-    puntatore.classList.toggle('link', !suOpera && !!el.closest('a, button'));
+    puntatore.classList.toggle('link', !suOpera && !!el.closest('a, button, summary')); // summary: la riga del progetto in Work
     puntatore.classList.toggle('testo', !!el.closest('input'));
     puntatore.classList.toggle('chiaro', !suOpera && !suFoto && !!el.closest('.pn-group, .scopri-pillola a, .nl button')); // su crema: nero
   }, { passive: true });

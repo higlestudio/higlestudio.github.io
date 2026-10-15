@@ -34,7 +34,7 @@ main { position: relative; z-index: 2; }
 /* cursore: solo con il mouse */
 .cur { display: none; }
 @media (pointer: fine) {
-  html, body, a, button, input { cursor: none; }
+  *, *::before, *::after { cursor: none !important; } /* 16/10: la freccia di sistema mai, da nessuna parte (prima ricompariva dove un elemento chiedeva la sua, es. la riga del progetto in Work) */
   /* 16/10: un cerchio solo, grande quanto "Apri" (84 px), rimpicciolito con lo zoom: pallino 14 px, link 24 px,
      lineetta nel campo della newsletter. Lo zoom (scale) è separato dalla posizione (translate, scritta da sito.ts) */
   .cur { display: grid; place-items: center; position: fixed; left: 0; top: 0; z-index: 99; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--accento); pointer-events: none; opacity: 0; scale: calc(14 / 84); will-change: translate, scale; transition: scale .25s, background .25s, opacity .2s; font-size: 13px; font-weight: 700; color: var(--nero); }
