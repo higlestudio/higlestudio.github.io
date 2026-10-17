@@ -13,11 +13,6 @@
   "testo_en": "The text of the work goes here, in your words.",
   "foto": [
     {
-      "immagine": "/img/opere/boddi.webp",
-      "alt_it": "Boddi, di fronte: figura con un cervello rosa al posto della testa, occhi ondulati, corpo nero e stivali arancioni, su una base nera rotonda.",
-      "alt_en": "Boddi, from the front: a figure with a pink brain for a head, wavy eyes, a black body and orange boots, on a round black base."
-    },
-    {
       "immagine": "/img/opere/boddi-2.webp",
       "alt_it": "Boddi di tre quarti, a metà di un passo.",
       "alt_en": "Boddi in three-quarter view, mid-step."
@@ -26,7 +21,13 @@
       "immagine": "/img/opere/boddi-3.webp",
       "alt_it": "Boddi di profilo, mentre cammina.",
       "alt_en": "Boddi in profile, walking."
+    },
+    {
+      "immagine": "/img/opere/boddi.webp",
+      "alt_it": "Boddi, di fronte: figura con un cervello rosa al posto della testa, occhi ondulati, corpo nero e stivali arancioni, su una base nera rotonda.",
+      "alt_en": "Boddi, from the front: a figure with a pink brain for a head, wavy eyes, a black body and orange boots, on a round black base."
     }
   ],
-  "foto_quadrata": "/img/opere/boddi-q.webp"
+  "foto_quadrata": "/img/opere/boddi-q.webp",
+  "bozza": false
 }
