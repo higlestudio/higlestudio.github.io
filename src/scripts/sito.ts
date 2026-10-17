@@ -96,6 +96,16 @@ if (sfoglia && trattini.length > 1) {
   sfoglia.addEventListener('pointerup', lascia);
   sfoglia.addEventListener('pointercancel', lascia);
   sfoglia.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') scorri(qui() - 1); if (e.key === 'ArrowRight') scorri(qui() + 1); });
+  // 18/10: col trackpad un gesto orizzontale deciso porta alla foto dopo o prima (una per gesto); il movimento quasi verticale
+  // di chi scorre la pagina non tocca più la galleria (in CSS, su computer, la galleria non scorre da sola)
+  let gesto = 0;
+  sfoglia.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY) || Math.abs(e.deltaX) < 12) return; // è scorrimento della pagina: lo fa il browser
+    e.preventDefault();
+    if (performance.now() - gesto < 650) return;
+    gesto = performance.now();
+    scorri(qui() + Math.sign(e.deltaX));
+  }, { passive: false });
   let largo = innerWidth;
   addEventListener('resize', () => { if (innerWidth !== largo) { largo = innerWidth; salta(qui()); } });
 }

@@ -248,7 +248,8 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 /* più foto: si sfogliano col dito, una alla volta */
 .sfoglia { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .sfoglia::-webkit-scrollbar { display: none; }
-.sfoglia.trascina { user-select: none; } /* col mouse si trascina (14/10); il cursore del sito mostra le frecce */
+.sfoglia.trascina { user-select: none; }
+@media (pointer: fine) { .sfoglia { overflow-x: hidden; } } /* 18/10: col mouse lo scorrimento della pagina non sposta la galleria (col trackpad la foto traballava); si sfoglia trascinando, coi trattini, coi tasti o con un gesto orizzontale deciso (sito.ts) */ /* col mouse si trascina (14/10); il cursore del sito mostra le frecce */
 .sfoglia img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; display: block; scroll-snap-align: start; scroll-snap-stop: always; background: var(--f); } /* ogni foto col suo fondo, preso da lei (11/10) */
 /* trattini sotto la foto: uno per foto, pieno quello che si vede */
 .trattini { display: flex; justify-content: center; gap: 4px; padding: 10px var(--g) 4px; }
@@ -359,14 +360,15 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   .evento .et-riga { grid-column: 2; grid-row: 1; background: var(--nero); padding-inline: var(--g); }
   .evento .evento-t { padding-block: 48px 32px; font-size: clamp(34px, 3.6vw, 64px); }
   .evento-apri { display: none; }
-  .evento > .evento-info { grid-column: 2; grid-row: 2; grid-template-columns: 1fr; align-content: start; align-self: start; gap: 0; background: var(--nero); }
-  .evento > .evento-info .cella { border-bottom: 1px solid var(--linea); }
+  .evento > .evento-info { grid-column: 2; grid-row: 2; grid-template-columns: 1fr; align-content: start; align-self: start; } /* 18/10: le linee fra le caselle sono lo spazio di 1 px della griglia, non bordi: prima si sommavano con la linea sotto (3 px) */
   /* 14/10: sotto il luogo qualche riga (solo su computer); e sotto l'evento un filo che lo chiude, come quelli di costruzione sopra */
   .evento .evento-testo, .evento .evento-testo.vuoto { display: block; grid-column: 2; grid-row: 3; background: var(--nero); padding: 22px var(--g) 40px; } /* sempre aperte; vuota se non c'è testo */
   .et-testo { padding-bottom: 0; }
-  .evento + .prog-opere .prog-intro { margin-top: 0; }
   .evento:not(:has(.locandina)) { grid-template-columns: 1fr; } /* evento senza locandina: tutta la riga al testo */
   .evento:not(:has(.locandina)) :is(.et-riga, .evento-info, .evento-testo) { grid-column: 1; grid-row: auto; }
+  .evento:not(:has(.locandina)) .evento-info { order: 1; } /* senza locandina: titolo, data e luogo, poi le righe (come con la locandina) */
+  .evento:not(:has(.locandina)) .evento-testo { order: 2; }
+  .evento:not(:has(.locandina)) .evento-testo.vuoto { display: none; } /* senza righe e senza locandina, niente casella vuota */
 
   /* Home, il progetto: titolo a sinistra, il primo paragrafo accanto, allineati in basso */
   .prog-intro .cella { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; column-gap: 6vw; padding-block: 64px 56px; }
@@ -391,13 +393,16 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
    accanto il nome e la scheda in colonna; sotto, a tutta riga, il testo dell'opera. Stesse cose del telefono, altro ordine */
 @media (min-width: 900px) {
   .op-pagina { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; border-top: 1px solid var(--linea); } /* 14/10: un filo in alto chiude il riquadro, come sul telefono */
-  .op-pagina > .op-foto { grid-column: 1; grid-row: 1 / span 2; height: calc(100svh - var(--testa) - 40px); max-width: 78vw; }
-  .op-pagina:not(:has(.trattini)) > .op-foto { height: calc(100svh - var(--testa)); } /* una foto sola o nessuna: niente spazio per i trattini */
+  /* 18/10: la larghezza della foto arrotondata al pixel intero (la galleria si allinea esatta: prima restava a 2 px e a ogni scatto
+     della rotella il browser la rimetteva a posto, e la foto traballava); l'altezza viene dal formato 4:3 */
+  .op-pagina > .op-foto { grid-column: 1; grid-row: 1 / span 2; width: round(down, min(calc((100svh - var(--testa) - 40px) * 4 / 3), 78vw), 1px); height: auto; }
+  .op-pagina:not(:has(.trattini)) > .op-foto { width: round(down, min(calc((100svh - var(--testa)) * 4 / 3), 78vw), 1px); } /* una foto sola o nessuna: niente spazio per i trattini */
   .op-pagina > .trattini { grid-column: 1; grid-row: 3; height: 40px; align-items: center; padding-block: 0; }
   .op-blocco { display: contents; } /* i suoi pezzi entrano nella griglia della pagina */
   .op-blocco > .op-testa { grid-column: 2; grid-row: 1; padding-block: clamp(24px, 5svh, 44px) clamp(16px, 3svh, 28px); border-left: 1px solid var(--linea); border-bottom: 1px solid var(--linea); }
   .op-t { text-align: left; font-size: clamp(56px, 6.4vw, 140px); }
   .op-blocco > .op-griglia { grid-column: 2; grid-row: 2 / span 2; grid-auto-rows: 1fr; align-content: stretch; gap: 0; background: var(--nero); border-left: 1px solid var(--linea); } /* 14/10: le voci si dividono tutta l'altezza, niente casellina vuota in fondo */
+  .op-griglia .cella:last-child { border-bottom: 0; } /* 18/10: sotto l'ultima voce c'è già la linea che chiude il riquadro (prima erano due, quasi attaccate) */
   .op-griglia .cella { border-bottom: 1px solid var(--linea); padding-block: clamp(10px, 1.9svh, 18px) clamp(11px, 2.1svh, 20px); } /* sugli schermi bassi (iPad) le voci si stringono, così la scheda non supera la foto */
   .op-blocco > .cella:last-child { grid-column: 1 / -1; grid-row: 4; border-top: 1px solid var(--linea); padding-block: 56px 72px; }
   .op-testo { max-width: 52ch; font-size: clamp(20px, 1.7vw, 28px); }
