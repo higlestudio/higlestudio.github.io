@@ -9,8 +9,6 @@ const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector
    Le misure (link, "Apri", lineetta) cambiano con uno zoom in CSS, il modo più leggero per il browser */
 const puntatore = $('.cur');
 if (puntatore && matchMedia('(pointer: fine)').matches) {
-  const etichetta = puntatore.querySelector('span')!;
-  const apri = etichetta.textContent || 'Apri';
   let x = 0, y = 0, attesa = false;
   const disegna = () => { attesa = false; puntatore.style.translate = `${x}px ${y}px`; }; // translate, non transform: così lo zoom del CSS non tocca la posizione
   addEventListener('mousemove', (e) => {
@@ -19,9 +17,9 @@ if (puntatore && matchMedia('(pointer: fine)').matches) {
     const el = e.target as Element;
     const suOpera = !!el.closest('[data-opera]');
     const suFoto = !!el.closest('.sfoglia[tabindex]'); // 14/10: sulle foto da sfogliare le frecce, si trascina
-    etichetta.textContent = suFoto ? '← →' : apri;
     puntatore.classList.add('vivo'); // compare al primo movimento, non in mezzo allo schermo
     puntatore.classList.toggle('apri', suOpera || suFoto);
+    puntatore.classList.toggle('frecce', suFoto); // al posto di "Apri" le due frecce del sito (non "foto": è già la classe delle foto di Work)
     puntatore.classList.toggle('link', !suOpera && !!el.closest('a, button, summary')); // summary: la riga del progetto in Work
     puntatore.classList.toggle('testo', !!el.closest('input'));
     puntatore.classList.toggle('chiaro', !suOpera && !suFoto && !!el.closest('.pn-group, .scopri-pillola a, .nl button')); // su crema: nero

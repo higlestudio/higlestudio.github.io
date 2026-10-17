@@ -12,6 +12,7 @@
   --font: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --display: 'Nohemi', 'Helvetica Neue', sans-serif;
   --g: 16px;
+  --freccia: calc(clamp(17px, 4.6vw, 24px) * .95); /* la misura della freccia del sito: quella della pillola "Scopri tutto il progetto" */
   --testa: calc(78px + env(safe-area-inset-top, 0px)); /* spazio in cima a ogni pagina per il menu, che sta in alto */
   color-scheme: dark;
 }
@@ -38,13 +39,16 @@ main { position: relative; z-index: 2; }
      lineetta nel campo della newsletter. Lo zoom (scale) è separato dalla posizione (translate, scritta da sito.ts) */
   .cur { display: grid; place-items: center; position: fixed; left: 0; top: 0; z-index: 99; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: var(--accento); pointer-events: none; opacity: 0; scale: calc(14 / 84); will-change: translate, scale; transition: scale .25s, background .25s, opacity .2s; font-size: 13px; font-weight: 700; color: var(--nero); }
   .cur.vivo { opacity: 1; }
-  .cur span { opacity: 0; transition: opacity .2s; white-space: nowrap; }
+  .cur-t { opacity: 0; transition: opacity .2s; white-space: nowrap; }
   /* 14/10 (Simone): solo pallino pieno, mai trasparente. Su ciò che si clicca si ingrandisce un poco; su ciò che è crema
      e si clicca (menu, pillole, Iscriviti) diventa nero come lo sfondo, per vedersi. Sulle opere il cerchio "Apri"; nel campo la lineetta */
   .cur.link { scale: calc(24 / 84); }
   .cur.chiaro { background: var(--nero); }
   .cur.apri { scale: 1; }
-  .cur.apri span { opacity: 1; }
+  .cur.apri .cur-t { opacity: 1; }
+  .cur-frecce { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 6px; opacity: 0; transition: opacity .2s; }
+  .cur.frecce .cur-t { opacity: 0; }
+  .cur.frecce .cur-frecce { opacity: 1; } /* 17/10: sulle foto da sfogliare le due frecce del sito, non più i caratteri ← → */
   .cur.testo { scale: calc(3 / 84) calc(26 / 84); }
 }
 
@@ -91,8 +95,8 @@ body[data-pagina="home"] { padding-top: 0; } /* in Home la scena parte dal bordo
 .nv-sopra { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 72px); line-height: .95; letter-spacing: -0.03em; }
 .nv-anno { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(96px, 34vw, 300px); line-height: .82; letter-spacing: -0.05em; }
 .nv-giu { display: grid; place-items: center; width: 56px; height: 56px; margin-top: 18px; border: 1.5px solid var(--carta); border-radius: 50%; }
-.nv-giu svg { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-@media (hover: hover) { .nv-giu:hover { background: var(--carta); } .nv-giu:hover svg { stroke: var(--nero); } }
+.nv-giu { color: var(--carta); }
+@media (hover: hover) { .nv-giu:hover { background: var(--carta); color: var(--nero); } }
 .nv { position: absolute; left: var(--x); top: var(--y); width: min(calc(var(--w) * 1vw), calc(var(--w) * .46lvh)); z-index: 2; will-change: transform; }
 .nv.dietro { z-index: 1; }
 .nv.solo-pc { display: none; } /* le nuvole del computer (14/10): sul telefono non ci sono */
@@ -143,7 +147,8 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .evento > .evento-testa { padding-block: 0; }
 .et-riga { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .evento-apri { flex: none; width: 44px; height: 44px; display: grid; place-items: center; margin-right: -10px; }
-.evento-apri svg { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; will-change: transform; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+.evento-apri { color: var(--carta); }
+.evento-apri svg { will-change: transform; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
 .evento.aperto .evento-apri svg { transform: rotate(180deg); }
 .evento-testo { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.2,.8,.2,1); color: var(--neutro); font-size: 16px; line-height: 1.6; }
 .evento.aperto .evento-testo { grid-template-rows: 1fr; }
@@ -164,13 +169,14 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .locandina img { display: block; width: 100%; height: auto; position: relative; }
 
 /* Home, verso Work (11/10): una pillola crema al centro, con aria sopra e sotto, staccata dal piede */
-.scopri-pillola { display: flex; justify-content: center; padding: 56px var(--g) 88px; }
+.scopri-pillola { display: flex; justify-content: center; padding: 88px var(--g); } /* 17/10: stesso spazio sopra e sotto, il maggiore dei due (prima 56 sopra, 88 sotto) */
 .scopri-pillola a { display: inline-flex; gap: .5em; align-items: center; background: var(--carta); color: var(--nero); border-radius: 999px; padding: 18px 30px; font-family: var(--display); font-weight: 700; font-size: clamp(17px, 4.6vw, 24px); line-height: 1; }
 @media (hover: hover) { .scopri-pillola a:hover { background: var(--neutro); } }
 /* 14/10: testo e freccia centrati davvero. Il testo si misura sull'altezza delle maiuscole (non sullo spazio vuoto che il
    carattere lascia sopra e sotto), la freccia è disegnata (Freccia.astro) e alta quanto le maiuscole */
 .scopri-pillola .pl-t, .nl button .pl-t { display: block; }
-.pl-freccia { width: .95em; height: .95em; flex: none; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+/* 17/10: la freccia del sito, una sola (Freccia.astro): la misura è quella della pillola (.95 del suo testo), uguale ovunque */
+.freccia-segno { width: var(--freccia); height: var(--freccia); flex: none; fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
 @supports (text-box: trim-both cap alphabetic) {
   .scopri-pillola .pl-t, .nl button .pl-t { text-box: trim-both cap alphabetic; }
   .scopri-pillola a { padding-block: 22px; }
@@ -218,7 +224,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .gruppo summary::-webkit-details-marker { display: none; }
 .gruppo .riga { display: grid; grid-template-columns: auto 1fr auto; align-items: center; column-gap: 14px; padding-block: 20px; }
 .gruppo .anno { color: var(--grigio); font-size: 13px; font-weight: 500; width: 2.6em; }
-.gruppo .freccia { width: 26px; height: 26px; fill: none; stroke: var(--carta); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transform-origin: 50% 50%; will-change: transform; transition: transform .36s cubic-bezier(.2,.8,.2,1); } /* gira su se stessa, senza spostarsi; 14/10: disegno centrato nel riquadro e rotazione come blocco unico (will-change), così su Windows non tremola */
+.gruppo .freccia { color: var(--carta); transform-origin: 50% 50%; will-change: transform; transition: transform .36s cubic-bezier(.2,.8,.2,1); } /* gira su se stessa, senza spostarsi; 17/10: la freccia del sito (Freccia.astro) */
 .gruppo.aperto .freccia { transform: rotate(180deg); transition-duration: .48s; } /* stessi tempi della griglia: .48s ad aprire, .36s a chiudere */
 .st-work { border-top: 0; }
 .st-work .cella { padding-block: 28px 40px; }

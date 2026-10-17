@@ -58,7 +58,7 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
         <div class="et-riga">
           <h2 class="evento-t" id={`evento-${i}`}>{titoloEvento}</h2>
           {testoEvento && <button type="button" class="evento-apri" aria-expanded="false" aria-controls={`evento-testo-${i}`} aria-label={t.info}>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.75v14.5" /><path d="m5.5 12.75 6.5 6.5 6.5-6.5" /></svg>
+            <Freccia verso="giu" />
           </button>}
         </div>
         <div class:list={['evento-testo', { vuoto: !testoEvento }]} id={`evento-testo-${i}`}>

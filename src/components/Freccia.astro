@@ -1,4 +1,9 @@
 ---
-// 14/10: la freccia dei tasti a pillola, disegnata a linee (il carattere "→" del font stava più in basso del testo)
+// la freccia del sito, una sola (17/10, Simone): quella della pillola "Scopri tutto il progetto", disegnata a linee spesse.
+// La stessa forma e la stessa misura ovunque (pillole, progetti in Work, evento, nuvole, cursore sulle foto), girata nel
+// verso che serve. Centrata nel suo riquadro, così girando non si sposta. Misura e spessore in global.css (.freccia-segno)
+interface Props { verso?: 'destra' | 'sinistra' | 'giu'; class?: string }
+const { verso = 'destra', class: cls = '' } = Astro.props;
+const giro = { destra: 0, giu: 90, sinistra: 180 }[verso];
 ---
-<svg class="pl-freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12h16" /><path d="m13 5.5 6.5 6.5-6.5 6.5" /></svg>
+<svg class={`freccia-segno ${cls}`} viewBox="0 0 24 24" aria-hidden="true"><g transform={giro ? `rotate(${giro} 12 12)` : undefined}><path d="M4 12h16" /><path d="m13.5 5.5 6.5 6.5-6.5 6.5" /></g></svg>

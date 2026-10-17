@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Statement from '../Statement.astro';
+import Freccia from '../Freccia.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
 import { cicli, opere, titoloCiclo, fondoDi } from '../../dati';
 interface Props { lang: Lang }
@@ -20,7 +21,7 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
       <summary class="pannelli"><div class="cella riga">
         <span class="anno num">{anno}</span>
         <h2>{titoloCiclo(c, lang)}</h2>
-        <svg class="freccia" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.75v14.5" /><path d="m5.5 12.75 6.5 6.5 6.5-6.5" /></svg>
+        <Freccia verso="giu" class="freccia" />
       </div></summary>
       <!-- 14/10: prima tutto il testo del progetto, poi le opere; si chiude insieme al progetto -->
       <div class="apre">
