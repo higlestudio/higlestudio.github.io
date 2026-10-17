@@ -4,8 +4,17 @@
   "ciclo": "idea",
   "ordine": 1,
   "anno": 2026,
-  "foto": "",
-  "altre_foto": [],
+  "foto": "/img/opere/idee.webp",
+  "foto_alt_it": "Idee, accesa: dodici capsule luminose gialle in tre file, attorno alla scritta IDEE, in un guscio trasparente.",
+  "foto_alt_en": "Idee, switched on: twelve glowing yellow capsules in three rows around the word IDEE, inside a clear shell.",
+  "foto_quadrata": "/img/opere/idee-q.webp",
+  "altre_foto": [
+    {
+      "foto": "/img/opere/idee-2.webp",
+      "alt_it": "Idee, spenta: le dodici capsule trasparenti attorno alla scritta IDEE.",
+      "alt_en": "Idee, switched off: the twelve clear capsules around the word IDEE."
+    }
+  ],
   "materiali_it": "da confermare",
   "materiali_en": "to be confirmed",
   "misure": "",

@@ -11,16 +11,20 @@ const o = opera.data;
 const ciclo = (await getEntry('cicli', o.ciclo))!;
 const nomeCiclo = titoloCiclo(ciclo, lang);
 const it = lang === 'it';
-const foto: string[] = [o.foto, ...o.altre_foto].filter(Boolean); // 14/10: senza foto resta il riquadro vuoto
+// la principale e le altre da sfogliare, ognuna col suo testo alternativo (17/10; vuoto = il nome dell'opera)
+const foto = [
+  { src: o.foto, alt: (it ? o.foto_alt_it : o.foto_alt_en) || o.titolo },
+  ...o.altre_foto.map((a: { foto: string; alt_it: string; alt_en: string }) => ({ src: a.foto, alt: (it ? a.alt_it : a.alt_en) || o.titolo })),
+];
 // ogni foto col suo fondo, preso da lei (dati.ts); il riquadro prende quello della prima
-const fondi = await Promise.all(foto.map((f) => fondoDi(f, o.fondo)));
+const fondi = await Promise.all(foto.map((f) => fondoDi(f.src, o.fondo)));
 ---
 <Base lang={lang} titolo={`${o.titolo} | Higle Studio`} pagina="archivio" descrizione={`${o.titolo}, ${o.anno}. ${nomeCiclo}`} altra={percorsi[altra].opera(opera.id)}>
   <!-- 14/10: sul computer la pagina è una griglia (global.css): la foto alta uno schermo, accanto nome e scheda, sotto il testo -->
   <div class="op-pagina">
-  <figure class="op-foto" style={`--f:${fondi[0] ?? '#33302C'}`}>
+  <figure class="op-foto" style={`--f:${fondi[0]}`}>
     <div class="sfoglia" tabindex={foto.length > 1 ? 0 : undefined} aria-label={foto.length > 1 ? `${t.foto}: ${o.titolo}` : undefined}>
-      {foto.map((f, n) => <img src={f} style={`--f:${fondi[n]}`} alt={foto.length > 1 ? `${o.titolo}, ${n + 1}/${foto.length}` : o.titolo} loading={n ? 'lazy' : 'eager'} />)}
+      {foto.map((f, n) => <img src={f.src} style={`--f:${fondi[n]}`} alt={f.alt} width="2400" height="1800" loading={n ? 'lazy' : 'eager'} />)}
     </div>
   </figure>
   {foto.length > 1 && (

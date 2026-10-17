@@ -4,13 +4,16 @@
   "ciclo": "idea",
   "ordine": 2,
   "anno": 2026,
-  "foto": "",
+  "foto": "/img/opere/salto.webp",
+  "foto_alt_it": "Salto: stampa incorniciata in nero con passepartout chiaro. Un cervello rosa vola su una griglia di lettere \"i\", tra la F in alto e UUUM in basso.",
+  "foto_alt_en": "Salto: print in a black frame with a light mat. A pink brain flies across a grid of letters \"i\", between the F at the top and UUUM at the bottom.",
+  "foto_quadrata": "/img/opere/salto-q.webp",
+  "altre_foto": [],
   "materiali_it": "da confermare",
   "materiali_en": "to be confirmed",
   "misure": "",
   "edizione_it": "Pezzo unico",
   "edizione_en": "Unique piece",
   "testo_it": "Qui va il testo dell'opera, dalle tue parole.",
-  "testo_en": "The text of the work goes here, in your words.",
-  "altre_foto": []
+  "testo_en": "The text of the work goes here, in your words."
 }

@@ -34,7 +34,7 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
           {o.map((x) => (
             <li class="opera">
               <a href={percorsi[lang].opera(x.id)} data-opera>
-                <div class="foto" style={`--f:${fondi.get(x.id)}`}>{x.data.foto && <img src={x.data.foto} alt={x.data.titolo} loading="lazy" />}</div>
+                <div class="foto" style={`--f:${fondi.get(x.id)}`}><img src={x.data.foto} alt={(lang === 'it' ? x.data.foto_alt_it : x.data.foto_alt_en) || x.data.titolo} width="2400" height="1800" loading="lazy" /></div>
                 <div class="scheda"><span class="t">{x.data.titolo}</span></div>
               </a>
             </li>

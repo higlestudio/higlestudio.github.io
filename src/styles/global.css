@@ -7,7 +7,6 @@
   --neutro: #E0D8C9;
   --grigio: #ABA396;
   --linea: #3E3B37;
-  --fondo-foto: #33302C;
   --accento: var(--carta); /* l'accento è la crema: niente arancio sul sito (deciso 8/10) */
   --pill: #3A3733;
   --font: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
@@ -163,7 +162,6 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   background-position: calc(var(--m) - 1px) 0, calc(100% - var(--m) + 1px) 0, 0 calc(var(--m) - 1px), 0 calc(100% - var(--m) + 1px);
   background-repeat: no-repeat; }
 .locandina img { display: block; width: 100%; height: auto; position: relative; }
-.loc-vuota { width: 100%; aspect-ratio: 1 / 1.414; background: var(--fondo-foto); position: relative; } /* 14/10: senza locandina, il suo spazio vuoto (formato A, come un manifesto) */
 
 /* Home, verso Work (11/10): una pillola crema al centro, con aria sopra e sotto, staccata dal piede */
 .scopri-pillola { display: flex; justify-content: center; padding: 56px var(--g) 88px; }
@@ -198,7 +196,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .opere { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; position: relative; z-index: 2; background: var(--nero); }
 .opera { min-width: 0; }
 .opera a { display: grid; grid-template-rows: auto auto; width: 100%; }
-.foto { background: var(--f, var(--fondo-foto)); overflow: hidden; aspect-ratio: 4 / 3; }
+.foto { background: var(--f); overflow: hidden; aspect-ratio: 4 / 3; }
 .foto img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
 @media (hover: hover) { .opera a:hover .foto img { transform: scale(1.015); } }
 .scheda { display: grid; padding: 12px var(--g) 18px; align-items: center; }
@@ -208,7 +206,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 /* griglia d'archivio */
 .inv-grid { grid-template-columns: 1fr 1fr; border-top: 0; list-style: none; margin: 0; padding: 0; }
 .inv-grid a { display: grid; grid-template-rows: auto auto; height: 100%; }
-.inv-grid .im { aspect-ratio: 1; background: var(--f, var(--fondo-foto)); }
+.inv-grid .im { aspect-ratio: 1; background: var(--f); }
 .inv-grid .im img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .inv-grid .cap { display: block; padding: 10px var(--g) 12px; }
 .inv-grid .t { font-family: var(--display); font-weight: 700; font-size: 16px; }
@@ -232,7 +230,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 /* About: in alto Instagram e la mail (righe .ft-ig, 11/10), poi la bio, sotto il ritratto */
 .me { grid-template-columns: 1fr; }
 .me > .ft-ig { grid-column: 1 / -1; }
-.me .ph { aspect-ratio: 4 / 5; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; background: var(--fondo-foto); }
+.me .ph { aspect-ratio: 4 / 5; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
 .me .testo { padding-block: 22px 26px; } /* prima la bio, sotto il ritratto (9/10) */
 .me .bio { margin: 0; font-size: clamp(20px, 5.4vw, 40px); line-height: 1.2; font-weight: 500; max-width: 26ch; }
 .me .bio p { margin: 0 0 .6em; }
@@ -353,7 +351,6 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
   .evento { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; }
   .evento > .locandina { grid-column: 1; grid-row: 1 / span 3; display: grid; place-items: center; }
   .evento > .locandina img { width: auto; max-width: 100%; max-height: calc(100svh - var(--testa) - 2 * var(--m)); }
-  .evento > .locandina .loc-vuota { width: auto; height: calc(100svh - var(--testa) - 2 * var(--m)); max-width: 100%; }
   .evento > .evento-testa { display: contents; } /* sul computer titolo e righe sono due caselle della griglia */
   .evento .et-riga { grid-column: 2; grid-row: 1; background: var(--nero); padding-inline: var(--g); }
   .evento .evento-t { padding-block: 48px 32px; font-size: clamp(34px, 3.6vw, 64px); }

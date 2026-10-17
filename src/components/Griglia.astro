@@ -11,7 +11,7 @@ const fondi = await Promise.all(opere.map((o) => fondoDi(o.data.foto_quadrata ||
   {opere.map((o, i) => (
     <li>
       <a href={percorsi[lang].opera(o.id)} data-opera>
-        <div class="im" style={`--f:${fondi[i]}`}>{(o.data.foto_quadrata || o.data.foto) && <img src={o.data.foto_quadrata || o.data.foto} alt="" loading="lazy" />}</div>
+        <div class="im" style={`--f:${fondi[i]}`}><img src={o.data.foto_quadrata || o.data.foto} alt="" width="1800" height="1800" loading="lazy" /></div>
         <div class="cap"><span class="t">{o.data.titolo}</span></div>
       </a>
     </li>
