@@ -92,22 +92,6 @@ collections:
       - { name: ciclo, label: Progetto, widget: relation, collection: cicli, value_field: "{{slug}}", search_fields: [titolo_it], display_fields: [titolo_it] }
       - { name: ordine, label: "Ordine nel progetto (1, 2, 3…)", widget: number, value_type: int }
       - { name: anno, label: Anno, widget: number, value_type: int }
-      - { name: foto, label: "Foto principale (orizzontale 4:3, consigliato 2400×1800)", widget: image }
-      - { name: foto_alt_it, label: "Testo alternativo IT della foto principale (descrive la foto per chi non vede e per Google)", widget: string, required: false }
-      - { name: foto_alt_en, label: "Testo alternativo EN della foto principale", widget: string, required: false }
-      - { name: foto_quadrata, label: "Foto quadrata per la griglia della Home (facoltativa: se manca si usa la principale)", widget: image, required: false }
-      - name: altre_foto
-        label: "Altre foto, da sfogliare nella pagina dell'opera (fino a 4, facoltative; trascinale per cambiare l'ordine)"
-        label_singular: Foto
-        widget: list
-        max: 4
-        required: false
-        summary: "{{fields.alt_it}}"
-        fields:
-          - { name: foto, label: "Foto (4:3)", widget: image }
-          - { name: alt_it, label: "Testo alternativo IT", widget: string, required: false }
-          - { name: alt_en, label: "Testo alternativo EN", widget: string, required: false }
-      - { name: fondo, label: "Colore di fondo dietro le foto (lascialo vuoto: lo prende da solo dai bordi della foto; sceglilo solo per forzarne uno)", widget: color, required: false }
       - { name: materiali_it, label: "Materiali IT", widget: string }
       - { name: materiali_en, label: "Materiali EN", widget: string }
       - { name: misure, label: "Misure (es. 22 × 14 × 10 cm; vuoto = \"da misurare\")", widget: string, required: false }
@@ -115,8 +99,19 @@ collections:
       - { name: edizione_en, label: "Edizione EN", widget: string, default: "Unique piece" }
       - { name: testo_it, label: "Testo IT", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
       - { name: testo_en, label: "Testo EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+      - name: foto
+        label: "Foto — la PRIMA è la principale (si vede in Work e apre la pagina dell'opera), le altre si sfogliano. Trascinale per cambiare l'ordine. Formato 4:3, consigliato 2400×1800; fino a 5"
+        label_singular: Foto
+        widget: list
+        min: 1
+        max: 5
+        summary: "{{fields.alt_it}}"
+        fields:
+          - { name: immagine, label: "Foto", widget: image }
+          - { name: alt_it, label: "Testo alternativo IT (descrive la foto per chi non vede e per Google)", widget: string, required: false }
+          - { name: alt_en, label: "Testo alternativo EN", widget: string, required: false }
+      - { name: foto_quadrata, label: "Foto quadrata per la griglia della Home (1:1, consigliato 1800×1800; se manca si usa la prima foto)", widget: image, required: false }
       - { name: bozza, label: "Bozza (nascosta dal sito)", widget: boolean, default: false }
-
   - name: pagine
     label: Pagine
     files:

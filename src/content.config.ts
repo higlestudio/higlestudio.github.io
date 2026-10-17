@@ -43,13 +43,10 @@ const opere = defineCollection({
     ciclo: z.string(),
     ordine: z.number().default(0),
     anno: z.number(),
-    foto: z.string(),
-    // 17/10: il testo alternativo di ogni foto (per chi non vede e per Google), in IT e in EN; vuoto = il nome dell'opera
-    foto_alt_it: z.string().default(''),
-    foto_alt_en: z.string().default(''),
-    foto_quadrata: z.string().optional(), // per la griglia della Home; stesso testo alternativo della principale
-    altre_foto: z.array(z.object({ foto: z.string(), alt_it: z.string().default(''), alt_en: z.string().default('') })).max(4).default([]),
-    fondo: z.string().optional(), // vuoto = preso dalla foto (dati.ts, fondoDi)
+    // 17/10: le foto in una lista sola: la prima è la principale (Work, apertura della pagina), le altre si sfogliano.
+    // Ognuna col suo testo alternativo IT/EN (per chi non vede e per Google; vuoto = il nome dell'opera)
+    foto: z.array(z.object({ immagine: z.string(), alt_it: z.string().default(''), alt_en: z.string().default('') })).min(1).max(5),
+    foto_quadrata: z.string().optional(), // per la griglia della Home; se manca si usa la principale
     materiali_it: z.string().default(''),
     materiali_en: z.string().default(''),
     misure: z.string().default(''),

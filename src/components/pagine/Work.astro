@@ -11,7 +11,7 @@ const altra: Lang = lang === 'it' ? 'en' : 'it';
 const tutti = await cicli();
 const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.id), anno: c.data.anno })));
 // il fondo dietro ogni foto, preso dalla foto stessa (dati.ts)
-const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x) => [x.id, await fondoDi(x.data.foto, x.data.fondo)] as const)));
+const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x) => [x.id, await fondoDi(x.data.foto[0].immagine)] as const)));
 ---
 <Base lang={lang} titolo={`${t.archivio} | Higle Studio`} pagina="archivio" altra={percorsi[altra].archivio}>
   <h1 class="sr">{t.archivio}</h1>
@@ -35,7 +35,7 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
           {o.map((x) => (
             <li class="opera">
               <a href={percorsi[lang].opera(x.id)} data-opera>
-                <div class="foto" style={`--f:${fondi.get(x.id)}`}><img src={x.data.foto} alt={(lang === 'it' ? x.data.foto_alt_it : x.data.foto_alt_en) || x.data.titolo} width="2400" height="1800" loading="lazy" /></div>
+                <div class="foto" style={`--f:${fondi.get(x.id)}`}><img src={x.data.foto[0].immagine} alt={(lang === 'it' ? x.data.foto[0].alt_it : x.data.foto[0].alt_en) || x.data.titolo} width="2400" height="1800" loading="lazy" /></div>
                 <div class="scheda"><span class="t">{x.data.titolo}</span></div>
               </a>
             </li>
