@@ -8,7 +8,6 @@
   --grigio: #ABA396;
   --linea: #3E3B37;
   --accento: var(--carta); /* l'accento è la crema: niente arancio sul sito (deciso 8/10) */
-  --pill: #3A3733;
   --font: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --display: 'Nohemi', 'Helvetica Neue', sans-serif;
   --g: 16px;
@@ -26,7 +25,6 @@ a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transpar
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--carta); outline-offset: 3px; }
 .num { font-variant-numeric: tabular-nums; }
-.wrap { padding-inline: var(--g); max-width: 1440px; margin: 0 auto; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 [hidden] { display: none !important; } /* nascosto vuol dire nascosto, anche se una regola dice display */
 main { position: relative; z-index: 2; }

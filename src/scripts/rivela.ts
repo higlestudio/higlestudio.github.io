@@ -26,17 +26,39 @@ const TESTO = [
   '.op-testo > *',
 ].join(', ');
 
+// 17/10: una foto si scopre solo quando è pronta. Le foto si caricano avvicinandosi, e sono grandi (2400 px): se la tendina
+// partiva subito scopriva il riquadro col fondo chiaro e la foto arrivava dopo, di colpo. Si aspetta la foto che si vede
+// (nella galleria dell'opera solo quella al centro, non le copie); con una rete lentissima dopo 4 s si apre comunque
+const fotoPronta = (el: Element) => {
+  const box = el.getBoundingClientRect();
+  const foto = [...el.querySelectorAll('img')].filter((i) => { const r = i.getBoundingClientRect(); return r.right > box.left + 1 && r.left < box.right - 1; });
+  if (foto.every((i) => i.complete && i.naturalWidth)) return Promise.resolve();
+  return Promise.race([
+    Promise.all(foto.map((i) => i.decode().catch(() => {}))),
+    new Promise((ok) => setTimeout(ok, 4000)),
+  ]);
+};
+
 const avvia = () => {
   if (!movimento) return;
 
   tutti(TESTO).forEach((el) => el.classList.add('r-scende'));                    // testo: tendina dall'alto in basso
   tutti('.op-foto, .inv-grid .im, .opere .foto').forEach((el) => el.classList.add('r-tenda')); // foto: tendina ovunque (Work come la Home, 14/10)
 
+  // le foto si scaricano già a uno schermo e mezzo di distanza (Safari da solo aspetta troppo): arrivandoci, di solito sono pronte
+  const vicino = new IntersectionObserver((voci) => voci.forEach((v) => {
+    if (!v.isIntersecting) return;
+    v.target.querySelectorAll('img').forEach((i) => { i.loading = 'eager'; });
+    vicino.unobserve(v.target);
+  }), { rootMargin: '0px 0px 150% 0px' });
+  tutti('.r-tenda').forEach((el) => vicino.observe(el));
+
   // si scoprono una volta sola, poco prima di arrivare in fondo allo schermo
   const vista = new IntersectionObserver((voci) => voci.forEach((v) => {
     if (!v.isIntersecting) return;
-    v.target.classList.add('visto');
     vista.unobserve(v.target);
+    if (v.target.classList.contains('r-tenda')) fotoPronta(v.target).then(() => v.target.classList.add('visto')); // la foto, quando è pronta
+    else v.target.classList.add('visto');
   }), { rootMargin: '0px 0px -9% 0px' });
   tutti('.r-scende, .r-tenda').forEach((el) => vista.observe(el));
 };
