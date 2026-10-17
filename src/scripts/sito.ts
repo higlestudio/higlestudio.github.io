@@ -35,30 +35,36 @@ document.querySelectorAll<HTMLAnchorElement>('.lingua').forEach((a) => a.addEven
 
 /* pagina dell'opera: le foto si sfogliano col dito; i trattini sotto dicono quale si vede e, toccati, ci saltano */
 const sfoglia = $('.sfoglia'), trattini = [...document.querySelectorAll<HTMLButtonElement>('.trattini button')];
-// 11/10: senza fine. Dopo l'ultima si torna alla prima (e prima della prima c'è l'ultima): ai due capi una copia della foto
-// dell'altro capo; quando ci si ferma su una copia, si salta senza movimento alla foto vera
+// Senza fine: dopo l'ultima si torna alla prima, prima della prima c'è l'ultima. 17/10: una copia intera delle foto prima
+// e una dopo (prima era una sola foto per lato, e scorrendo veloce due volte si sbatteva contro la fine): per quanto si
+// scorra c'è sempre una foto dopo. Quando ci si ferma su una copia, si salta senza movimento alla stessa foto al centro
 if (sfoglia && trattini.length > 1) {
   const n = trattini.length;
   const vere = [...sfoglia.querySelectorAll('img')];
   const copia = (img: HTMLImageElement) => { const c = img.cloneNode() as HTMLImageElement; c.alt = ''; c.setAttribute('aria-hidden', 'true'); c.loading = 'eager'; return c; };
-  sfoglia.prepend(copia(vere[n - 1])); sfoglia.append(copia(vere[0]));
+  // quanti giri di copie per lato: almeno 6 foto di riserva, così anche con 2 foto non si arriva mai in fondo
+  const giri = Math.ceil(6 / n), centro = giri * n;
+  for (let g = 0; g < giri; g++) { sfoglia.prepend(...vere.map(copia)); sfoglia.append(...vere.map(copia)); } // copie | vere | copie
   const w = () => sfoglia.clientWidth;
   const salta = (i: number) => { sfoglia.style.scrollSnapType = 'none'; sfoglia.scrollLeft = i * w(); void sfoglia.offsetWidth; sfoglia.style.scrollSnapType = ''; };
-  salta(1);
-  const qui = () => Math.round(sfoglia.scrollLeft / w()); // 0 = copia dell'ultima, 1…n = vere, n+1 = copia della prima
-  const vai = (i: number) => sfoglia.scrollTo({ left: (i + 1) * w(), behavior: 'smooth' });
+  salta(centro);
+  const qui = () => Math.round(sfoglia.scrollLeft / w()); // prima di centro copie, centro…centro+n-1 vere, dopo copie
+  const scorri = (i: number) => sfoglia.scrollTo({ left: i * w(), behavior: 'smooth' });
+  const vai = (k: number) => scorri(centro + k); // trattino k: la foto vera k
   const aggiorna = () => {
-    const vera = (qui() - 1 + n) % n;
+    const vera = qui() % n;
     trattini.forEach((b, i) => (i === vera ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
   };
   // a scorrimento finito (col dito o coi trattini): se si è su una copia, si va alla vera
   // (mai col dito ancora appoggiato, e solo con la foto ferma al suo posto: il salto così non si vede)
   let ferma = 0, dito = false;
+  let meta: number | null = null; // dove sta andando la galleria dopo una trascinata: la prossima riparte da lì, non da metà strada
   const fermo = () => {
     if (!dito && sfoglia.classList.contains('lasciata')) { sfoglia.classList.remove('lasciata'); sfoglia.style.scrollSnapType = ''; }
     const i = qui();
-    if (dito || Math.abs(sfoglia.scrollLeft - i * w()) > 2) return;
-    if (i === 0) salta(n); else if (i === n + 1) salta(1);
+    if (dito || Math.abs(sfoglia.scrollLeft - i * w()) > 8) return; // ferma al suo posto (qualche pixel di scarto si corregge col salto)
+    salta(i < centro || i >= centro + n ? centro + (i % n) : i); // da una copia alla stessa foto al centro; e sempre al pixel giusto
+    meta = null;
     aggiorna();
   };
   const aspetta = () => { clearTimeout(ferma); ferma = setTimeout(fermo, 120); };
@@ -73,7 +79,7 @@ if (sfoglia && trattini.length > 1) {
   let presa: { x: number; da: number; i: number } | null = null;
   sfoglia.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    presa = { x: e.clientX, da: sfoglia.scrollLeft, i: qui() };
+    presa = { x: e.clientX, da: sfoglia.scrollLeft, i: meta ?? qui() };
     dito = true; sfoglia.style.scrollSnapType = 'none'; sfoglia.classList.add('trascina');
     sfoglia.setPointerCapture(e.pointerId);
   });
@@ -83,12 +89,13 @@ if (sfoglia && trattini.length > 1) {
     const tratto = e.clientX - presa.x, i = presa.i;
     presa = null; dito = false; sfoglia.classList.remove('trascina'); sfoglia.classList.add('lasciata');
     const dove = Math.abs(tratto) > w() / 10 ? i - Math.sign(tratto) : i; // indice nella fila con le copie
+    meta = dove;
     sfoglia.scrollTo({ left: dove * w(), behavior: 'smooth' });
     aspetta(); // lo scatto torna quando lo scorrimento è finito (in fermo)
   };
   sfoglia.addEventListener('pointerup', lascia);
   sfoglia.addEventListener('pointercancel', lascia);
-  sfoglia.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') vai(qui() - 2); if (e.key === 'ArrowRight') vai(qui()); });
+  sfoglia.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') scorri(qui() - 1); if (e.key === 'ArrowRight') scorri(qui() + 1); });
   let largo = innerWidth;
   addEventListener('resize', () => { if (innerWidth !== largo) { largo = innerWidth; salta(qui()); } });
 }
