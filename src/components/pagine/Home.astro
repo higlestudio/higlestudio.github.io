@@ -5,7 +5,7 @@ import Griglia from '../Griglia.astro';
 import Nuvole from '../Nuvole.astro';
 import Freccia from '../Freccia.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
-import { cicloInPrimoPiano, opere, titoloCiclo, statement, md } from '../../dati';
+import { cicloInPrimoPiano, opere, titoloCiclo, statement, md, eventi } from '../../dati';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = testi[lang];
@@ -15,7 +15,7 @@ const ciclo = await cicloInPrimoPiano();
 const lista = await opere(ciclo.id);
 const titolo = titoloCiclo(ciclo, lang);
 const it = lang === 'it';
-const eventi = ciclo.data.eventi.filter((e) => e.attivo);
+const listaEventi = (await eventi()).map((x) => x.data);
 // sotto le opere, il primo paragrafo dello statement
 const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_en);
 ---
@@ -42,8 +42,8 @@ const { lead } = statement(it ? ciclo.data.statement_it : ciclo.data.statement_e
   <!-- in cima le nuvole con Boddi, che salgono e scoprono il progetto (11/10; dal 14/10 niente più video dal pannello) -->
   <Nuvole sopra={t.nuovoProgetto} anno={ciclo.data.anno} giu="#opere" />
 
-  <!-- gli eventi, ognuno con la sua locandina, nell'ordine del pannello (11/10: possono essere più di uno; si spengono uno per uno) -->
-  {eventi.map((e, i) => {
+  <!-- gli eventi, dalla sezione Eventi del pannello (17/10): quelli accesi, nell'ordine scelto; ognuno con la sua locandina, se c'è -->
+  {listaEventi.map((e, i) => {
     const titoloEvento = it ? e.titolo_it : e.titolo_en;
     const dataEvento = it ? e.data_it : e.data_en;
     const luogoEvento = it ? e.luogo_it : e.luogo_en;

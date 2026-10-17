@@ -1,0 +1,12 @@
+{
+  "titolo_it": "Titolo dell'evento",
+  "titolo_en": "Event title",
+  "attivo": true,
+  "ordine": 1,
+  "data_it": "12–20 novembre 2026",
+  "data_en": "12–20 November 2026",
+  "luogo_it": "Berlino, Kreuzberg",
+  "luogo_en": "Berlin, Kreuzberg",
+  "testo_it": "Qui qualche riga sull'evento: cosa si vede, gli orari, come arrivarci.",
+  "testo_en": "A few lines about the event: what is on, opening hours, how to get there."
+}

@@ -12,6 +12,11 @@ export async function cicloInPrimoPiano() {
   return tutti.find((c) => c.data.in_primo_piano) ?? tutti[0];
 }
 
+/** gli eventi da mostrare in Home: accesi, nell'ordine scelto nel pannello (17/10) */
+export async function eventi() {
+  return (await getCollection('eventi', (e) => e.data.attivo)).sort((a, b) => a.data.ordine - b.data.ordine);
+}
+
 export async function opere(ciclo?: string) {
   return (await getCollection('opere', (o) => !o.data.bozza && (!ciclo || o.data.ciclo === ciclo)))
     .sort((a, b) => a.data.ordine - b.data.ordine);

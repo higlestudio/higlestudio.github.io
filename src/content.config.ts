@@ -12,21 +12,26 @@ const cicli = defineCollection({
     in_primo_piano: z.boolean().default(false),
     statement_it: z.string().default(''),
     statement_en: z.string().default(''),
-    // in Home, sotto le nuvole: gli eventi del progetto (mostre, presentazioni…), ognuno con la sua locandina, nell'ordine del pannello.
-    // Spento = non si vede (11/10: da uno solo a una lista)
-    eventi: z.array(z.object({
-      attivo: z.boolean().default(true),
-      titolo_it: z.string().default(''),
-      titolo_en: z.string().default(''),
-      data_it: z.string().default(''),
-      data_en: z.string().default(''),
-      luogo_it: z.string().default(''),
-      luogo_en: z.string().default(''),
-      testo_it: z.string().default(''), // 14/10: qualche riga sotto il titolo (telefono: si apre con la freccetta) o sotto il luogo (computer)
-      testo_en: z.string().default(''),
-      locandina: z.string().optional(),
-      link: z.string().optional(),
-    })).default([]),
+  }),
+});
+
+// 17/10: gli eventi (mostre, presentazioni…) in una sezione a sé del pannello, un file per evento. In Home escono quelli
+// con "Mostra in Home" acceso, nell'ordine scelto; se nessuno è acceso la parte degli eventi non c'è
+const eventi = defineCollection({
+  loader: glob({ pattern: '*.json', base: './src/content/eventi' }),
+  schema: z.object({
+    titolo_it: z.string().default(''),
+    titolo_en: z.string().default(''),
+    attivo: z.boolean().default(true),
+    ordine: z.number().default(0),
+    data_it: z.string().default(''),
+    data_en: z.string().default(''),
+    luogo_it: z.string().default(''),
+    luogo_en: z.string().default(''),
+    testo_it: z.string().default(''), // qualche riga: sul telefono si apre con la freccetta, sul computer sta sotto il luogo
+    testo_en: z.string().default(''),
+    locandina: z.string().optional(),
+    link: z.string().optional(),
   }),
 });
 
@@ -70,4 +75,4 @@ const pagine = defineCollection({
   }),
 });
 
-export const collections = { cicli, opere, pagine };
+export const collections = { cicli, eventi, opere, pagine };
