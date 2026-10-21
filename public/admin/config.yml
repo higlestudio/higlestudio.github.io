@@ -1,0 +1,128 @@
+backend:
+  name: github
+  repo: higlestudio/higlestudio.github.io
+  branch: main
+  commit_messages:
+    create: 'Nuovo: {{collection}} "{{slug}}"'
+    update: 'Modifica: {{collection}} "{{slug}}"'
+    delete: 'Eliminato: {{collection}} "{{slug}}"'
+    uploadMedia: 'Foto caricata: "{{path}}"'
+    deleteMedia: 'Foto eliminata: "{{path}}"'
+
+locale: it
+site_url: https://higlestudio.com
+display_url: https://higlestudio.com
+media_folder: public/img
+public_folder: /img
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 15000000
+      transformations:
+        raster_image: { format: webp, quality: 85, width: 2400, height: 2400 }
+
+collections:
+  - name: cicli
+    label: Progetti
+    label_singular: Progetto
+    description: "Un progetto è un gruppo di opere. Quello con «In primo piano» acceso apre la home; gli altri restano in Work, ordinati per anno. Tieni acceso l'interruttore su un solo progetto."
+    folder: src/content/cicli
+    extension: json
+    format: json
+    create: true
+    slug: "{{slug}}"
+    identifier_field: titolo_it
+    summary: "{{anno}} — {{titolo_it}}{{in_primo_piano | ternary(' · in primo piano', '')}}"
+    sortable_fields: [anno, titolo_it]
+    fields:
+      - { name: titolo_it, label: "Titolo IT", widget: string }
+      - { name: titolo_en, label: "Titolo EN", widget: string }
+      - { name: anno, label: Anno, widget: number, value_type: int }
+      - { name: in_primo_piano, label: "In primo piano (apre la Home e parte aperto in Work)", widget: boolean, default: false }
+      - { name: statement_it, label: "Statement IT (in Home si vede il primo paragrafo, in Work tutto)", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+      - { name: statement_en, label: "Statement EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+  - name: eventi
+    label: Eventi
+    label_singular: Evento
+    description: "Mostre, presentazioni, aperture. In Home escono quelli con «Mostra in Home» acceso, in ordine di «Ordine» (1 per primo). Se nessuno è acceso, in Home la parte degli eventi non c'è. Un evento finito: spegnilo (resta salvato) o eliminalo."
+    folder: src/content/eventi
+    extension: json
+    format: json
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: titolo_it
+    media_folder: /public/img/eventi
+    public_folder: /img/eventi
+    summary: "{{ordine}} — {{titolo_it}} · {{data_it}}{{attivo | ternary('', ' · spento')}}"
+    sortable_fields: [ordine, titolo_it]
+    fields:
+      - { name: titolo_it, label: "Titolo IT (es. Prima mostra personale)", widget: string }
+      - { name: titolo_en, label: "Titolo EN", widget: string }
+      - { name: attivo, label: "Mostra in Home", widget: boolean, default: true }
+      - { name: ordine, label: "Ordine in Home (1 esce per primo)", widget: number, value_type: int, default: 1 }
+      - { name: data_it, label: "Data IT (es. 12–20 novembre 2026)", widget: string, required: false }
+      - { name: data_en, label: "Data EN (es. 12–20 November 2026)", widget: string, required: false }
+      - { name: luogo_it, label: "Luogo IT (es. Berlino, Kreuzberg)", widget: string, required: false }
+      - { name: luogo_en, label: "Luogo EN (es. Berlin, Kreuzberg)", widget: string, required: false }
+      - { name: testo_it, label: "Qualche riga IT (sul telefono si apre con la freccetta accanto al titolo; sul computer sta sotto il luogo)", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
+      - { name: testo_en, label: "Qualche riga EN", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
+      - { name: locandina, label: "Locandina (verticale; facoltativa: senza, il testo dell'evento prende tutta la riga)", widget: image, required: false }
+      - { name: link, label: "Link (facoltativo: dove porta toccando la locandina)", widget: string, required: false }
+
+  - name: opere
+    label: Opere
+    label_singular: Opera
+    folder: src/content/opere
+    extension: json
+    format: json
+    create: true
+    slug: "{{fields.slug}}"
+    media_folder: /public/img/opere
+    public_folder: /img/opere
+    identifier_field: titolo
+    summary: "{{ordine}} — {{titolo}} ({{ciclo}}){{bozza | ternary(' · bozza', '')}}"
+    sortable_fields: [ordine, titolo, anno]
+    fields:
+      - { name: slug, label: "Nome breve (minuscole, senza spazi, non cambiarlo dopo: è l'indirizzo della pagina)", widget: string }
+      - { name: titolo, label: Titolo, widget: string }
+      - { name: ciclo, label: Progetto, widget: relation, collection: cicli, value_field: "{{slug}}", search_fields: [titolo_it], display_fields: [titolo_it] }
+      - { name: ordine, label: "Ordine nel progetto (1, 2, 3…)", widget: number, value_type: int }
+      - { name: anno, label: Anno, widget: number, value_type: int }
+      - { name: materiali_it, label: "Materiali IT", widget: string }
+      - { name: materiali_en, label: "Materiali EN", widget: string }
+      - { name: misure, label: "Misure (es. 22 × 14 × 10 cm; vuoto = \"da misurare\")", widget: string, required: false }
+      - { name: testo_it, label: "Testo IT", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+      - { name: testo_en, label: "Testo EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+      - name: foto
+        label: "Foto — la PRIMA è la principale (si vede in Work e apre la pagina dell'opera), le altre si sfogliano. Trascinale per cambiare l'ordine. Formato 4:3, consigliato 2400×1800; fino a 5"
+        label_singular: Foto
+        widget: list
+        min: 1
+        max: 5
+        summary: "{{fields.alt_it}}"
+        fields:
+          - { name: immagine, label: "Foto", widget: image }
+          - { name: alt_it, label: "Testo alternativo IT (descrive la foto per chi non vede e per Google)", widget: string, required: false }
+          - { name: alt_en, label: "Testo alternativo EN", widget: string, required: false }
+      - { name: foto_quadrata, label: "Foto quadrata per la griglia della Home (1:1, consigliato 1800×1800; se manca si usa la prima foto)", widget: image, required: false }
+      - { name: bozza, label: "Bozza (nascosta dal sito)", widget: boolean, default: false }
+  - name: pagine
+    label: Pagine
+    files:
+      - name: sito
+        label: "Contatti, bio, privacy e Impressum"
+        file: src/content/pagine/sito.json
+        format: json
+        media_folder: /public/img/pagine
+        public_folder: /img/pagine
+        fields:
+          - { name: email, label: Email, widget: string }
+          - { name: instagram, label: "Instagram (senza @)", widget: string }
+          - { name: ritratto, label: Ritratto, widget: image }
+          - { name: bio_it, label: "Bio IT", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - { name: bio_en, label: "Bio EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - { name: privacy_link, label: "Privacy: link alla policy Iubenda (una sola, in inglese; la apre la pagina Privacy del sito)", widget: string }
+          - { name: impressum_it, label: "Impressum IT (per ora non si vede sul sito)", widget: markdown }
+          - { name: impressum_en, label: "Impressum EN (per ora non si vede sul sito)", widget: markdown }

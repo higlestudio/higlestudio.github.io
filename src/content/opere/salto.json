@@ -1,0 +1,21 @@
+{
+  "slug": "salto",
+  "titolo": "Salto",
+  "ciclo": "idea",
+  "ordine": 2,
+  "anno": 2026,
+  "materiali_it": "carta di cotone",
+  "materiali_en": "cotton paper",
+  "misure": "31 × 25 × 2 cm",
+  "testo_it": "Qui va il testo dell'opera, dalle tue parole.",
+  "testo_en": "The text of the work goes here, in your words.",
+  "foto": [
+    {
+      "immagine": "/img/opere/salto.webp",
+      "alt_it": "Salto: stampa incorniciata in nero con passepartout chiaro. Un cervello rosa vola su una griglia di lettere \"i\", tra la F in alto e UUUM in basso.",
+      "alt_en": "Salto: print in a black frame with a light mat. A pink brain flies across a grid of letters \"i\", between the F at the top and UUUM at the bottom."
+    }
+  ],
+  "foto_quadrata": "/img/opere/salto-q.webp",
+  "bozza": false
+}

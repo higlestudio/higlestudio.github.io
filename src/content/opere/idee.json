@@ -1,0 +1,26 @@
+{
+  "slug": "idee",
+  "titolo": "Idee",
+  "ciclo": "idea",
+  "ordine": 1,
+  "anno": 2026,
+  "materiali_it": "resina, alluminio",
+  "materiali_en": "resin, aluminium",
+  "misure": "7 × 15 × 4 cm",
+  "testo_it": "Qui va il testo dell'opera, dalle tue parole.",
+  "testo_en": "The text of the work goes here, in your words.",
+  "foto": [
+    {
+      "immagine": "/img/opere/idee.webp",
+      "alt_it": "Idee, accesa: dodici capsule luminose gialle in tre file, attorno alla scritta IDEE, in un guscio trasparente.",
+      "alt_en": "Idee, switched on: twelve glowing yellow capsules in three rows around the word IDEE, inside a clear shell."
+    },
+    {
+      "immagine": "/img/opere/idee-2.webp",
+      "alt_it": "Idee, spenta: le dodici capsule trasparenti attorno alla scritta IDEE.",
+      "alt_en": "Idee, switched off: the twelve clear capsules around the word IDEE."
+    }
+  ],
+  "foto_quadrata": "/img/opere/idee-q.webp",
+  "bozza": false
+}

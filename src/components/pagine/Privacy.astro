@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import Freccia from '../Freccia.astro';
+import { testi, type Lang } from '../../i18n';
+import { sito } from '../../dati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const s = await sito();
+const en = testi.en;
+---
+
+<Base lang={lang} titolo={`${en.privacy} | Higle Studio`} descrizione={en.privacyRiga} altra={lang === 'it' ? '/privacy/' : '/it/privacy/'} automatica={false}>
+  <section class="vuoto privacy">
+    <h1 class="vuoto-404 privacy-t" lang="en">{en.privacy}</h1>
+    <p class="vuoto-frase" lang="en">{en.privacyRiga}</p>
+    {lang === 'it' && <p class="vuoto-frase privacy-it">{testi.it.privacySoloEn}</p>}
+    <div class="scopri-pillola"><a href={s.privacy_link} target="_blank" rel="noopener" lang="en"><span class="pl-t">{en.privacyLeggi}</span><Freccia /></a></div>
+  </section>
+</Base>

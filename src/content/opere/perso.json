@@ -1,0 +1,26 @@
+{
+  "slug": "perso",
+  "titolo": "Perso",
+  "ciclo": "idea",
+  "ordine": 3,
+  "anno": 2026,
+  "materiali_it": "policarbonato",
+  "materiali_en": "polycarbonate",
+  "misure": "5 × 19 × 19 cm",
+  "testo_it": "Qui va il testo dell'opera, dalle tue parole.",
+  "testo_en": "The text of the work goes here, in your words.",
+  "foto": [
+    {
+      "immagine": "/img/opere/perso.webp",
+      "alt_it": "Perso, dall'alto: lastra trasparente dal bordo ondulato. Al centro un cervello rosa su una macchia nera, circondato dalla scritta \"lost & found\".",
+      "alt_en": "Perso, from above: a clear sheet with a wavy edge. At its centre a pink brain on a black blot, ringed by the words \"lost & found\"."
+    },
+    {
+      "immagine": "/img/opere/perso-2.webp",
+      "alt_it": "Perso, di lato: il bordo ondulato della lastra trasparente.",
+      "alt_en": "Perso, from the side: the wavy edge of the clear sheet."
+    }
+  ],
+  "foto_quadrata": "/img/opere/perso-q.webp",
+  "bozza": false
+}

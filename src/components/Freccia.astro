@@ -1,0 +1,6 @@
+---
+interface Props { verso?: 'destra' | 'sinistra' | 'giu'; class?: string }
+const { verso = 'destra', class: cls = '' } = Astro.props;
+const giro = { destra: 0, giu: 90, sinistra: 180 }[verso];
+---
+<svg class={`freccia-segno ${cls}`} viewBox="0 0 24 24" aria-hidden="true"><g transform={giro ? `rotate(${giro} 12 12)` : undefined}><path d="M4 12h16" /><path d="m13.5 5.5 6.5 6.5-6.5 6.5" /></g></svg>

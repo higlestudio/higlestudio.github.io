@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import Freccia from '../Freccia.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+---
+
+<Base lang={lang} titolo={`${t.nlTitolo} | Higle Studio`} altra={percorsi[altra].newsletter} automatica={false} nascosta>
+  <section class="vuoto nl-grazie">
+    <h1 class="vuoto-404 nl-ci-sei">{t.nlCiSei}</h1>
+    <p class="vuoto-frase">{t.nlConfermata}</p>
+    <div class="scopri-pillola"><a href={percorsi[lang].home}><span class="pl-t">{t.vaiHome}</span><Freccia /></a></div>
+  </section>
+</Base>

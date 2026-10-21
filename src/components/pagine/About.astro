@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icona from '../Icona.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { sito, md } from '../../dati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const s = await sito();
+---
+<Base lang={lang} titolo={`${t.contatti} | Higle Studio`} pagina="contatti" altra={percorsi[altra].contatti}>
+  <h1 class="sr">{t.contatti}</h1>
+
+  <section class="pannelli me" aria-labelledby="me-t">
+    <a class="ft-ig" href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><Icona nome="instagram" /><span>Instagram</span></a>
+    <a class="ft-ig ft-mail" href={`mailto:${s.email}`}><Icona nome="mail" /><span>{s.email}</span></a>
+    <div class="cella testo">
+      <h2 class="sr" id="me-t">Higle</h2>
+      <div class="bio" set:html={md(lang === 'it' ? s.bio_it : s.bio_en)} />
+    </div>
+    <img class="ph" src={s.ritratto} alt={t.ritratto} loading="lazy" />
+  </section>
+</Base>
