@@ -49,6 +49,8 @@ const opere = defineCollection({
     misure: z.string().default(''),
     testo_it: z.string().default(''),
     testo_en: z.string().default(''),
+    atto_it: z.string().default(''),
+    atto_en: z.string().default(''),
     bozza: z.boolean().default(false),
   }),
 });
@@ -64,6 +66,7 @@ const pagine = defineCollection({
     privacy_link: z.string(),
     impressum_it: z.string(),
     impressum_en: z.string(),
+    cv: z.string().optional(),
   }),
 });
 

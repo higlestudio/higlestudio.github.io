@@ -16,7 +16,7 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
 <Base lang={lang} titolo={`${t.archivio} | Higle Studio`} pagina="archivio" altra={percorsi[altra].archivio}>
   <h1 class="sr">{t.archivio}</h1>
 
-  {gruppi.map(({ c, o, anno }) => (
+  {gruppi.map(({ c, o, anno }) => { const intro = lang === 'it' ? c.data.statement_it : c.data.statement_en; const atti = o.map((x) => ((lang === 'it' ? x.data.atto_it : x.data.atto_en) ?? '').trim()); return (
     <details class:list={["gruppo", { aperto: c.data.in_primo_piano }]} open={c.data.in_primo_piano}>
       <summary class="pannelli"><div class="cella riga">
         <span class="anno num">{anno}</span>
@@ -25,12 +25,25 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
       </div></summary>
 
       <div class="apre">
-        {(lang === 'it' ? c.data.statement_it : c.data.statement_en).trim() && <div class="pannelli st-work"><div class="cella">
+        {intro.trim() && <div class="pannelli st-work"><div class="cella">
 
           <h3 class="st-titolo">{titoloCiclo(c, lang)}</h3>
-          <Statement testo={lang === 'it' ? c.data.statement_it : c.data.statement_en} />
+          <Statement testo={intro} />
         </div></div>}
 
+        {atti.some(Boolean) ? (
+        <ol class="opere atti">
+          {o.map((x, i) => (
+            <li class="atto">
+              <a href={percorsi[lang].opera(x.id)} data-opera class="foto" style={`--f:${fondi.get(x.id)}`} tabindex="-1" aria-hidden="true"><img src={x.data.foto[0].immagine} alt="" width="2400" height="1800" loading="lazy" /></a>
+              <div class="scheda">
+                <h4 class="t"><a href={percorsi[lang].opera(x.id)}>{x.data.titolo}</a></h4>
+                {atti[i] && <Statement testo={atti[i]} />}
+              </div>
+            </li>
+          ))}
+        </ol>
+        ) : (
         <ol class="opere">
           {o.map((x) => (
             <li class="opera">
@@ -41,7 +54,8 @@ const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x)
             </li>
           ))}
         </ol>
+        )}
       </div>
     </details>
-  ))}
+  ); })}
 </Base>

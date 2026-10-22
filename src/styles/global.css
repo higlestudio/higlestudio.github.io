@@ -184,6 +184,20 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .scheda { display: grid; padding: 12px var(--g) 18px; align-items: center; }
 .scheda .t { font-family: var(--display); font-weight: 700; font-size: 16px; }
 
+.atto { min-width: 0; display: grid; background: var(--nero); }
+.atto .foto { display: block; }
+.atto .scheda { align-items: start; align-content: start; gap: 10px; padding: 20px var(--g) 40px; }
+.atto .t { margin: 0; font-size: clamp(30px, 9vw, 48px); line-height: .95; letter-spacing: -0.03em; }
+.atto .statement { margin-top: 8px; }
+@media (hover: hover) { .atto .foto:hover img { transform: scale(1.015); } .atto .t a:hover { color: var(--neutro); } }
+@media (min-width: 900px) {
+  .atti { gap: 1px; background: var(--linea); }
+  .atto { grid-template-columns: minmax(0, 1fr) auto; min-height: calc(100svh - var(--testa)); }
+  .atto .foto { order: 2; height: 100%; max-height: calc(100svh - var(--testa)); aspect-ratio: 4 / 3; max-width: 62vw; align-self: center; }
+  .atto .scheda { align-content: end; gap: 14px; padding: 48px var(--g); border-right: 1px solid var(--linea); }
+  .atto .t { font-size: clamp(48px, 5.6vw, 112px); line-height: .9; letter-spacing: -0.035em; }
+}
+
 .inv-grid { grid-template-columns: 1fr 1fr; border-top: 0; list-style: none; margin: 0; padding: 0; }
 .inv-grid a { display: grid; grid-template-rows: auto auto; height: 100%; }
 .inv-grid .im { aspect-ratio: 1; background: var(--f); }
@@ -252,6 +266,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .ft-ig { display: flex; justify-content: center; align-items: center; gap: 12px; padding-block: 22px; font-size: clamp(18px, 5vw, 30px); overflow-wrap: anywhere; }
 .ft-ic { width: 1.2em; height: 1.2em; flex: none; translate: 0 -.1em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .ft-nav a span, .ft-ig span { border-bottom: 2px solid transparent; padding-bottom: .08em; }
+.ft-ig .freccia-segno { --freccia: .85em; }
 .ft-nav a[aria-current="page"] span { border-bottom-color: currentColor; }
 @media (hover: hover) { .ft-nav a:hover, .ft-ig:hover, .ft-logo:hover { color: var(--neutro); } }
 .ft > .cella { padding-bottom: 28px; }
@@ -269,14 +284,13 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .nl-nota a { color: var(--carta); text-decoration: underline; text-underline-offset: 2px; }
 .nl-ok { color: var(--carta); margin: 10px 0 0; }
 .nl-ok:empty { display: none; }
-.ft .piede { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px 18px; color: var(--grigio); font-size: 13px; }
+.ft .piede { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 18px; color: var(--grigio); font-size: 13px; }
 .ft .piede > .num { flex-basis: 100%; text-align: center; }
 
-.ft-icone { display: flex; gap: 6px; margin-right: -8px; }
-.ft-icone a { display: grid; place-items: center; width: 36px; height: 36px; color: var(--grigio); }
-.ft-icone .ft-ic { width: 21px; height: 21px; translate: none; }
-@media (hover: hover) { .ft-icone a:hover { color: var(--carta); } }
-.legali { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; }
+.ft-contatti { display: grid; gap: 1px; background: var(--linea); }
+.ft-contatti .ft-ig { padding-block: 26px; font-size: clamp(20px, 6vw, 34px); }
+@media (min-width: 900px) { .ft-contatti { grid-template-columns: 1fr 1fr; } .ft-contatti .ft-ig { padding-block: 40px; font-size: clamp(24px, 2.6vw, 44px); } }
+.legali { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; font-size: 13px; }
 .legali a { color: var(--grigio); }
 @media (hover: hover) { .legali a:hover { color: var(--carta); } }
 

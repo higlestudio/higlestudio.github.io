@@ -14,6 +14,10 @@ const anno = new Date().getFullYear();
 
 <script>import '../scripts/piede.ts';</script>
 <footer class="pannelli ft">
+  <div class="ft-contatti">
+    <a class="ft-ig" href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener"><Icona nome="instagram" /><span>@{s.instagram}</span></a>
+    <a class="ft-ig" href={`mailto:${s.email}`}><Icona nome="mail" /><span>{s.email}</span></a>
+  </div>
   <div class="ft-testa">
     <a href={p.home} class="ft-logo" aria-label="Higle Studio, Home"><Logomark /></a>
     <nav class="ft-nav" aria-label={t.menu}>
@@ -39,11 +43,6 @@ const anno = new Date().getFullYear();
       <a href={p.privacy}>{t.privacy}</a>
       <a href={altra} class="lingua" lang={altraLang} hreflang={altraLang}>{t.altraLinguaNome}</a>
     </nav>
-
-    <span class="ft-icone">
-      <a href={`https://instagram.com/${s.instagram}`} target="_blank" rel="noopener" aria-label="Instagram"><Icona nome="instagram" /></a>
-      <a href={`mailto:${s.email}`} aria-label={t.email}><Icona nome="mail" /></a>
-    </span>
     <span class="num">© {anno} Higle Studio</span>
   </div>
 </footer>

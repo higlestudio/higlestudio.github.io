@@ -95,6 +95,8 @@ collections:
       - { name: misure, label: "Misure (es. 22 × 14 × 10 cm; vuoto = \"da misurare\")", widget: string, required: false }
       - { name: testo_it, label: "Testo IT", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
       - { name: testo_en, label: "Testo EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+      - { name: atto_it, label: "Testo dell'atto IT (facoltativo). Se almeno un'opera del progetto ha il suo atto, in Work ogni opera compare col suo testo sotto lo statement; se nessuna lo ha, Work resta con la griglia delle opere", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
+      - { name: atto_en, label: "Testo dell'atto EN (facoltativo)", widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
       - name: foto
         label: "Foto — la PRIMA è la principale (si vede in Work e apre la pagina dell'opera), le altre si sfogliano. Trascinale per cambiare l'ordine. Formato 4:3, consigliato 2400×1800; fino a 5"
         label_singular: Foto
@@ -126,3 +128,4 @@ collections:
           - { name: privacy_link, label: "Privacy: link alla policy Iubenda (una sola, in inglese; la apre la pagina Privacy del sito)", widget: string }
           - { name: impressum_it, label: "Impressum IT (per ora non si vede sul sito)", widget: markdown }
           - { name: impressum_en, label: "Impressum EN (per ora non si vede sul sito)", widget: markdown }
+          - { name: cv, label: "CV artistico (PDF): caricato qui, in About compare il pulsante per scaricarlo", widget: file, required: false, media_folder: /public/cv, public_folder: /cv }

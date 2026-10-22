@@ -14,6 +14,7 @@ const TESTO = [
   '.st-work .st-titolo', '.statement > *',
   '.me .bio > *',
   '.op-testo > *',
+  '.atto .t',
 ].join(', ');
 
 const fotoPronta = (el: Element) => {
