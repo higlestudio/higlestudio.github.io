@@ -16,6 +16,7 @@ export const testi = {
     apri: 'Apri', data: 'Data', luogo: 'Luogo', scopri: 'Scopri tutto il progetto',
     anno: 'Anno', materiali: 'Materiali', misure: 'Misure', daMisurare: 'da misurare', tecnica: 'Tecnica',
     foto: 'Foto', opere: 'opere', nuovoProgetto: 'Nuovo progetto', errore: 'Errore', vaiHome: 'Torna alla Home', nlCiSei: 'Grazie', nlConfermata: 'per la tua iscrizione. Riceverai poche email, ma buone.', nlTitolo: 'Iscrizione confermata',
+    titoloHome: 'Arte contemporanea', artista: 'Artista', torino: 'Torino', berlino: 'Berlino', privacyDescr: 'Come vengono trattati i tuoi dati, in un solo documento.',
     email: 'Email', ritratto: 'Ritratto di Higle', info: 'Più informazioni', cv: 'Scarica il CV',
   },
   en: {
@@ -28,6 +29,7 @@ export const testi = {
     apri: 'Open', data: 'Date', luogo: 'Venue', scopri: 'See the whole project',
     anno: 'Year', materiali: 'Materials', misure: 'Dimensions', daMisurare: 'to be measured', tecnica: 'Technique',
     foto: 'Photos', opere: 'works', nuovoProgetto: 'New project', errore: 'Error', vaiHome: 'Go to Home', nlCiSei: 'Thank you', nlConfermata: "for subscribing. You'll get few emails, but good ones.", nlTitolo: 'Subscription confirmed',
+    titoloHome: 'Contemporary art', artista: 'Artist', torino: 'Turin', berlino: 'Berlin',
     email: 'Email', ritratto: 'Portrait of Higle', info: 'More information', cv: 'Download CV',
   },
 } as const;

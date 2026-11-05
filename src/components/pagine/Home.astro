@@ -5,7 +5,8 @@ import Griglia from '../Griglia.astro';
 import Nuvole from '../Nuvole.astro';
 import Freccia from '../Freccia.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
-import { cicloInPrimoPiano, opere, titoloCiclo, primoParagrafo, md, eventi } from '../../dati';
+import { cicloInPrimoPiano, opere, titoloCiclo, primoParagrafo, md, eventi, sito } from '../../dati';
+import { datiProgetto } from '../../strutturati';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = testi[lang];
@@ -17,9 +18,10 @@ const titolo = titoloCiclo(ciclo, lang);
 const it = lang === 'it';
 const listaEventi = (await eventi()).map((x) => x.data);
 
+const s = await sito();
 const lead = primoParagrafo(it ? ciclo.data.statement_it : ciclo.data.statement_en);
 ---
-<Base lang={lang} titolo={`Higle Studio | ${titolo}`} descrizione={titolo} pagina="home" altra={percorsi[altra].home}>
+<Base lang={lang} titolo={`Higle Studio | ${t.titoloHome}`} descrizione={it ? s.descrizione_home_it : s.descrizione_home_en} dati={[datiProgetto(ciclo, lista, lang, Astro.site!)]} pagina="home" altra={percorsi[altra].home}>
 
   <div class="ingresso" aria-hidden="true" slot="prima">
     <script is:inline>      try {

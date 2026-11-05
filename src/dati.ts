@@ -54,4 +54,17 @@ export function fondoDi(foto: string): Promise<string> {
   return fondi.get(foto)!;
 }
 
+export const testoPiano = (s: string) => (s ?? '')
+  .replace(/<[^>]+>/g, '')
+  .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+  .replace(/[*_`#>]/g, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+export function riassunto(s: string, max = 160) {
+  if (s.length <= max) return s;
+  const taglio = s.slice(0, max - 1);
+  return taglio.slice(0, taglio.lastIndexOf(' ')).replace(/[,;:.]$/, '') + '…';
+}
+
 export const md = (s: string) => marked.parse(s ?? '') as string;

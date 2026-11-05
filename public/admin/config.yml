@@ -42,6 +42,8 @@ collections:
       - { name: in_primo_piano, label: "In primo piano (apre la Home e parte aperto in Work)", widget: boolean, default: false }
       - { name: statement_it, label: "Statement IT (in Home si vede il primo paragrafo, in Work tutto)", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
       - { name: statement_en, label: "Statement EN", widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+      - { name: descrizione_it, label: "Descrizione della pagina Work per Google IT (circa 150 caratteri, non si vede sul sito)", widget: text, required: false }
+      - { name: descrizione_en, label: "Descrizione della pagina Work per Google EN", widget: text, required: false }
   - name: eventi
     label: Eventi
     label_singular: Evento
@@ -130,4 +132,8 @@ collections:
           - { name: privacy_link, label: "Privacy: link alla policy Iubenda (una sola, in inglese; la apre la pagina Privacy del sito)", widget: string }
           - { name: impressum_it, label: "Impressum IT (per ora non si vede sul sito)", widget: markdown, required: false }
           - { name: impressum_en, label: "Impressum EN (per ora non si vede sul sito)", widget: markdown, required: false }
+          - { name: descrizione_home_it, label: "Descrizione della Home per Google IT (circa 150 caratteri, non si vede sul sito)", widget: text, required: false }
+          - { name: descrizione_home_en, label: "Descrizione della Home per Google EN", widget: text, required: false }
+          - { name: descrizione_about_it, label: "Descrizione di About per Google IT", widget: text, required: false }
+          - { name: descrizione_about_en, label: "Descrizione di About per Google EN", widget: text, required: false }
           - { name: cv, label: "CV artistico (PDF): caricato qui, in About compare il pulsante per scaricarlo", widget: file, required: false, media_folder: /public/cv, public_folder: /cv }

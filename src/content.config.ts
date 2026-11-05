@@ -12,6 +12,8 @@ const cicli = defineCollection({
     in_primo_piano: z.boolean().default(false),
     statement_it: z.string().default(''),
     statement_en: z.string().default(''),
+    descrizione_it: z.string().default(''),
+    descrizione_en: z.string().default(''),
   }),
 });
 
@@ -69,6 +71,10 @@ const pagine = defineCollection({
     impressum_it: z.string(),
     impressum_en: z.string(),
     cv: z.string().optional(),
+    descrizione_home_it: z.string().default(''),
+    descrizione_home_en: z.string().default(''),
+    descrizione_about_it: z.string().default(''),
+    descrizione_about_en: z.string().default(''),
   }),
 });
 

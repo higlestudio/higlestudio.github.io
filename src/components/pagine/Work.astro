@@ -3,7 +3,8 @@ import Base from '../../layouts/Base.astro';
 import Statement from '../Statement.astro';
 import Freccia from '../Freccia.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
-import { cicli, opere, titoloCiclo, fondoDi } from '../../dati';
+import { cicli, cicloInPrimoPiano, opere, titoloCiclo, fondoDi } from '../../dati';
+import { datiProgetto } from '../../strutturati';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = testi[lang];
@@ -11,9 +12,10 @@ const altra: Lang = lang === 'it' ? 'en' : 'it';
 const tutti = await cicli();
 const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.id), anno: c.data.anno })));
 
+const primo = await cicloInPrimoPiano();
 const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x) => [x.id, await fondoDi(x.data.foto[0].immagine)] as const)));
 ---
-<Base lang={lang} titolo={`${t.archivio} | Higle Studio`} pagina="archivio" altra={percorsi[altra].archivio}>
+<Base lang={lang} titolo={`${t.archivio} | Higle Studio`} descrizione={lang === 'it' ? primo.data.descrizione_it : primo.data.descrizione_en} dati={gruppi.map((g) => datiProgetto(g.c, g.o, lang, Astro.site!))} pagina="archivio" altra={percorsi[altra].archivio}>
   <h1 class="sr">{t.archivio}</h1>
 
   {gruppi.map(({ c, o, anno }) => { const intro = lang === 'it' ? c.data.statement_it : c.data.statement_en; const atti = o.map((x) => ((lang === 'it' ? x.data.atto_it : x.data.atto_en) ?? '').trim()); return (

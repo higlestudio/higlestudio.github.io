@@ -9,7 +9,7 @@ const s = await sito();
 const en = testi.en;
 ---
 
-<Base lang={lang} titolo={`${en.privacy} | Higle Studio`} descrizione={en.privacyRiga} altra={lang === 'it' ? '/privacy/' : '/it/privacy/'} automatica={false}>
+<Base lang={lang} titolo={`${en.privacy} | Higle Studio`} descrizione={lang === 'it' ? testi.it.privacyDescr : en.privacyRiga} altra={lang === 'it' ? '/privacy/' : '/it/privacy/'} automatica={false}>
   <section class="vuoto privacy">
     <h1 class="vuoto-404 privacy-t" lang="en">{en.privacy}</h1>
     <p class="vuoto-frase" lang="en">{en.privacyRiga}</p>

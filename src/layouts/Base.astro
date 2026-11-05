@@ -8,6 +8,8 @@ import Piede from '../components/Piede.astro';
 import Freccia from '../components/Freccia.astro';
 import { percorsi, testi, type Lang } from '../i18n';
 import { LANCIATO } from '../lancio';
+import { sito } from '../dati';
+import { grafoBase } from '../strutturati';
 
 interface Props {
   lang: Lang;
@@ -20,13 +22,19 @@ interface Props {
   automatica?: boolean;
 
   nascosta?: boolean;
+
+  immagine?: { src: string; alt: string };
+
+  dati?: object[];
 }
-const { lang, titolo, descrizione = '', pagina = null, altra, automatica = true, nascosta = false } = Astro.props;
+const { lang, titolo, descrizione = '', pagina = null, altra, automatica = true, nascosta = false, immagine, dati = [] } = Astro.props;
 const t = testi[lang];
 const p = percorsi[lang];
 const qui = new URL(Astro.url.pathname, Astro.site);
 const enUrl = new URL(lang === 'en' ? Astro.url.pathname : altra, Astro.site);
 const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
+const grafo = { '@context': 'https://schema.org', '@graph': [...grafoBase(await sito(), lang, Astro.site!), ...dati] };
+const grafoJson = JSON.stringify(grafo).replace(/</g, '\\u003c');
 ---
 <!doctype html>
 <html lang={lang}>
@@ -58,11 +66,13 @@ const itUrl = new URL(lang === 'it' ? Astro.url.pathname : altra, Astro.site);
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Higle Studio" />
   <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_GB'} />
-  <meta property="og:image" content={new URL('/og.png', Astro.site)} />
+  <meta property="og:image" content={new URL(immagine?.src ?? '/og.png', Astro.site)} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Higle Studio" />
+  <meta property="og:image:alt" content={immagine?.alt ?? 'Higle Studio'} />
   <meta name="twitter:card" content="summary_large_image" />
+
+  {!nascosta && <script type="application/ld+json" set:html={grafoJson} />}
 
   <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
   <link rel="icon" href="/favicon.ico?v=2" sizes="32x32 48x48" />

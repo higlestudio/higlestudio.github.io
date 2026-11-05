@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { percorsi, testi, type Lang } from '../../i18n';
-import { titoloCiclo, md, fondoDi } from '../../dati';
+import { md, fondoDi, testoPiano, riassunto } from '../../dati';
+import { datiOpera } from '../../strutturati';
 import { getEntry } from 'astro:content';
 interface Props { lang: Lang; opera: any }
 const { lang, opera } = Astro.props;
@@ -9,15 +10,19 @@ const t = testi[lang];
 const altra: Lang = lang === 'it' ? 'en' : 'it';
 const o = opera.data;
 const ciclo = (await getEntry('cicli', o.ciclo))!;
-const nomeCiclo = titoloCiclo(ciclo, lang);
 const it = lang === 'it';
 const tecnica = ((it ? o.tecnica_it : o.tecnica_en) ?? '').trim();
 
 const foto: { src: string; alt: string }[] = o.foto.map((f: { immagine: string; alt_it: string; alt_en: string }) => ({ src: f.immagine, alt: (it ? f.alt_it : f.alt_en) || o.titolo }));
 
 const fondi = await Promise.all(foto.map((f) => fondoDi(f.src)));
+const materiali = (it ? o.materiali_it : o.materiali_en).trim();
+const scheda = [tecnica || materiali, o.misure].filter(Boolean).join(', ');
+const piano = testoPiano(it ? o.testo_it : o.testo_en);
+const primaFrase = piano.match(/^.+?[.?!](?=\s|$)/)?.[0] ?? piano;
+const descrizione = riassunto([`${o.titolo}, ${o.anno}.`, scheda && `${scheda[0].toUpperCase()}${scheda.slice(1)}.`, primaFrase].filter(Boolean).join(' '));
 ---
-<Base lang={lang} titolo={`${o.titolo} | Higle Studio`} pagina="archivio" descrizione={`${o.titolo}, ${o.anno}. ${nomeCiclo}`} altra={percorsi[altra].opera(opera.id)}>
+<Base lang={lang} titolo={`${o.titolo} | Higle Studio`} pagina="archivio" descrizione={descrizione} immagine={{ src: `/og/${opera.id}.jpg`, alt: foto[0].alt }} dati={datiOpera(opera, ciclo, lang, Astro.site!)} altra={percorsi[altra].opera(opera.id)}>
 
   <div class="op-pagina">
   <figure class="op-foto" style={`--f:${fondi[0]}`}>
