@@ -121,7 +121,7 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 
 .prog-intro { margin-top: -1px; }
 .prog-intro .cella { padding-block: 30px 34px; display: grid; gap: 22px; }
-.prog-intro h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(38px, 11vw, 96px); line-height: .92; letter-spacing: -0.035em; text-wrap: balance; }
+.prog-intro h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(38px, 11vw, 96px); line-height: 1.04; letter-spacing: -0.035em; text-wrap: balance; }
 .prog-lead { margin: 0; max-width: 34ch; font-size: clamp(17px, 4.4vw, 24px); line-height: 1.4; color: var(--neutro); text-wrap: pretty; }
 
 .evento-t { margin: 0; padding-block: 26px 28px; font-family: var(--display); font-weight: 700; font-size: clamp(30px, 9vw, 64px); line-height: .95; letter-spacing: -0.03em; text-wrap: balance; }
@@ -216,9 +216,9 @@ html.intro .nv-boddi, html.intro-resto .nv-boddi { translate: 0 45lvh; }
 .st-work { border-top: 0; }
 .st-work .cella { padding-block: 28px 40px; }
 .st-work .statement { margin-top: 26px; }
-.st-titolo { margin: 0; display: grid; gap: 12px; font-family: var(--display); font-weight: 700; font-size: clamp(34px, 10vw, 80px); line-height: .92; letter-spacing: -0.035em; text-wrap: balance; }
+.st-titolo { margin: 0; display: grid; gap: 12px; font-family: var(--display); font-weight: 700; font-size: clamp(34px, 10vw, 80px); line-height: 1.04; letter-spacing: -0.035em; text-wrap: balance; }
 .st-titolo .anno { font-family: var(--font); font-size: 12px; font-weight: 500; letter-spacing: .08em; color: var(--grigio); }
-.gruppo h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 6vw, 40px); line-height: .98; letter-spacing: -0.02em; text-wrap: balance; }
+.gruppo h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(22px, 6vw, 40px); line-height: 1.06; letter-spacing: -0.02em; text-wrap: balance; }
 
 .me { grid-template-columns: 1fr; }
 .me > .ft-ig { grid-column: 1 / -1; }
