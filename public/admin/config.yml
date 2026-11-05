@@ -136,4 +136,4 @@ collections:
           - { name: descrizione_home_en, label: "Descrizione della Home per Google EN", widget: text, required: false }
           - { name: descrizione_about_it, label: "Descrizione di About per Google IT", widget: text, required: false }
           - { name: descrizione_about_en, label: "Descrizione di About per Google EN", widget: text, required: false }
-          - { name: cv, label: "CV artistico (PDF): caricato qui, in About compare il pulsante per scaricarlo", widget: file, required: false, media_folder: /public/cv, public_folder: /cv }
+          - { name: cv, label: "Portfolio (PDF): caricato qui, in About compare il pulsante per scaricarlo", widget: file, required: false, media_folder: /public/cv, public_folder: /cv }

@@ -1,1 +1,1 @@
-export const LANCIATO = false;
+export const LANCIATO = true;
