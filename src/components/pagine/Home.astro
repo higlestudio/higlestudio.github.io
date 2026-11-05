@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import Logomark from '../Logomark.astro';
+import Griglia from '../Griglia.astro';
+import Nuvole from '../Nuvole.astro';
+import Freccia from '../Freccia.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { cicloInPrimoPiano, opere, titoloCiclo, primoParagrafo, md, eventi } from '../../dati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const p = percorsi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const ciclo = await cicloInPrimoPiano();
+const lista = await opere(ciclo.id);
+const titolo = titoloCiclo(ciclo, lang);
+const it = lang === 'it';
+const listaEventi = (await eventi()).map((x) => x.data);
+
+const lead = primoParagrafo(it ? ciclo.data.statement_it : ciclo.data.statement_en);
+---
+<Base lang={lang} titolo={`Higle Studio | ${titolo}`} descrizione={titolo} pagina="home" altra={percorsi[altra].home}>
+
+  <div class="ingresso" aria-hidden="true" slot="prima">
+    <script is:inline>      try {
+        var tipo = (performance.getEntriesByType('navigation')[0] || {}).type, interno = false;
+        try { interno = !!document.referrer && new URL(document.referrer).host === location.host; } catch (e) {}
+        var daFuori = sessionStorage.getItem('higle-da-fuori'); sessionStorage.removeItem('higle-da-fuori');
+        var parte = tipo === 'reload' || (tipo !== 'back_forward' && (!interno || daFuori));
+        if (parte && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.classList.add('intro');
+          setTimeout(function () { document.documentElement.classList.remove('intro', 'intro-resto'); }, 4500);
+        }
+      } catch (e) {}
+</script>
+    <Logomark />
+  </div>
+  <h1 class="sr">Higle Studio</h1>
+
+  <Nuvole sopra={t.nuovoProgetto} anno={ciclo.data.anno} giu="#opere" />
+
+  {listaEventi.map((e, i) => {
+    const titoloEvento = it ? e.titolo_it : e.titolo_en;
+    const dataEvento = it ? e.data_it : e.data_en;
+    const luogoEvento = it ? e.luogo_it : e.luogo_en;
+    const testoEvento = ((it ? e.testo_it : e.testo_en) ?? '').trim();
+    const Locandina = e.link ? 'a' : 'div';
+    return <section class="pannelli prog-home evento" aria-labelledby={`evento-${i}`}>
+
+      <div class="cella evento-testa">
+        <div class="et-riga">
+          <h2 class="evento-t" id={`evento-${i}`}>{titoloEvento}</h2>
+          {testoEvento && <button type="button" class="evento-apri" aria-expanded="false" aria-controls={`evento-testo-${i}`} aria-label={t.info}>
+            <Freccia verso="giu" />
+          </button>}
+        </div>
+        <div class:list={['evento-testo', { vuoto: !testoEvento }]} id={`evento-testo-${i}`}>
+          <div class="et-dentro"><div class="et-testo" set:html={md(testoEvento)} /></div>
+        </div>
+      </div>
+      {(dataEvento || luogoEvento) && <dl class="evento-info">
+        {dataEvento && <div class="cella"><dt>{t.data}</dt><dd>{dataEvento}</dd></div>}
+        {luogoEvento && <div class="cella"><dt>{t.luogo}</dt><dd>{luogoEvento}</dd></div>}
+      </dl>}
+      {e.locandina && <Locandina class="cella locandina" href={e.link}>
+        <img src={e.locandina} alt={titoloEvento} loading="lazy" />
+      </Locandina>}
+    </section>;
+  })}
+
+  <section class="prog-opere" aria-labelledby="prog-t" id="opere">
+    <div class="pannelli prog-home prog-intro"><div class="cella">
+      <h2 id="prog-t">{titolo}</h2>
+      {lead && <p class="prog-lead" set:html={lead} />}
+    </div></div>
+    <Griglia lang={lang} opere={lista} />
+
+    <div class="scopri-pillola">
+      <a href={p.archivio}><span class="pl-t">{t.scopri}</span><Freccia /></a>
+    </div>
+  </section>
+</Base>
+<script>import '../../scripts/hero.ts';</script>

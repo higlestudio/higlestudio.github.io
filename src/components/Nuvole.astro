@@ -1,0 +1,86 @@
+---
+import Freccia from './Freccia.astro';
+
+interface Props { sopra: string; anno: number; giu: string }
+const { sopra, anno, giu } = Astro.props;
+
+type Forma = { base: number[]; bozzi: number[][] };
+const forme: Record<string, Forma> = {
+  c: { base: [10, 44, 200, 30], bozzi: [[60, 40, 30], [125, 32, 38], [178, 48, 22]] },
+  d: { base: [10, 44, 104, 28], bozzi: [[44, 40, 24], [82, 44, 20]] },
+  h: { base: [10, 40, 140, 26], bozzi: [[50, 38, 24], [98, 30, 30]] },
+  i: { base: [10, 50, 160, 30], bozzi: [[48, 48, 26], [94, 36, 34], [138, 52, 20]] },
+  j: { base: [10, 56, 220, 34], bozzi: [[70, 52, 38], [146, 40, 48], [204, 60, 26]] },
+  k: { base: [10, 46, 170, 30], bozzi: [[58, 44, 30], [116, 36, 36], [160, 52, 18]] },
+  e: { base: [18, 70, 184, 34], bozzi: [[66, 64, 32], [122, 52, 42], [174, 68, 24]] },
+
+  g: { base: [10, 62, 300, 40], bozzi: [[82, 56, 44], [168, 44, 54], [250, 62, 36]] },
+};
+const BORDO = 3.5, OMBRA = 7;
+const riquadro = ({ base: [bx, by, bw, bh], bozzi }: Forma) => {
+  const x0 = Math.min(bx, ...bozzi.map(([x, , r]) => x - r)) - BORDO, y0 = Math.min(by, ...bozzi.map(([, y, r]) => y - r)) - BORDO;
+  const x1 = Math.max(bx + bw, ...bozzi.map(([x, , r]) => x + r)) + BORDO + OMBRA, y1 = Math.max(by + bh, ...bozzi.map(([, y, r]) => y + r)) + BORDO + OMBRA;
+  return `${x0} ${y0} ${x1 - x0} ${y1 - y0}`;
+};
+
+const nuvole = [
+  { f: 'k', x: -16, y: 1, w: 58, v: 0.4, dx: -0.06 },
+  { f: 'j', x: 50, y: 12, w: 76, v: 0.6, dx: 0.1 },
+  { f: 'd', x: 2, y: 24, w: 39, v: 0.5, dx: -0.05 },
+  { f: 'c', x: 56, y: 34, w: 67, v: 0.8, dx: 0.12 },
+  { f: 'h', x: -14, y: 46, w: 46, v: 0.9, dx: -0.1 },
+  { f: 'i', x: 70, y: 58, w: 44, v: 1.3, dx: 0.12 },
+  { f: 'e', x: -14, y: 69, w: 60, v: 1.1, dx: -0.14 },
+];
+
+const nuvolePc = [
+
+  { f: 'j', x: -14, y: -6, w: 46, v: 0.5, dx: -0.06 },
+  { f: 'k', x: 64, y: -8, w: 44, v: 0.5, dx: 0.06 },
+  { f: 'd', x: 30, y: 14, w: 16, v: 1.0, dx: -0.04 },
+  { f: 'h', x: 57, y: 22, w: 22, v: 0.9, dx: 0.05 },
+  { f: 'c', x: -10, y: 32, w: 40, v: 0.7, dx: -0.1 },
+  { f: 'i', x: 79, y: 30, w: 30, v: 0.8, dx: 0.1 },
+  { f: 'e', x: 17, y: 54, w: 34, v: 1.2, dx: -0.08 },
+  { f: 'c', x: 57, y: 50, w: 38, v: 1.1, dx: 0.08 },
+  { f: 'd', x: 88, y: 58, w: 20, v: 1.3, dx: 0.1 },
+  { f: 'h', x: -8, y: 72, w: 30, v: 1.0, dx: -0.12 },
+  { f: 'k', x: 25, y: 84, w: 30, v: 1.4, dx: -0.06 },
+  { f: 'j', x: 66, y: 74, w: 42, v: 1.2, dx: 0.12 },
+];
+---
+<section class="nuvole" aria-labelledby="nv-t">
+  <div class="nv-scena">
+    <div class="nv-testo">
+      <p class="nv-sopra" id="nv-t">{sopra}</p>
+      <p class="nv-anno num">{anno}</p>
+      <a class="nv-giu" href={giu} aria-label={sopra}>
+        <Freccia verso="giu" />
+      </a>
+    </div>
+    {[
+      ...nuvole.map((n, i) => ({ ...n, boddi: false, dove: 'solo-tel', i })),
+      ...nuvolePc.map((n, i) => ({ ...n, boddi: false, dove: 'solo-pc', i: i * 0.5 })),
+      { f: 'g', x: 0, y: 0, w: 0, v: 1.6, dx: 0, boddi: true, dove: '', i: 0 },
+    ].map((n) => {
+      const da = n.x + n.w / 2 < 50 ? -1 : 1, ap = n.boddi ? 0.15 : n.i * 0.06;
+      const s = forme[n.f];
+      const [bx, by, bw, bh] = s.base;
+      const sagoma = <>
+        <rect x={bx} y={by} width={bw} height={bh} rx={bh / 2} />
+        {s.bozzi.map(([cx, cy, r]) => <circle cx={cx} cy={cy} r={r} />)}
+      </>;
+      const nuvola = <svg class="nv-forma" viewBox={riquadro(s)}>
+        <g class="nv-ombra" transform={`translate(${OMBRA} ${OMBRA})`} stroke-width={BORDO * 2}>{sagoma}</g>
+        <g class="nv-bordo" stroke-width={BORDO * 2}>{sagoma}</g>
+        <g class="nv-pieno">{sagoma}</g>
+      </svg>;
+      return n.boddi
+        ? <div class="nv nv-boddi" style={`--v:${n.v}; --dx:${n.dx}; --ap:${ap}s`} aria-hidden="true">
+            <div class="nv-galleggia"><img class="boddi" src="/img/boddi.svg" width="515" height="1122" alt="" />{nuvola}<img class="boddi boddi-davanti" src="/img/boddi.svg" width="515" height="1122" alt="" /></div>
+          </div>
+        : <div class={`nv dietro ${n.dove}`} style={`--x:${n.x}%; --y:${n.y}%; --w:${n.w}; --v:${n.v}; --dx:${n.dx}; --da:${da}; --ap:${ap}s`} aria-hidden="true">{nuvola}</div>;
+    })}
+  </div>
+</section>
+<script>import '../scripts/nuvole.ts';</script>

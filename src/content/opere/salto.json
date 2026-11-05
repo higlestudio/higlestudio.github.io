@@ -1,0 +1,25 @@
+{
+  "slug": "salto",
+  "titolo": "Salto",
+  "ciclo": "idea",
+  "ordine": 2,
+  "anno": 2026,
+  "materiali_it": "carta di cotone",
+  "materiali_en": "cotton paper",
+  "tecnica_it": "stampa giclée su carta di cotone",
+  "tecnica_en": "giclée print on cotton paper",
+  "misure": "31 × 25 × 2 cm",
+  "testo_it": "Salto è l'opera che racchiude il significato del progetto, quella che mi ha permesso di collegare tutti i punti della storia che voglio raccontare, ma è anche la prima ad aver preso forma. Avevo una cornice vuota di cui vedevo il potenziale da tempo, poi una notte, disegnando, ho dato vita al poster e un'idea mi ha balenato nel cervello. Qual è il passo successivo all'intuizione?",
+  "testo_en": "Salto holds the meaning of the whole project. It let me connect all the points of the story I want to tell, yet it was also the first work to take shape. I had an empty frame whose potential I had seen for a long time. Then one night, while drawing, I made the poster and an idea flashed through my brain. What is the next step after intuition?",
+  "atto_it": "Rifiutando la propria inerzia, il cervello decide di fuggire. L'opera fissa l'istante esatto di questa ribellione: un balzo nel vuoto accompagnato da un metaforico \"Fiuuum\". Non si tratta di una semplice onomatopea, ma del suono di uno strappo definitivo, il momento in cui la mente abbandona la via più facile per lanciarsi verso l'ignoto.",
+  "atto_en": "Refusing its own inertia, the brain decides to run. The work freezes the exact instant of this rebellion: a leap into the void, with a figurative \"Fiuuum\". It is not just a sound effect. It is the sound of a clean break, the moment the mind leaves the easy road and throws itself toward the unknown.",
+  "foto": [
+    {
+      "immagine": "/img/opere/salto.webp",
+      "alt_it": "Salto: stampa incorniciata in nero con passepartout chiaro. Un cervello rosa vola su una griglia di lettere \"i\", tra la F in alto e UUUM in basso.",
+      "alt_en": "Salto: print in a black frame with a light mat. A pink brain flies across a grid of letters \"i\", between the F at the top and UUUM at the bottom."
+    }
+  ],
+  "foto_quadrata": "/img/opere/salto-q.webp",
+  "bozza": false
+}

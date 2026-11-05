@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import Statement from '../Statement.astro';
+import Freccia from '../Freccia.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { cicli, opere, titoloCiclo, fondoDi } from '../../dati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const tutti = await cicli();
+const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.id), anno: c.data.anno })));
+
+const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x) => [x.id, await fondoDi(x.data.foto[0].immagine)] as const)));
+---
+<Base lang={lang} titolo={`${t.archivio} | Higle Studio`} pagina="archivio" altra={percorsi[altra].archivio}>
+  <h1 class="sr">{t.archivio}</h1>
+
+  {gruppi.map(({ c, o, anno }) => { const intro = lang === 'it' ? c.data.statement_it : c.data.statement_en; const atti = o.map((x) => ((lang === 'it' ? x.data.atto_it : x.data.atto_en) ?? '').trim()); return (
+    <details class:list={["gruppo", { aperto: c.data.in_primo_piano }]} open={c.data.in_primo_piano}>
+      <summary class="pannelli"><div class="cella riga">
+        <span class="anno num">{anno}</span>
+        <h2>{titoloCiclo(c, lang)}</h2>
+        <Freccia verso="giu" class="freccia" />
+      </div></summary>
+
+      <div class="apre">
+        {intro.trim() && <div class="pannelli st-work"><div class="cella">
+
+          <h3 class="st-titolo">{titoloCiclo(c, lang)}</h3>
+          <Statement testo={intro} />
+        </div></div>}
+
+        {atti.some(Boolean) ? (
+        <ol class="opere atti">
+          {o.map((x, i) => (
+            <li class="atto">
+              <a href={percorsi[lang].opera(x.id)} data-opera class="foto" style={`--f:${fondi.get(x.id)}`} tabindex="-1" aria-hidden="true"><img src={x.data.foto[0].immagine} alt="" width="2400" height="1800" loading="lazy" /></a>
+              <div class="scheda">
+                <h4 class="t"><a href={percorsi[lang].opera(x.id)}>{x.data.titolo}</a></h4>
+                {atti[i] && <Statement testo={atti[i]} />}
+              </div>
+            </li>
+          ))}
+        </ol>
+        ) : (
+        <ol class="opere">
+          {o.map((x) => (
+            <li class="opera">
+              <a href={percorsi[lang].opera(x.id)} data-opera>
+                <div class="foto" style={`--f:${fondi.get(x.id)}`}><img src={x.data.foto[0].immagine} alt={(lang === 'it' ? x.data.foto[0].alt_it : x.data.foto[0].alt_en) || x.data.titolo} width="2400" height="1800" loading="lazy" /></div>
+                <div class="scheda"><span class="t">{x.data.titolo}</span></div>
+              </a>
+            </li>
+          ))}
+        </ol>
+        )}
+      </div>
+    </details>
+  ); })}
+</Base>

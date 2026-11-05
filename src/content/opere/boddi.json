@@ -1,0 +1,35 @@
+{
+  "slug": "boddi",
+  "titolo": "Boddi",
+  "ciclo": "idea",
+  "ordine": 4,
+  "anno": 2026,
+  "materiali_it": "resina",
+  "materiali_en": "resin",
+  "tecnica_it": "stampa 3D in resina",
+  "tecnica_en": "resin 3D print",
+  "misure": "22 × 12 × 12 cm",
+  "testo_it": "Boddi è la materializzazione dei bozzetti e dei disegni che ho realizzato nel corso degli anni. Ho comprato una stampante 3D e ho reso tangibile l'idea che fino ad allora era solo bidimensionale: dopo diverse prove di stampa e di colore, per realizzare la superficie perfetta, ho potuto toccare con mano la mia stessa intuizione.",
+  "testo_en": "Boddi is the sketches and drawings I made over the years, turned into matter. I bought a 3D printer and made tangible an idea that until then had existed only in two dimensions. After several print and colour tests to get the perfect surface, I could touch my own intuition with my hands.",
+  "atto_it": "Per spezzare il circolo vizioso dello smarrimento, la sola coscienza non basta. Un'idea priva di materia resta un'astrazione bloccata in un cassetto. Il cervello comprende che per muoversi nel mondo ha bisogno di un veicolo, di un gesto concreto. Acquisendo un corpo fisico, traduce finalmente il pensiero in azione e compie il suo primo, reale passo.",
+  "atto_en": "To break the vicious circle of being lost, awareness alone is not enough. An idea without matter stays an abstraction, shut away in a drawer. The brain realises that to move through the world it needs a vehicle, a concrete gesture. By taking on a physical body, it finally turns thought into action and takes its first real step.",
+  "foto": [
+    {
+      "immagine": "/img/opere/boddi-2.webp",
+      "alt_it": "Boddi di tre quarti, a metà di un passo.",
+      "alt_en": "Boddi in three-quarter view, mid-step."
+    },
+    {
+      "immagine": "/img/opere/boddi-3.webp",
+      "alt_it": "Boddi di profilo, mentre cammina.",
+      "alt_en": "Boddi in profile, walking."
+    },
+    {
+      "immagine": "/img/opere/boddi.webp",
+      "alt_it": "Boddi, di fronte: figura con un cervello rosa al posto della testa, occhi ondulati, corpo nero e stivali arancioni, su una base nera rotonda.",
+      "alt_en": "Boddi, from the front: a figure with a pink brain for a head, wavy eyes, a black body and orange boots, on a round black base."
+    }
+  ],
+  "foto_quadrata": "/img/opere/boddi-2-q.webp",
+  "bozza": false
+}

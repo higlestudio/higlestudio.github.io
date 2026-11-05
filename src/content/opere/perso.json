@@ -1,0 +1,30 @@
+{
+  "slug": "perso",
+  "titolo": "Perso",
+  "ciclo": "idea",
+  "ordine": 3,
+  "anno": 2026,
+  "materiali_it": "policarbonato",
+  "materiali_en": "polycarbonate",
+  "tecnica_it": "modellazione a caldo",
+  "tecnica_en": "heat moulding",
+  "misure": "5 × 19 × 19 cm",
+  "testo_it": "Inizialmente ho sperimentato con dei vecchi vinili regalati da mio padre e, modellandoli, li ho trasformati in svuotatasche. Sentivo di dover continuare la ricerca verso qualcosa di meno anonimo, così ho contattato l'azienda che produce vinili e ho chiesto loro scarti di produzione. Alla fine, però, ho capito che non mi sarei accontentato utilizzando materiali di riciclo e ho iniziato a produrre da solo i miei dischi: il vinile è un materiale che si scioglie a temperature basse quindi mi ha permesso di sperimentare con comodità. Il mio scopo non è mai stato quello di dare una seconda vita ad un oggetto che ha passato il suo tempo e allo stesso tempo ho sentito il bisogno di staccarmi completamente dalla musica, che avrebbe solo corrotto il prodotto finito. Ecco perché sono arrivato ad utilizzare il policarbonato dandogli forme diverse e sradicandolo dalla musica. Sono arrivato alla conclusione che un'idea è un processo per il quale è necessario anche perdersi.",
+  "testo_en": "I started by experimenting with old vinyl records my father had given me, shaping them into catch-all trays. I felt I had to keep searching for something less anonymous, so I contacted the company that makes vinyl records and asked for production scraps. In the end, though, I realised recycled materials would never satisfy me, and I began making my own discs: vinyl melts at low temperatures, which made it easy to experiment with. My aim was never to give a second life to an object past its time, and I also felt the need to break away from music altogether, since it would only have corrupted the finished piece. That is how I arrived at polycarbonate, giving it different forms and uprooting it from music. I came to the conclusion that an idea is a process, and part of that process is getting lost.",
+  "atto_it": "Il salto fuori dall'apatia non porta a una rotta certa, ma al disorientamento. Di fronte a infinite possibilità, il cervello va in cortocircuito e finisce in un loop, smarrendosi e ritrovandosi. La forma dell'opera richiama quella di uno svuotatasche, il contenitore quotidiano in cui la sera abbandoniamo gli oggetti per recuperarli al mattino. È la metafora di un limbo: la libertà, senza una direzione, rischia di diventare una nuova prigione circolare.",
+  "atto_en": "The leap out of apathy does not lead to a clear course, only to disorientation. Faced with endless possibilities, the brain short-circuits and ends up in a loop, losing itself and finding itself again. The shape of the work recalls a catchall tray, the everyday dish where we drop our things at night and pick them up in the morning. It is the image of a limbo: freedom without direction can turn into a new, circular prison.",
+  "foto": [
+    {
+      "immagine": "/img/opere/perso.webp",
+      "alt_it": "Perso, dall'alto: lastra trasparente dal bordo ondulato. Al centro un cervello rosa su una macchia nera, circondato dalla scritta \"lost & found\".",
+      "alt_en": "Perso, from above: a clear sheet with a wavy edge. At its centre a pink brain on a black blot, ringed by the words \"lost & found\"."
+    },
+    {
+      "immagine": "/img/opere/perso-2.webp",
+      "alt_it": "Perso, di lato: il bordo ondulato della lastra trasparente.",
+      "alt_en": "Perso, from the side: the wavy edge of the clear sheet."
+    }
+  ],
+  "foto_quadrata": "/img/opere/perso-q.webp",
+  "bozza": false
+}

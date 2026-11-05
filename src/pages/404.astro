@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Freccia from '../components/Freccia.astro';
+import { testi } from '../i18n';
+---
+<Base lang="en" titolo="404 | Higle Studio" altra="/it/" automatica={false}>
+
+  <section class="vuoto">
+    <h1 class="vuoto-404"><span class="vuoto-errore" data-lingua="en">{testi.en.errore}</span><span class="vuoto-errore" data-lingua="it" lang="it" hidden>{testi.it.errore}</span><span class="vuoto-numero">404</span></h1>
+    <p class="vuoto-frase" data-lingua="en">Nothing here.</p>
+    <p class="vuoto-frase" data-lingua="it" lang="it" hidden>Qui non c'è niente.</p>
+    <div class="scopri-pillola"><a href="/" data-lingua="en"><span class="pl-t">{testi.en.vaiHome}</span><Freccia /></a><a href="/it/" data-lingua="it" lang="it" hidden><span class="pl-t">{testi.it.vaiHome}</span><Freccia /></a></div>
+  </section>
+</Base>
+<script>import '../scripts/vuoto.ts';</script>

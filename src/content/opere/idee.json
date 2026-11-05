@@ -1,0 +1,30 @@
+{
+  "slug": "idee",
+  "titolo": "Idee",
+  "ciclo": "idea",
+  "ordine": 1,
+  "anno": 2026,
+  "materiali_it": "resina, alluminio",
+  "materiali_en": "resin, aluminium",
+  "tecnica_it": "stampa 3D in resina",
+  "tecnica_en": "resin 3D print",
+  "misure": "7 × 15 × 4 cm",
+  "testo_it": "Idee è il risultato di innumerevoli rifacimenti, tentativi e ripensamenti. Ho sostituito la struttura in cartone e il circuito iniziale con materiali più solidi per renderla più duratura, resina e alluminio. Mentre ho progettato il circuito su misura per l'opera, sostituendo le classiche lampadine alogene con Led a luce calda, per riprendere l'immagine stereotipata della lampadina gialla.",
+  "testo_en": "Idee is the result of countless remakes, attempts and second thoughts. I replaced the original cardboard structure and circuit with sturdier materials, resin and aluminium, so it would last. I designed the circuit specifically for the work, swapping the classic halogen bulbs for warm LEDs to bring back the stereotypical image of the yellow light bulb.",
+  "atto_it": "L'intuizione non è più un processo, ma un prodotto. Il colpo di genio perde la sua natura di illuminazione spontanea per essere incapsulato in un blister farmaceutico. L'opera mostra pillole luminose pronte all'uso: idee preconfezionate da assumere come cura rapida ai primi sintomi di vuoto intellettuale, annullando così lo sforzo del pensiero autonomo.",
+  "atto_en": "Intuition is no longer a process but a product. The stroke of genius loses its nature as a spontaneous flash and gets sealed in a pharmaceutical blister pack. The work shows glowing pills ready for use: pre-packaged ideas, to be taken as a quick cure at the first symptoms of mental emptiness. The effort of thinking for yourself is gone.",
+  "foto": [
+    {
+      "immagine": "/img/opere/idee.webp",
+      "alt_it": "Idee, accesa: dodici capsule luminose gialle in tre file, attorno alla scritta IDEE, in un guscio trasparente.",
+      "alt_en": "Idee, switched on: twelve glowing yellow capsules in three rows around the word IDEE, inside a clear shell."
+    },
+    {
+      "immagine": "/img/opere/idee-2.webp",
+      "alt_it": "Idee, spenta: le dodici capsule trasparenti attorno alla scritta IDEE.",
+      "alt_en": "Idee, switched off: the twelve clear capsules around the word IDEE."
+    }
+  ],
+  "foto_quadrata": "/img/opere/idee-q.webp",
+  "bozza": false
+}

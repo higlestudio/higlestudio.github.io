@@ -1,0 +1,5 @@
+---
+import { md } from '../dati';
+interface Props { testo: string }
+---
+<div class="statement" set:html={md(Astro.props.testo)} />

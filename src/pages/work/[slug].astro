@@ -1,0 +1,8 @@
+---
+import Pagina from '../../components/pagine/Opera.astro';
+import { opere } from '../../dati';
+export async function getStaticPaths() {
+  return (await opere()).map((o) => ({ params: { slug: o.id }, props: { opera: o } }));
+}
+---
+<Pagina lang="en" opera={Astro.props.opera} />
