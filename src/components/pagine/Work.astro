@@ -15,7 +15,7 @@ const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.i
 const primo = await cicloInPrimoPiano();
 const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x) => [x.id, await fondoDi(x.data.foto[0].immagine)] as const)));
 ---
-<Base lang={lang} titolo={`${t.archivio} | Higle Studio`} descrizione={lang === 'it' ? primo.data.descrizione_it : primo.data.descrizione_en} dati={gruppi.map((g) => datiProgetto(g.c, g.o, lang, Astro.site!))} pagina="archivio" altra={percorsi[altra].archivio}>
+<Base lang={lang} titolo={`${t.titoloWork} | Higle Studio`} descrizione={lang === 'it' ? primo.data.descrizione_it : primo.data.descrizione_en} dati={gruppi.map((g) => datiProgetto(g.c, g.o, lang, Astro.site!))} pagina="archivio" altra={percorsi[altra].archivio}>
   <h1 class="sr">{t.archivio}</h1>
 
   {gruppi.map(({ c, o, anno }) => { const intro = lang === 'it' ? c.data.statement_it : c.data.statement_en; const atti = o.map((x) => ((lang === 'it' ? x.data.atto_it : x.data.atto_en) ?? '').trim()); return (

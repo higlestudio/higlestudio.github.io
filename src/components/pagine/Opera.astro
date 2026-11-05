@@ -20,9 +20,9 @@ const materiali = (it ? o.materiali_it : o.materiali_en).trim();
 const scheda = [tecnica || materiali, o.misure].filter(Boolean).join(', ');
 const piano = testoPiano(it ? o.testo_it : o.testo_en);
 const primaFrase = piano.match(/^.+?[.?!](?=\s|$)/)?.[0] ?? piano;
-const descrizione = riassunto([`${o.titolo}, ${o.anno}.`, scheda && `${scheda[0].toUpperCase()}${scheda.slice(1)}.`, primaFrase].filter(Boolean).join(' '));
+const descrizione = riassunto([`${o.titolo} (${o.anno}), ${t.operaDi}.`, scheda && `${scheda[0].toUpperCase()}${scheda.slice(1)}.`, primaFrase].filter(Boolean).join(' '));
 ---
-<Base lang={lang} titolo={`${o.titolo} | Higle Studio`} pagina="archivio" descrizione={descrizione} immagine={{ src: `/og/${opera.id}.jpg`, alt: foto[0].alt }} dati={datiOpera(opera, ciclo, lang, Astro.site!)} altra={percorsi[altra].opera(opera.id)}>
+<Base lang={lang} titolo={`${o.titolo}${tecnica ? `, ${tecnica}` : ''} | Higle Studio`} pagina="archivio" descrizione={descrizione} immagine={{ src: `/og/${opera.id}.jpg`, alt: foto[0].alt }} dati={datiOpera(opera, ciclo, lang, Astro.site!)} altra={percorsi[altra].opera(opera.id)}>
 
   <div class="op-pagina">
   <figure class="op-foto" style={`--f:${fondi[0]}`}>
