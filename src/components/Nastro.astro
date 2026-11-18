@@ -1,0 +1,21 @@
+---
+import { fondoDi } from '../dati';
+import type { Lang } from '../i18n';
+interface Props { lang: Lang; opere: any[] }
+const { lang, opere } = Astro.props;
+const voci = await Promise.all(opere.slice(0, 4).map(async (o) => {
+  const f = o.data.foto[0];
+  return { id: o.id, titolo: o.data.titolo, fondo: await fondoDi(f.immagine), alt: (lang === 'it' ? f.alt_it : f.alt_en) || o.data.titolo };
+}));
+const giri = [0, 1, 2, 3].flatMap((g) => voci.map((v) => ({ ...v, copia: g > 0 })));
+---
+<div class="nastro">
+  <ul class="nastro-fila">
+    {giri.map((v) => (
+      <li aria-hidden={v.copia ? 'true' : undefined}>
+        <div class="nastro-foto" style={`--f:${v.fondo}`}><img src={`/nastro/${v.id}.webp`} alt={v.copia ? '' : v.alt} width="1200" height="900" loading="lazy" /></div>
+        <span class="nastro-t">{v.titolo}</span>
+      </li>
+    ))}
+  </ul>
+</div>

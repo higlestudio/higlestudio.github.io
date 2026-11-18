@@ -1,0 +1,18 @@
+---
+import { percorsi, type Lang } from '../i18n';
+import { fondoDi } from '../dati';
+interface Props { lang: Lang; opere: any[] }
+const { lang, opere } = Astro.props;
+
+const fondi = await Promise.all(opere.map((o) => fondoDi(o.data.foto_quadrata || o.data.foto[0].immagine)));
+---
+<ol class="pannelli inv-grid">
+  {opere.map((o, i) => (
+    <li>
+      <a href={percorsi[lang].opera(o.id)} data-opera>
+        <div class="im" style={`--f:${fondi[i]}`}><img src={o.data.foto_quadrata || o.data.foto[0].immagine} alt="" width="1800" height="1800" loading="lazy" /></div>
+        <div class="cap"><span class="t">{o.data.titolo}</span></div>
+      </a>
+    </li>
+  ))}
+</ol>

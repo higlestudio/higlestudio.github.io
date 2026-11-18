@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import Statement from '../Statement.astro';
+import Freccia from '../Freccia.astro';
+import Griglia from '../Griglia.astro';
+import { percorsi, testi, type Lang } from '../../i18n';
+import { cicli, cicloInPrimoPiano, opere, titoloCiclo, fondoDi, capitoli } from '../../dati';
+import { datiProgetto } from '../../strutturati';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = testi[lang];
+const altra: Lang = lang === 'it' ? 'en' : 'it';
+const tutti = await cicli();
+const gruppi = await Promise.all(tutti.map(async (c) => ({ c, o: await opere(c.id), anno: c.data.anno })));
+
+const primo = await cicloInPrimoPiano();
+const fondi = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x) => [x.id, await fondoDi(x.data.foto[0].immagine)] as const)));
+const fondiQ = new Map(await Promise.all(gruppi.flatMap((g) => g.o).map(async (x) => [x.id, await fondoDi(x.data.foto_quadrata || x.data.foto[0].immagine)] as const)));
+---
+<Base lang={lang} titolo={`${t.titoloWork} | Higle Studio`} descrizione={lang === 'it' ? primo.data.descrizione_it : primo.data.descrizione_en} dati={gruppi.map((g) => datiProgetto(g.c, g.o, lang, Astro.site!))} pagina="archivio" altra={percorsi[altra].archivio}>
+  <h1 class="sr">{t.archivio}</h1>
+
+  {gruppi.map(({ c, o, anno }) => { const { ancore, parti } = capitoli(lang === 'it' ? c.data.statement_it : c.data.statement_en, o.map((x) => x.data.titolo)); const intro = parti.map((x) => x.testo).filter(Boolean).join('\n\n'); const quadra = (x: (typeof o)[number]) => x.data.foto_quadrata || x.data.foto[0].immagine; return (
+    <details class:list={["gruppo", { aperto: c.data.in_primo_piano }]} open={c.data.in_primo_piano}>
+      <summary class="pannelli"><div class="cella riga">
+        <span class="anno num">{anno}</span>
+        <h2>{titoloCiclo(c, lang)}</h2>
+        <Freccia verso="giu" class="freccia" />
+      </div></summary>
+
+      <div class="apre">
+        {ancore > 0 ? (
+        <>
+          <div class="racconto" data-racconto>
+            <div class="rg">
+              {o.map((x, i) => (
+                <figure class:list={["rg-foto", { su: i === 0 }]} style={`--f:${fondi.get(x.id)}`}>
+                  <img src={x.data.foto[0].immagine} alt={(lang === 'it' ? x.data.foto[0].alt_it : x.data.foto[0].alt_en) || x.data.titolo} width="2400" height="1800" loading="lazy" />
+                </figure>
+              ))}
+            </div>
+            <div class="rt">
+              {parti.map((x, i) => (
+                <section class="rb" data-foto={x.foto}>
+                  {i === 0 ? <h3 class="st-titolo">{titoloCiclo(c, lang)}</h3> : <h4 class="sr">{x.titolo}</h4>}
+                  {x.testo && <Statement testo={x.testo} />}
+                  {i > 0 && (
+                    <figure class="rb-foto">
+                      <img src={quadra(o[x.foto])} alt={(lang === 'it' ? o[x.foto].data.foto[0].alt_it : o[x.foto].data.foto[0].alt_en) || x.titolo} width="1800" height="1800" loading="lazy" style={`--f:${fondiQ.get(o[x.foto].id)}`} />
+                      <figcaption>{x.titolo}</figcaption>
+                    </figure>
+                  )}
+                  {x.coda && <Statement testo={x.coda} />}
+                </section>
+              ))}
+            </div>
+          </div>
+          <div class="pannelli vedi"><div class="cella"><h3 class="vedi-frase">{t.vediOpere}</h3></div></div>
+          <Griglia lang={lang} opere={o} />
+        </>
+        ) : (
+        <>
+        {intro.trim() && <div class="pannelli st-work"><div class="cella">
+          <h3 class="st-titolo">{titoloCiclo(c, lang)}</h3>
+          <Statement testo={intro} />
+        </div></div>}
+        <ol class="opere">
+          {o.map((x) => (
+            <li class="opera">
+              <a href={percorsi[lang].opera(x.id)} data-opera>
+                <div class="foto" style={`--f:${fondi.get(x.id)}`}><img src={x.data.foto[0].immagine} alt={(lang === 'it' ? x.data.foto[0].alt_it : x.data.foto[0].alt_en) || x.data.titolo} width="2400" height="1800" loading="lazy" /></div>
+                <div class="scheda"><span class="t">{x.data.titolo}</span></div>
+              </a>
+            </li>
+          ))}
+        </ol>
+        </>
+        )}
+      </div>
+    </details>
+  ); })}
+</Base>
+<script>import '../../scripts/racconto.ts';</script>
